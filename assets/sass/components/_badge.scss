@@ -1,0 +1,119 @@
+@use '../abstracts/colors' as *;
+@use '../abstracts/variables' as *;
+
+$badge-padding: 0.25rem;
+$badge-font-weight: 600;
+
+@mixin badge-border($color) {
+	border: 1px solid $color;
+}
+
+.badge {
+	display: block;
+	border-radius: $border-radius;
+	padding: $badge-padding;
+	text-transform: uppercase;
+	font-weight: $badge-font-weight;
+	width: max-content;
+	line-height: 1;
+	align-content: center;
+
+	&-soft-red {
+		background-color: $badge-soft-red;
+		@include badge-border($badge-high-red);
+		color: $badge-high-red;
+	}
+
+	&-soft-orange {
+		background-color: $badge-soft-orange;
+		@include badge-border($badge-high-orange);
+		color: $badge-high-orange;
+	}
+
+	&-soft-blue {
+		background-color: $badge-soft-blue;
+		@include badge-border($badge-high-blue);
+		color: $badge-high-blue;
+	}
+
+	&-soft-green {
+		background-color: $badge-soft-green;
+		@include badge-border($badge-high-green);
+		color: $badge-high-green;
+	}
+
+	&-soft-purple {
+		background-color: $badge-soft-purple;
+		@include badge-border($badge-high-purple);
+		color: $badge-high-purple;
+	}
+
+	&-soft-grey {
+		background-color: $badge-soft-grey;
+		@include badge-border($badge-high-grey);
+		color: $badge-high-grey;
+	}
+
+	&-soft-brown {
+		background-color: $badge-soft-brown;
+		@include badge-border($badge-high-brown);
+		color: $badge-high-brown;
+	}
+
+	&-soft-cyan {
+		background-color: $badge-soft-cyan;
+		@include badge-border($badge-high-cyan);
+		color: $badge-high-cyan;
+	}
+
+	&-soft-black {
+		background-color: $badge-soft-black;
+		@include badge-border($badge-high-black);
+		color: $badge-high-black;
+	}
+
+	&-high-red {
+		background-color: $badge-high-red;
+		color: $badge-soft-red;
+	}
+
+	&-high-orange {
+		background-color: $badge-high-orange;
+		color: $badge-soft-orange;
+	}
+
+	&-high-blue {
+		background-color: $badge-high-blue;
+		color: $badge-soft-blue;
+	}
+
+	&-high-green {
+		background-color: $badge-high-green;
+		color: $badge-soft-green;
+	}
+
+	&-high-purple {
+		background-color: $badge-high-purple;
+		color: $badge-soft-purple;
+	}
+
+	&-high-grey {
+		background-color: $badge-high-grey;
+		color: $badge-soft-grey;
+	}
+
+	&-high-brown {
+		background-color: $badge-high-brown;
+		color: $badge-soft-brown;
+	}
+
+	&-high-cyan {
+		background-color: $badge-high-cyan;
+		color: $badge-soft-cyan;
+	}
+
+	&-high-black {
+		background-color: $badge-high-black;
+		color: $badge-soft-black;
+	}
+}

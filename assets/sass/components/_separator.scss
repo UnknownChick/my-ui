@@ -1,0 +1,7 @@
+@use '../abstracts/colors' as *;
+
+hr {
+	height: 2px;
+	background-color: $light-grey;
+	border: none;
+}

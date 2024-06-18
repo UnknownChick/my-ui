@@ -1,0 +1,6 @@
+@use '../abstracts/colors' as *;
+
+.highlight {
+  background: $badge-alert;
+  color: $white-color
+}

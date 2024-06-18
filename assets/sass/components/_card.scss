@@ -1,0 +1,27 @@
+@use '../abstracts/colors' as *;
+@use '../abstracts/variables' as *;
+
+$card-padding: 2rem;
+
+.card {
+	border-radius: $border-radius;
+	box-shadow: $box-shadow;
+	height: 100%;
+
+	&-title {
+		display: flex;
+		padding: $card-padding;
+		border-bottom: 2px solid $light-grey;
+		align-items: center;
+
+		p {
+			font-size: 1.5rem;
+			color: $blue;
+		}
+	}
+
+	&-body {
+		padding: $card-padding;
+		height: 100%;
+	}
+}

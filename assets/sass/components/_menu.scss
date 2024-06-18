@@ -1,0 +1,119 @@
+@use '../abstracts/colors' as *;
+@use '../abstracts/mixins' as *;
+
+.menu {
+	position: relative;
+	background: $dark-linear-gradient;
+	transition: width 300ms ease-in-out;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	gap: 2rem;
+
+	&__logo {
+		margin: 2rem 0 3rem;
+		padding: 0 2rem;
+		//min-width: 100px;
+		height: 40px;
+		display: flex;
+		gap: 1rem;
+	}
+
+	&__list {
+		list-style: none;
+		white-space: nowrap;
+		li {
+			a {
+				display: flex;
+				color: $white-color;
+				padding: 1rem 2rem;
+
+				transition: background-color 200ms ease-in-out;
+
+				&:hover {
+					background-color: $light-blue;
+				}
+
+				svg {
+					min-width: 1.25rem;
+				}
+			}
+		}
+	}
+
+	&__toggle {
+		position: absolute;
+		@include absolute-vertical-center;
+		right: -1rem;
+		background-color: $white-color;
+		width: 2rem;
+		height: 2rem;
+		border-radius: 100%;
+		@include df-center;
+		cursor: pointer;
+		opacity: 0;
+		transition: transform 300ms ease-in-out, opacity 300ms ease-in-out;
+
+		&__border {
+			position: absolute;
+			width: 1.25rem;
+			height: 1.25rem;
+			border-radius: 100%;
+			border: 1.5px solid $blue;
+		}
+
+		svg {
+			stroke: $blue;
+		}
+	}
+
+	&:hover {
+		.menu__toggle {
+			opacity: 1;
+		}
+	}
+
+	&-open {
+		width: 250px;
+
+		.menu__list {
+			li {
+				a {
+					gap: 0.5rem;
+				}
+			}
+
+			&__text {
+				display: block;
+			}
+		}
+
+		.menu__logo > img:last-child {
+			display: block;
+		}
+	}
+
+	&-close {
+		width: 84px;
+
+		.menu__list {
+			li {
+				a {
+					gap: 0;
+				}
+			}
+
+			&__text {
+				display: none;
+			}
+		}
+
+		.menu__logo > img:last-child {
+			display: none;
+		}
+
+		.menu__toggle {
+			transform: rotate(180deg);
+		}
+	}
+}
