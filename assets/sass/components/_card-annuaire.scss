@@ -1,0 +1,44 @@
+@use "../abstracts/variables" as *;
+@use "../abstracts/colors" as *;
+
+.card-annuaire {
+	position: relative;
+	display: block;
+	padding: 1rem;
+	border-radius: $border-radius;
+	border: $border-grey;
+
+	&__name {
+		font-size: 1.25rem;
+		font-weight: 500;
+		color: $light-blue;
+	}
+
+	&__job {
+		font-weight: 500;
+	}
+
+	&__infos {
+		li {
+			display: flex;
+			gap: 0.5rem;
+
+			svg {
+				stroke: $light-blue;
+			}
+		}
+	}
+
+	&__more {
+		position: absolute;
+		cursor: pointer;
+		top: 0.5rem;
+		right: 0.5rem;
+	}
+}
+
+.grid {
+	display: grid;
+	grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+	gap: 3rem;
+}

@@ -1,0 +1,69 @@
+$white-color: #FFFFFF;
+$black-color: #000000;
+
+$blue: #001553;
+$dark-blue: #000B2B;
+$light-blue: #466AD1;
+$clear-blue: #96AEF6;
+$grey: #707070;
+$grey2: #616161;
+$light-grey: #f5f5f5;
+
+$dark-linear-gradient: linear-gradient(120deg, rgba(0,11,43,1) 0%, rgba(0,21,83,1) 100%);
+$medium-linear-gradient: linear-gradient(106deg, #3955AB 0%, #1B3585 100%, #000000 100%);
+$clear-linear-gradient: linear-gradient(97deg, rgba(145,171,248,1) 0%, rgba(121,142,204,1) 100%);
+
+/* Badges */
+$badge-low: #F2F5FF;
+$badge-low-text: #96AEF6;
+$badge-medium: #FFE9C2;
+$badge-medium-text: #EB9500;
+$badge-high: #FFD9D9;
+$badge-high-text: #E24848;
+$badge-alert: #EE6767;
+$badge-alert-text: $white-color;
+
+$badge-admin: #203F95;
+$badge-invite: #878FA7;
+$badge-employee: $light-blue;
+
+$note-type1: $badge-low-text;
+$note-type2: $light-blue;
+$note-type3: $badge-admin;
+$note-type4: $badge-alert;
+$note-type5: $grey2;
+
+
+$user-status-online: #00e217;
+$user-status-disconnected: $badge-alert;
+$user-status-absent: #ffbb00;
+
+
+/* Badges v2 */
+$badge-soft-red: #FFD9D9;
+$badge-soft-orange: #FFF0D6;
+$badge-soft-blue: #EBF0FF;
+$badge-soft-green: #DCFFEB;
+$badge-soft-purple: #E6DCFF;
+$badge-soft-grey: #F0F3F5;
+$badge-soft-brown: #FFF3D0;
+$badge-soft-cyan: #F2FFFF;
+$badge-soft-black: #F1F1F1;
+
+$badge-high-red: #EE6767;
+$badge-high-orange: #FFA200;
+$badge-high-blue: #4E7AFF;
+$badge-high-green: #00CB58;
+$badge-high-purple: #8454FF;
+$badge-high-grey: #809FB8;
+$badge-high-brown: #C56C4A;
+$badge-high-cyan: #51E5E6;
+$badge-high-black: #202020;
+
+.dark-linear-gradient {
+	background: $dark-linear-gradient;
+}
+
+.clear-linear-gradient {
+	background: $clear-linear-gradient;
+}

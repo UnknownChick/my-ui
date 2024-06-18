@@ -1,0 +1,17 @@
+@use '../../abstracts/colors' as *;
+
+.emoji-picker {
+  //display: none;
+  position: absolute;
+  width: max-content;
+  top: 0;
+  left: 0;
+}
+
+#arrow {
+  position: absolute;
+  background: $white-color;
+  width: 1rem;
+  height: 1rem;
+  transform: rotate(45deg);
+}

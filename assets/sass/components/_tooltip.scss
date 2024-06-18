@@ -1,0 +1,39 @@
+@use'../abstracts/colors' as *;
+@use '../abstracts/variables' as *;
+
+.tooltip {
+  position: relative;
+  display: inline-block;
+  cursor: pointer;
+
+  .tooltip-text {
+    visibility: hidden;
+    width: 345px;
+    background-color: $black-color;
+    color: $white-color;
+    border-radius: $border-radius;
+    padding: 5px;
+    position: absolute;
+    z-index: 1000;
+    //bottom: 125%; /* Position au-dessus du texte */
+    opacity: 0;
+    transition: opacity 0.3s;
+    white-space: pre-line; /* Pour gérer les retours à la ligne */
+  }
+
+  &.tooltip-right .tooltip-text {
+    margin-left: -320px;
+  }
+
+  &.tooltip-left .tooltip-text{
+    margin-left: -228px;
+  }
+
+  &:hover {
+    .tooltip-text {
+      visibility: visible;
+      opacity: 1;
+    }
+  }
+}
+

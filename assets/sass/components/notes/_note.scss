@@ -1,0 +1,118 @@
+@use '../../abstracts/colors' as *;
+@use '../../abstracts/mixins' as *;
+@use '../../abstracts/variables' as *;
+
+.note {
+	display: flex;
+	gap: 0.25rem;
+	padding: 1rem;
+	line-height: 1;
+	border-bottom: $border-grey;
+	cursor: pointer;
+
+	&[note-type="type1"] {
+		.note__icon {
+			background-color: $note-type1;
+		}
+	}
+
+	&[note-type="type2"] {
+		.note__icon {
+			background-color: $note-type2;
+		}
+	}
+
+	&[note-type="type3"] {
+		.note__icon {
+			background-color: $note-type3;
+		}
+	}
+
+	&[note-type="type4"] {
+		.note__icon {
+			background-color: $note-type4;
+		}
+	}
+
+	&[note-type="type5"] {
+		.note__icon {
+			background-color: $note-type5;
+		}
+	}
+
+	&--active, &:hover {
+		background-color: $light-grey;
+	}
+
+	&__icon {
+		padding: 0.25rem;
+		border-radius: 0.375rem;
+		width: 1.75rem;
+		//height: 1.75rem;
+		color: $white-color;
+		@include df-center;
+
+		svg {
+			width: 1rem;
+			height: 1rem;
+		}
+	}
+
+	&__content {
+		&__infos {
+			display: flex;
+			gap: 0.5rem;
+			align-items: center;
+
+			.badge {
+				font-size: 0.5rem;
+				padding: 2px;
+			}
+
+			&__users-count {
+				display: flex;
+				gap: 0.25rem;
+				color: $grey2;
+
+				svg {
+					width: 0.75rem;
+					height: 0.75rem;
+				}
+
+				p {
+					font-size: 0.75rem;
+				}
+			}
+		}
+
+		&__title {
+			font-weight: 500;
+			font-size: 1rem;
+		}
+	}
+
+	&__status {
+		align-content: center;
+		margin-left: auto;
+
+		&__messages-count {
+			background-color: $blue;
+			color: $white-color;
+			border-radius: 100%;
+			height: 1rem;
+			width: 1rem;
+			
+			text-align: center;
+			align-content: center;
+		}
+
+		&__messages-status {
+			color: $grey2;
+
+			svg {
+				width: 1rem;
+				height: 1rem;
+			}
+		}
+	}
+}

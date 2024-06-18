@@ -1,0 +1,11 @@
+.tabs__nav {
+  ul {
+    list-style: none;
+    display: flex;
+    gap: 0.5rem;
+  }
+}
+
+.tabs__content:not(.active) {
+    display: none;
+}
