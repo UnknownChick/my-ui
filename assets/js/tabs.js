@@ -1,19 +1,19 @@
-let tabsButton = document.querySelectorAll('.tabs__nav ul li');
-let tabsContent = document.querySelectorAll('.tabs__content');
+let tabsButtons = document.querySelectorAll('.tabs__nav ul li');
+let tabsContents = document.querySelectorAll('.tabs__content');
 
-if (tabsButton.length > 0 && tabsContent.length > 0) {
+if (tabsButtons.length > 0 && tabsContents.length > 0) {
     // Get the saved tab id from URL
     let savedTabId = new URLSearchParams(window.location.search).get('tab');
 
     // If there is no saved tab id, use the first tab as the default
     if (!savedTabId) {
-        savedTabId = tabsButton[0].getAttribute('data-tab');
+        savedTabId = tabsButtons[0].getAttribute('data-tab');
         window.history.replaceState({}, '', '?tab=' + savedTabId);
     }
 
     setActiveTab(savedTabId);
 
-    tabsButton.forEach((button) => {
+    tabsButtons.forEach((button) => {
         button.addEventListener('click', () => {
             // Add the data-tab of the clicked tab to the URL
             let tabId = button.getAttribute('data-tab');
@@ -27,7 +27,7 @@ if (tabsButton.length > 0 && tabsContent.length > 0) {
  * @param {string} tabId - The id of the tab to be activated.
  */
 function setActiveTab(tabId) {
-    tabsContent.forEach((content) => {
+    tabsContents.forEach((content) => {
         if (content.getAttribute('data-tab') === tabId) {
             content.classList.add('active');
         } else {
