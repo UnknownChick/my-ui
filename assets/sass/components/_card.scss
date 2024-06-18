@@ -9,7 +9,7 @@ $card-border-radius: $border-radius;
 	box-shadow: $box-shadow;
 	height: 100%;
 
-	&-title {
+	&__title {
 		display: flex;
 		padding: $card-padding;
 		border-bottom: 2px solid $off-color;
@@ -21,8 +21,7 @@ $card-border-radius: $border-radius;
 		}
 	}
 
-	&-body {
+	&__body {
 		padding: $card-padding;
-		height: 100%;
 	}
 }
