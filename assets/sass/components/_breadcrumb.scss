@@ -1,19 +1,22 @@
 @use '../abstracts/colors' as *;
 
+$breadcrumb-separator: '>';
+$breadcrumb-color: $primary-color;
+
 ul.breadcrumb {
-	display: inline-flex;
 	list-style: none;
+	display: inline-flex;
 	align-items: flex-end;
 
 	li {
 		height: max-content;
 		&:not(:last-child)::after {
-			content: '>';
+			content: $breadcrumb-separator;
 			padding: 0 0.25rem;
 		}
 
 		a {
-			color: $black-color;
+			color: $breadcrumb-color;
 			text-decoration: none;
 			line-height: 1;
 		}

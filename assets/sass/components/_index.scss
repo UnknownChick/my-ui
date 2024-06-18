@@ -1,12 +1,9 @@
-@forward 'alert';
 @forward 'attachement';
 @forward 'badge';
 @forward 'breadcrumb';
 @forward 'button';
-@forward 'card-annuaire';
 @forward 'card';
 @forward 'form';
-@forward 'highlight';
 @forward 'loader';
 @forward 'menu';
 @forward 'modal';
@@ -14,5 +11,3 @@
 @forward 'table';
 @forward 'tabs';
 @forward 'tooltip';
-
-@use 'notes';

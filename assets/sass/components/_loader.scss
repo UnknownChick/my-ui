@@ -1,11 +1,13 @@
 @use '../abstracts/colors' as *;
 
+$loader-size: 2rem;
+
 .loader {
-  width: 2rem;
-  height: 2rem;
-  border: 3px solid $blue;
+  width: $loader-size;
+  height: $loader-size;
+  border: 3px solid $primary-color;
   border-bottom-color: transparent;
-  border-radius: 50%;
+  border-radius: 100%;
   display: inline-block;
   box-sizing: border-box;
   animation: rotation 1s linear infinite;

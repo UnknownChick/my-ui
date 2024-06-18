@@ -2,21 +2,22 @@
 @use '../abstracts/variables' as *;
 
 $card-padding: 2rem;
+$card-border-radius: $border-radius;
 
 .card {
-	border-radius: $border-radius;
+	border-radius: $card-border-radius;
 	box-shadow: $box-shadow;
 	height: 100%;
 
 	&-title {
 		display: flex;
 		padding: $card-padding;
-		border-bottom: 2px solid $light-grey;
+		border-bottom: 2px solid $off-color;
 		align-items: center;
 
 		p {
 			font-size: 1.5rem;
-			color: $blue;
+			color: $primary-color;
 		}
 	}
 

@@ -1,4 +1,5 @@
 import {defineConfig} from "vite";
+import path from 'path';
 
 export default defineConfig({
     root: './',
@@ -10,6 +11,7 @@ export default defineConfig({
                 app: './assets/js/app.js',
             },
             output: {
+                dir: path.resolve(__dirname, 'dist'),
                 format: 'es',
                 entryFileNames: `[name].js`,
                 chunkFileNames: `[name].js`,

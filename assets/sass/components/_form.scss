@@ -2,23 +2,14 @@
 @use "../abstracts/variables" as *;
 @use "../abstracts/mixins" as *;
 
-
-@mixin input-style {
-
-}
-
 form {
-	p {
+	label {
 		font-weight: 500;
 	}
 }
 
 input[type="submit"] {
 	border: none;
-}
-
-input[type="file"] {
-	display: none;
 }
 
 .dz-button {
@@ -28,7 +19,7 @@ input[type="file"] {
 	height: 200px;
 	width: 100%;
 	font-weight: 500;
-	border: 2px solid $blue;
+	border: 2px solid $primary-color;
 	border-radius: $border-radius;
 	background-color: $white-color;
 }
@@ -36,24 +27,14 @@ input[type="file"] {
 textarea {
 	resize: vertical;
 	font-family: $primary-font;
-}
-
-label.disabled {
-	color:$grey !important;
-	font-style: italic;
-}
-
-dialog {
-	textarea {
-		min-height: 150px;
-	}
+	min-height: 150px;
 }
 
 .custom-select {
 	&__selection {
 		background-color: $white-color !important;
 		border-radius: $border-radius !important;
-		border: 1px solid $grey !important;
+		border: 1px solid $primary-color !important;
 		padding: 1rem;
 		height: auto !important;
 		line-height: 1 !important;
@@ -84,11 +65,11 @@ dialog {
 	}
 
 	&__dropdown {
-		border: 1px solid $grey !important;
+		border: 1px solid $primary-color !important;
 		overflow: hidden !important;
 
 		ul {
-			scrollbar-color: $blue $white-color;
+			scrollbar-color: $primary-color $white-color;
 			scrollbar-width: thin;
 
 			li {
@@ -101,7 +82,7 @@ dialog {
 		}
 
 		.select2-results__option--highlighted.select2-results__option--selectable {
-			background-color: $blue !important;
+			background-color: $primary-color !important;
 		}
 	}
 }
@@ -128,7 +109,7 @@ dialog {
 input:not(:is([type="checkbox"], input[type="submit"])), textarea, select, label[input-type="file"] {
 	background-color: $white-color;
 	border-radius: $border-radius;
-	border: 1px solid $grey;
+	border: 1px solid $primary-color;
 	padding: 1rem;
 	line-height: 1;
 	width: 100%;
@@ -141,7 +122,7 @@ input:not(:is([type="checkbox"], input[type="submit"])), textarea, select, label
 .password-container {
 	display: flex;
 	border-radius: $border-radius;
-	border: 1px solid $grey;
+	border: 1px solid $primary-color;
 	overflow: hidden;
 
 	input:is([type="password"], [type="text"]) {
@@ -175,11 +156,11 @@ input:not(:is([type="checkbox"], input[type="submit"])), textarea, select, label
 		min-width: 1rem;
 		min-height: 1rem;
 		border-radius: $border-radius;
-		border: 1px solid $grey;
+		border: 1px solid $primary-color;
 
 		&:checked {
-			background-color: $light-blue;
-			border: 1px solid $light-blue;
+			background-color: $primary-color;
+			border: 1px solid $primary-color;
 
 			&::before {
 				content: '';
