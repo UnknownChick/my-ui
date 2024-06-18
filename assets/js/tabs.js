@@ -27,14 +27,6 @@ if (tabsButton.length > 0 && tabsContent.length > 0) {
  * @param {string} tabId - The id of the tab to be activated.
  */
 function setActiveTab(tabId) {
-    tabsButton.forEach((button) => {
-        if (button.getAttribute('data-tab') === tabId) {
-            button.classList.add('active');
-        } else {
-            button.classList.remove('active');
-        }
-    });
-
     tabsContent.forEach((content) => {
         if (content.getAttribute('data-tab') === tabId) {
             content.classList.add('active');
