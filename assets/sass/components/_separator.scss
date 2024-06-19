@@ -1,7 +1,10 @@
 @use '../abstracts/colors' as *;
 
+$separator-height: 2px;
+$separator-color: $black-color;
+
 hr {
-	height: 2px;
-	background-color: $off-color;
+	height: $separator-height;
+	background-color: $separator-color;
 	border: none;
 }
