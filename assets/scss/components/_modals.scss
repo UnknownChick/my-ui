@@ -1,19 +1,15 @@
 @use "../abstracts/colors" as *;
 @use "../abstracts/variables" as *;
 
+$dialog-padding: 3rem;
+
 dialog {
 	background-color: $white-color;
-	box-shadow: 0 0 15px 5px rgba(0,0,0,0.25);
+	box-shadow: $box-shadow;
 	border: none;
-	padding: 3rem;
+	padding: $dialog-padding;
 	margin: auto;
 	width: 100%;
-
-	p, a, label {
-		color: $blue !important;
-
-
-	}
 }
 
 ::backdrop {

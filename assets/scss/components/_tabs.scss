@@ -1,8 +1,14 @@
+$tabs-button-gap: 0.5rem;
+
 .tabs__nav {
   ul {
     list-style: none;
     display: flex;
-    gap: 0.5rem;
+    gap: $tabs-button-gap;
+
+    li {
+      cursor: pointer;
+    }
   }
 }
 

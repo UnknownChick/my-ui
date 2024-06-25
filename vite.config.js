@@ -1,4 +1,5 @@
 import {defineConfig} from "vite";
+import path from 'path';
 
 export default defineConfig({
     root: './',
@@ -6,10 +7,11 @@ export default defineConfig({
         copyPublicDir: false,
         rollupOptions: {
             input: {
-                style: './assets/sass/style.scss',
+                style: './assets/scss/style.scss',
                 app: './assets/js/app.js',
             },
             output: {
+                dir: path.resolve(__dirname, 'dist'),
                 format: 'es',
                 entryFileNames: `[name].js`,
                 chunkFileNames: `[name].js`,
