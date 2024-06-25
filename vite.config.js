@@ -7,7 +7,7 @@ export default defineConfig({
         copyPublicDir: false,
         rollupOptions: {
             input: {
-                style: './assets/sass/style.scss',
+                style: './assets/scss/style.scss',
                 app: './assets/js/app.js',
             },
             output: {

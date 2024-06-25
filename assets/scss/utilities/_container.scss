@@ -1,6 +1,7 @@
 @use "../abstracts/media-queries" as *;
 
 $gap-default: 2rem;
+
 $container-width: 90%;
 $container-max-widths: (
 	xxs: 375px,
@@ -35,7 +36,7 @@ $container-max-widths: (
 		flex-direction: column;
 	}
 
-	.column {
+	.col {
 		flex: 1;
 
 		&-25 {
@@ -91,13 +92,13 @@ $container-max-widths: (
 	@include max-device(desktop) {
 		flex-direction: column;
 
-		.column {
+		.col {
 			width: 100%;
 		}
 	}
 }
 
-.justify-content {
+.jc {
 	&-center {
 		justify-content: center;
 	}
@@ -106,29 +107,11 @@ $container-max-widths: (
 		justify-content: flex-end;
 	}
 
-	&-sb {
+	&-space-between {
 		justify-content: space-between;
 	}
 
-	&-sa {
+	&-space-around {
 		justify-content: space-around;
-	}
-}
-
-.align-items {
-	&-center {
-		align-items: center;
-	}
-
-	&-end {
-		align-items: flex-end;
-	}
-
-	&-sb {
-		align-items: space-between;
-	}
-
-	&-sa {
-		align-items: space-around;
 	}
 }

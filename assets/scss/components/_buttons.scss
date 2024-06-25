@@ -24,7 +24,7 @@ $btn-font-weight: 500;
 	box-shadow: none;
 	transition: all 250ms ease;
 
-	&.btn-small {
+	&.btn-sm {
 		padding: $btn-small-padding;
 	}
 
@@ -51,6 +51,7 @@ $btn-font-weight: 500;
 
 	&.btn-secondary {
 		background: $secondary-color;
+
 		color: $primary-color;
 
 		&:is(:hover, :active, :focus, .active) {
