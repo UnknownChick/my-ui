@@ -1,10 +1,8 @@
 @use '../abstracts/colors' as *;
-
-$separator-height: 2px;
-$separator-color: $black-color;
+@use '../abstracts/variables' as v;
 
 hr {
-	height: $separator-height;
-	background-color: $separator-color;
+	height: v.$separator-height;
+	background-color: v.$separator-color;
 	border: none;
 }

@@ -1,17 +1,13 @@
-@use '../abstracts/colors' as *;
-
-$loader-border-size: 3px;
-$loader-color: $primary-color;
-$loader-size: 2rem;
+@use '../abstracts/variables' as v;
 
 .loader {
-  width: $loader-size;
-  height: $loader-size;
-  border: $loader-border-size solid $loader-color;
+  width: v.$loader-size;
+  height: v.$loader-size;
+  border: v.$loader-border-size solid v.$loader-color;
   border-bottom-color: transparent;
   border-radius: 100%;
-  display: inline-block;
-  animation: rotation 1s linear infinite;
+  display: block;
+  animation: rotation v.$loader-animation-duration linear infinite;
 }
 
 @keyframes rotation {
