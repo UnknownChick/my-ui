@@ -1,24 +1,24 @@
 @use '../abstracts/colors' as *;
+@use '../abstracts/variables' as v;
 
-$breadcrumb-separator: '>';
-$breadcrumb-color: $primary-color;
+nav.breadcrumb {
+	ul {
+		list-style: none;
+		display: inline-flex;
+		align-items: flex-end;
 
-ul.breadcrumb {
-	list-style: none;
-	display: inline-flex;
-	align-items: flex-end;
+		li {
+			height: max-content;
+			&:not(:last-child)::after {
+				content: v.$breadcrumb-separator;
+				padding: 0 0.25rem;
+			}
 
-	li {
-		height: max-content;
-		&:not(:last-child)::after {
-			content: $breadcrumb-separator;
-			padding: 0 0.25rem;
-		}
-
-		a {
-			color: $breadcrumb-color;
-			text-decoration: none;
-			line-height: 1;
+			a {
+				color: v.$breadcrumb-color;
+				text-decoration: none;
+				line-height: 1;
+			}
 		}
 	}
 }

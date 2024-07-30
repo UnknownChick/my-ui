@@ -1,19 +1,16 @@
 @use '../abstracts/colors' as *;
-@use '../abstracts/variables' as *;
-
-$card-padding: 2rem;
-$card-border-radius: $border-radius;
+@use '../abstracts/variables' as v;
 
 .card {
-	border-radius: $card-border-radius;
-	box-shadow: $box-shadow;
+	border-radius: v.$card-border-radius;
+	box-shadow: v.$box-shadow;
 	height: 100%;
 
 	&__title {
+		padding: v.$card-padding;
 		display: flex;
-		padding: $card-padding;
-		border-bottom: 2px solid $off-color;
 		align-items: center;
+		border-bottom: 2px solid $off-color;
 
 		p {
 			font-size: 1.5rem;
@@ -22,6 +19,6 @@ $card-border-radius: $border-radius;
 	}
 
 	&__body {
-		padding: $card-padding;
+		padding: v.$card-padding;
 	}
 }
