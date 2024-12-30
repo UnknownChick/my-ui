@@ -1,11 +1,13 @@
 @use "../abstracts/colors" as c;
 @use "../abstracts/variables" as v;
 
+$modal-padding: 2rem;
+
 dialog {
 	background-color: c.$white-color;
 	box-shadow: v.$box-shadow;
 	border: none;
-	padding: v.$modal-padding;
+	padding: $modal-padding;
 	margin: auto;
 	width: 100%;
 }

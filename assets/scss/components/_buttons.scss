@@ -1,15 +1,23 @@
 @use "../abstracts/colors" as c;
 @use "../abstracts/variables" as v;
 
+$btn-border: none;
+$btn-border-radius: v.$border-radius;
+$btn-border-size: 2px;
+$btn-font-size: 1rem;
+$btn-font-weight: 500;
+$btn-padding: 1rem 2rem;
+$btn-padding-sm: 0.75rem 1rem;
+
 .btn {
 	display: block;
 	width: fit-content;
 	color: c.$white-color;
-	padding: v.$btn-padding;
-	border-radius: v.$btn-border-radius;
-	border: v.$btn-border;
-	font-size: v.$btn-font-size;
-	font-weight: v.$btn-font-weight;
+	padding: $btn-padding;
+	border-radius: $btn-border-radius;
+	border: $btn-border;
+	font-size: $btn-font-size;
+	font-weight: $btn-font-weight;
 	line-height: 1;
 	cursor: pointer;
 	outline: none;
@@ -17,7 +25,7 @@
 	transition: all 250ms ease;
 
 	&.btn-sm {
-		padding: v.$btn-padding-sm;
+		padding: $btn-padding-sm;
 	}
 
 	&.btn-primary {
@@ -33,7 +41,7 @@
 	&.btn-outline-primary {
 		background: c.$secondary-color;
 		color: c.$primary-color;
-		border: v.$btn-border-size solid c.$primary-color;
+		border: $btn-border-size solid c.$primary-color;
 
 		&:is(:hover, :active, :focus, .active) {
 			background: c.$primary-color;
@@ -54,7 +62,7 @@
 	&.btn-outline-secondary {
 		background: c.$primary-color;
 		color: c.$secondary-color;
-		border: v.$btn-border-size solid c.$secondary-color;
+		border: $btn-border-size solid c.$secondary-color;
 
 		&:is(:hover, :active, :focus, .active) {
 			background: c.$secondary-color;
