@@ -1,16 +1,21 @@
 @use '../abstracts/colors' as c;
 @use '../abstracts/variables' as v;
 
+$badge-border-radius: v.$border-radius;
+$badge-border-size: 1px;
+$badge-font-weight: 600;
+$badge-padding: 0.25rem;
+
 @mixin badge-border($color) {
-	border: v.$badge-border-size solid $color;
+	border: $badge-border-size solid $color;
 }
 
 .badge {
 	display: block;
-	border-radius: v.$badge-border-radius;
-	padding: v.$badge-padding;
+	border-radius: $badge-border-radius;
+	padding: $badge-padding;
 	text-transform: uppercase;
-	font-weight: v.$badge-font-weight;
+	font-weight: $badge-font-weight;
 	width: max-content;
 	line-height: 1;
 	align-content: center;

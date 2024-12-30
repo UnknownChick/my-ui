@@ -1,5 +1,8 @@
-@use '../abstracts/colors' as *;
+@use '../abstracts/colors' as c;
 @use '../abstracts/variables' as v;
+
+$breadcrumb-color: c.$primary-color;
+$breadcrumb-separator: '>';
 
 nav.breadcrumb {
 	ul {
@@ -10,12 +13,12 @@ nav.breadcrumb {
 		li {
 			height: max-content;
 			&:not(:last-child)::after {
-				content: v.$breadcrumb-separator;
+				content: $breadcrumb-separator;
 				padding: 0 0.25rem;
 			}
 
 			a {
-				color: v.$breadcrumb-color;
+				color: $breadcrumb-color;
 				text-decoration: none;
 				line-height: 1;
 			}
