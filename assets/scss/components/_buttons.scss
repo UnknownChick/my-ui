@@ -1,85 +1,82 @@
 @use "../abstracts/colors" as c;
 @use "../abstracts/variables" as v;
 
-$btn-border: none;
-$btn-border-radius: v.$border-radius;
-$btn-border-size: 2px;
-$btn-font-size: 1rem;
-$btn-font-weight: 500;
-$btn-padding: 1rem 2rem;
-$btn-padding-sm: 0.75rem 1rem;
+$btn: (
+	border: none,
+	border-radius: v.$border-radius,
+	border-size: 2px,
+	font-size: 1rem,
+	font-weight: 500,
+	padding: 1rem 2rem,
+	padding-sm: 0.75rem 1rem
+);
+
+@mixin button-states($bg-color, $text-color) {
+	background: $bg-color;
+	color: $text-color;
+
+	&:is(:hover, :active, :focus, .active) {
+		background: $text-color;
+		color: $bg-color;
+	}
+}
+
+@mixin button-outline($bg-color, $text-color) {
+	background: $bg-color;
+	color: $text-color;
+	border: map-get($btn, border-size) solid $text-color;
+
+	&:is(:hover, :active, :focus, .active) {
+		background: $text-color;
+		color: $bg-color;
+	}
+}
 
 .btn {
 	display: block;
 	width: fit-content;
 	color: c.$white-color;
-	padding: $btn-padding;
-	border-radius: $btn-border-radius;
-	border: $btn-border;
-	font-size: $btn-font-size;
-	font-weight: $btn-font-weight;
+	padding: map-get($btn, padding);
+	border-radius: map-get($btn, border-radius);
+	border: map-get($btn, border);
+	font-size: map-get($btn, font-size);
+	font-weight: map-get($btn, font-weight);
 	line-height: 1;
 	cursor: pointer;
 	outline: none;
 	box-shadow: none;
 	transition: all 250ms ease;
 
-	&.btn-sm {
-		padding: $btn-padding-sm;
+	&--small {
+		padding: map-get($btn, padding-sm);
 	}
 
-	&.btn-primary {
-		background: c.$primary-color;
-		color: c.$secondary-color;
-
-		&:is(:hover, :active, :focus, .active) {
-			background: c.$secondary-color;
-			color: c.$primary-color;
-		}
+	&--primary {
+		@include button-states(c.$primary-color, c.$secondary-color);
 	}
 
-	&.btn-outline-primary {
-		background: c.$secondary-color;
-		color: c.$primary-color;
-		border: $btn-border-size solid c.$primary-color;
-
-		&:is(:hover, :active, :focus, .active) {
-			background: c.$primary-color;
-			color: c.$secondary-color;
-		}
+	&--primary-outline {
+		@include button-outline(c.$secondary-color, c.$primary-color);
 	}
 
-	&.btn-secondary {
-		background: c.$secondary-color;
-		color: c.$primary-color;
-
-		&:is(:hover, :active, :focus, .active) {
-			background: c.$primary-color;
-			color: c.$secondary-color;
-		}
+	&--secondary {
+		@include button-states(c.$secondary-color, c.$primary-color);
 	}
 
-	&.btn-outline-secondary {
-		background: c.$primary-color;
-		color: c.$secondary-color;
-		border: $btn-border-size solid c.$secondary-color;
-
-		&:is(:hover, :active, :focus, .active) {
-			background: c.$secondary-color;
-			color: c.$primary-color;
-		}
+	&--secondary-outline {
+		@include button-outline(c.$primary-color, c.$secondary-color);
 	}
 
-	&.btn-full {
+	&--full {
 		width: 100%;
 		text-align: center;
 	}
-	
-	&.btn-center {
-		margin: auto;
+
+	&--centered {
+		margin-inline: auto;
 	}
 
-	&.btn-icon {
+	&--with-icon {
 		display: flex;
 		gap: 0.5rem;
 	}
