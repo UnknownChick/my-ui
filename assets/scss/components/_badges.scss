@@ -1,125 +1,89 @@
 @use '../abstracts/colors' as c;
 @use '../abstracts/variables' as v;
+@use "sass:map";
 
-$badge-border-radius: v.$border-radius;
-$badge-border-size: 1px;
-$badge-font-weight: 600;
-$badge-padding: 0.25rem;
+$badge-config: (
+	border-radius: v.$border-radius,
+	border-size: 1px,
+	font-weight: 600,
+	padding: 0.25rem
+);
 
-@mixin badge-border($color) {
-	border: $badge-border-size solid $color;
+$badge-colors: (
+	red: (
+		soft: c.$badge-soft-red,
+		high: c.$badge-high-red
+	),
+	orange: (
+		soft: c.$badge-soft-orange,
+		high: c.$badge-high-orange
+	),
+	blue: (
+		soft: c.$badge-soft-blue,
+		high: c.$badge-high-blue
+	),
+	green: (
+		soft: c.$badge-soft-green,
+		high: c.$badge-high-green
+	),
+	purple: (
+		soft: c.$badge-soft-purple,
+		high: c.$badge-high-purple
+	),
+	grey: (
+		soft: c.$badge-soft-grey,
+		high: c.$badge-high-grey
+	),
+	brown: (
+		soft: c.$badge-soft-brown,
+		high: c.$badge-high-brown
+	),
+	cyan: (
+		soft: c.$badge-soft-cyan,
+		high: c.$badge-high-cyan
+	),
+	black: (
+		soft: c.$badge-soft-black,
+		high: c.$badge-high-black
+	)
+);
+
+@mixin badge-soft($color) {
+	$soft-color: map.get(map.get($badge-colors, $color), 'soft');
+	$high-color: map.get(map.get($badge-colors, $color), 'high');
+
+	background-color: $soft-color;
+	border: map.get($badge-config, 'border-size') solid $high-color;
+	color: $high-color;
+}
+
+@mixin badge-high($color) {
+	$soft-color: map.get(map.get($badge-colors, $color), 'soft');
+	$high-color: map.get(map.get($badge-colors, $color), 'high');
+
+	background-color: $high-color;
+	color: $soft-color;
+	border: none;
 }
 
 .badge {
 	display: block;
-	border-radius: $badge-border-radius;
-	padding: $badge-padding;
+	border-radius: map.get($badge-config, 'border-radius');
+	padding: map.get($badge-config, 'padding');
 	text-transform: uppercase;
-	font-weight: $badge-font-weight;
+	font-weight: map.get($badge-config, 'font-weight');
 	width: max-content;
 	line-height: 1;
 	align-content: center;
 
-	&-soft {
-		&-red {
-			background-color: c.$badge-soft-red;
-			@include badge-border(c.$badge-high-red);
-			color: c.$badge-high-red;
+	// Génération automatique des classes pour chaque couleur
+	@each $color-name, $color-values in $badge-colors {
+		&--soft-#{$color-name} {
+			@include badge-soft($color-name);
 		}
 
-		&-orange {
-			background-color: c.$badge-soft-orange;
-			@include badge-border(c.$badge-high-orange);
-			color: c.$badge-high-orange;
-		}
-
-		&-blue {
-			background-color: c.$badge-soft-blue;
-			@include badge-border(c.$badge-high-blue);
-			color: c.$badge-high-blue;
-		}
-
-		&-green {
-			background-color: c.$badge-soft-green;
-			@include badge-border(c.$badge-high-green);
-			color: c.$badge-high-green;
-		}
-
-		&-purple {
-			background-color: c.$badge-soft-purple;
-			@include badge-border(c.$badge-high-purple);
-			color: c.$badge-high-purple;
-		}
-
-		&-grey {
-			background-color: c.$badge-soft-grey;
-			@include badge-border(c.$badge-high-grey);
-			color: c.$badge-high-grey;
-		}
-
-		&-brown {
-			background-color: c.$badge-soft-brown;
-			@include badge-border(c.$badge-high-brown);
-			color: c.$badge-high-brown;
-		}
-
-		&-cyan {
-			background-color: c.$badge-soft-cyan;
-			@include badge-border(c.$badge-high-cyan);
-			color: c.$badge-high-cyan;
-		}
-
-		&-black {
-			background-color: c.$badge-soft-black;
-			@include badge-border(c.$badge-high-black);
-			color: c.$badge-high-black;
-		}
-	}
-
-	&-high {
-		&-red {
-			background-color: c.$badge-high-red;
-			color: c.$badge-soft-red;
-		}
-
-		&-orange {
-			background-color: c.$badge-high-orange;
-			color: c.$badge-soft-orange;
-		}
-
-		&-blue {
-			background-color: c.$badge-high-blue;
-			color: c.$badge-soft-blue;
-		}
-
-		&-green {
-			background-color: c.$badge-high-green;
-			color: c.$badge-soft-green;
-		}
-
-		&-purple {
-			background-color: c.$badge-high-purple;
-			color: c.$badge-soft-purple;
-		}
-
-		&-grey {
-			background-color: c.$badge-high-grey;
-			color: c.$badge-soft-grey;
-		}
-
-		&-brown {
-			background-color: c.$badge-high-brown;
-			color: c.$badge-soft-brown;
-		}
-
-		&-cyan {
-			background-color: c.$badge-high-cyan;
-			color: c.$badge-soft-cyan;
-		}
-
-		&-black {
-			background-color: c.$badge-high-black;
-			color: c.$badge-soft-black;
+		&--high-#{$color-name} {
+			@include badge-high($color-name);
 		}
 	}
 }
