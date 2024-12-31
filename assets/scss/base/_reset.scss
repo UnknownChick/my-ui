@@ -9,7 +9,7 @@ html:focus-within {
 } 
 
 body {
-	height: 100vh;
+	min-height: 100vh;
 	overflow-x: clip;
 	text-rendering: optimizeSpeed;
 	-webkit-font-smoothing: antialiased;

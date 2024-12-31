@@ -1,6 +1,3 @@
-@use './colors' as *;
-
-// Global
 $line-height: 1.5;
 $title-line-height: 1.25;
 
@@ -9,39 +6,3 @@ $secondary-font: sans-serif;
 
 $border-radius: 0.25rem;
 $box-shadow: 0px 10px 15px -3px rgba(0,0,0,0.1);
-
-// Badges
-$badge-border-radius: $border-radius;
-$badge-border-size: 1px;
-$badge-font-weight: 600;
-$badge-padding: 0.25rem;
-
-// Breadcrumbs
-$breadcrumb-color: $primary-color;
-$breadcrumb-separator: '>';
-
-// Buttons
-$btn-border: none;
-$btn-border-radius: $border-radius;
-$btn-border-size: 2px;
-$btn-font-size: 1rem;
-$btn-font-weight: 500;
-$btn-padding: 1rem 2rem;
-$btn-padding-sm: 0.75rem 1rem;
-
-// Cards
-$card-border-radius: $border-radius;
-$card-padding: 2rem;
-
-// Loader
-$loader-animation-duration: 1.5s;
-$loader-border-size: 3px;
-$loader-color: $primary-color;
-$loader-size: 2rem;
-
-// Modals
-$modal-padding: 2rem;
-
-// Separator
-$separator-color: $primary-color;
-$separator-height: 2px;
