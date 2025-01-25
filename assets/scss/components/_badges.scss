@@ -10,39 +10,39 @@ $badge-config: (
 );
 
 $badge-colors: (
-	red: (
+	"red": (
 		soft: c.$badge-soft-red,
 		high: c.$badge-high-red
 	),
-	orange: (
+	"orange": (
 		soft: c.$badge-soft-orange,
 		high: c.$badge-high-orange
 	),
-	blue: (
+	"blue": (
 		soft: c.$badge-soft-blue,
 		high: c.$badge-high-blue
 	),
-	green: (
+	"green": (
 		soft: c.$badge-soft-green,
 		high: c.$badge-high-green
 	),
-	purple: (
+	"purple": (
 		soft: c.$badge-soft-purple,
 		high: c.$badge-high-purple
 	),
-	grey: (
+	"grey": (
 		soft: c.$badge-soft-grey,
 		high: c.$badge-high-grey
 	),
-	brown: (
+	"brown": (
 		soft: c.$badge-soft-brown,
 		high: c.$badge-high-brown
 	),
-	cyan: (
+	"cyan": (
 		soft: c.$badge-soft-cyan,
 		high: c.$badge-high-cyan
 	),
-	black: (
+	"black": (
 		soft: c.$badge-soft-black,
 		high: c.$badge-high-black
 	)
@@ -76,7 +76,6 @@ $badge-colors: (
 	line-height: 1;
 	align-content: center;
 
-	// Génération automatique des classes pour chaque couleur
 	@each $color-name, $color-values in $badge-colors {
 		&--soft-#{$color-name} {
 			@include badge-soft($color-name);
