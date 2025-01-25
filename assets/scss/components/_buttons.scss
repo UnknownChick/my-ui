@@ -1,3 +1,4 @@
+@use "sass:map";
 @use "../abstracts/colors" as c;
 @use "../abstracts/variables" as v;
 
@@ -24,7 +25,7 @@ $btn: (
 @mixin button-outline($bg-color, $text-color) {
 	background: $bg-color;
 	color: $text-color;
-	border: map-get($btn, border-size) solid $text-color;
+	border: map.get($btn, border-size) solid $text-color;
 
 	&:is(:hover, :active, :focus, .active) {
 		background: $text-color;
@@ -36,11 +37,11 @@ $btn: (
 	display: block;
 	width: fit-content;
 	color: c.$white-color;
-	padding: map-get($btn, padding);
-	border-radius: map-get($btn, border-radius);
-	border: map-get($btn, border);
-	font-size: map-get($btn, font-size);
-	font-weight: map-get($btn, font-weight);
+	padding: map.get($btn, padding);
+	border-radius: map.get($btn, border-radius);
+	border: map.get($btn, border);
+	font-size: map.get($btn, font-size);
+	font-weight: map.get($btn, font-weight);
 	line-height: 1;
 	cursor: pointer;
 	outline: none;
@@ -48,7 +49,7 @@ $btn: (
 	transition: all 250ms ease;
 
 	&--small {
-		padding: map-get($btn, padding-sm);
+		padding: map.get($btn, padding-sm);
 	}
 
 	&--primary {
