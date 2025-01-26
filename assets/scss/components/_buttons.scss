@@ -1,3 +1,4 @@
+@use "sass:map";
 @use "../abstracts/colors" as c;
 @use "../abstracts/variables" as v;
 
@@ -7,8 +8,13 @@ $btn: (
 	border-size: 2px,
 	font-size: 1rem,
 	font-weight: 500,
-	padding: 1rem 2rem,
-	padding-sm: 0.75rem 1rem
+	default-padding: 1rem 2rem,
+	sizes: (
+		sm: 0.75rem 1rem,
+		md: 1rem 1.5rem,
+		lg: 1.5rem 2rem,
+		xl: 2rem 2.5rem,
+	),
 );
 
 @mixin button-states($bg-color, $text-color) {
@@ -24,7 +30,7 @@ $btn: (
 @mixin button-outline($bg-color, $text-color) {
 	background: $bg-color;
 	color: $text-color;
-	border: map-get($btn, border-size) solid $text-color;
+	border: map.get($btn, border-size) solid $text-color;
 
 	&:is(:hover, :active, :focus, .active) {
 		background: $text-color;
@@ -36,19 +42,21 @@ $btn: (
 	display: block;
 	width: fit-content;
 	color: c.$white-color;
-	padding: map-get($btn, padding);
-	border-radius: map-get($btn, border-radius);
-	border: map-get($btn, border);
-	font-size: map-get($btn, font-size);
-	font-weight: map-get($btn, font-weight);
+	padding: map.get($btn, default-padding);
+	border-radius: map.get($btn, border-radius);
+	border: map.get($btn, border);
+	font-size: map.get($btn, font-size);
+	font-weight: map.get($btn, font-weight);
 	line-height: 1;
 	cursor: pointer;
 	outline: none;
 	box-shadow: none;
 	transition: all 250ms ease;
 
-	&--small {
-		padding: map-get($btn, padding-sm);
+	@each $size, $padding in map.get($btn, sizes) {
+		&--#{$size} {
+			padding: $padding;
+		}
 	}
 
 	&--primary {

@@ -1,30 +1,35 @@
+@use "sass:map";
+
 $breakpoints: (
-	mobile: 480px,
-	tablet: 768px,
-	desktop: 1024px,
-	large-desktop: 1280px,
+	xs: 20em,     // 320px
+	sm: 36em,     // 576px
+	md: 48em,     // 768px
+	lg: 64em,     // 1024px
+	xl: 80em,     // 1280px
+	xxl: 90em,    // 1440px
+	xxxl: 120em   // 1920px
 );
 
-@mixin min-device($breakpoint: map-get($breakpoints)) {
-	@if map-has-key($breakpoints, $breakpoint) {
-		@media screen and (min-width: map-get($breakpoints, $breakpoint)) {
+@mixin min-device($breakpoint: map.get($breakpoints)) {
+	@if map.has-key($breakpoints, $breakpoint) {
+		@media screen and (min-width: map.get($breakpoints, $breakpoint)) {
 			@content;
 		}
 	}
 }
 
-@mixin max-device($breakpoint: map-get($breakpoints)) {
-	@if map-has-key($breakpoints, $breakpoint) {
-		@media screen and (max-width: (map-get($breakpoints, $breakpoint) - 1)) {
+@mixin max-device($breakpoint: map.get($breakpoints)) {
+	@if map.has-key($breakpoints, $breakpoint) {
+		@media screen and (max-width: (map.get($breakpoints, $breakpoint) - 1)) {
 			@content;
 		}
 	}
 }
 
-@mixin only-device($breakpoint: map-get($breakpoints)) {
-	@if map-has-key($breakpoints, $breakpoint) {
+@mixin only-device($breakpoint: map.get($breakpoints)) {
+	@if map.has-key($breakpoints, $breakpoint) {
 		$breakpoints-length: length($breakpoints);
-		$map-list: map-keys($breakpoints);
+		$map-list: map.keys($breakpoints);
 
 		@if index($map-list, $breakpoint) == $breakpoints-length {
 			@include min-device($breakpoint) {
@@ -43,8 +48,8 @@ $breakpoints: (
 	}
 }
 
-@mixin between-devices($min-device: map-get($breakpoints), $max-device: map-get($breakpoints)) {
-	@if map-has-key($breakpoints, $min-device) and map-has-key($breakpoints, $max-device) {
+@mixin between-devices($min-device: map.get($breakpoints), $max-device: map.get($breakpoints)) {
+	@if map.has-key($breakpoints, $min-device) and map.has-key($breakpoints, $max-device) {
 		@include min-device($min-device) {
 			@include max-device($max-device) {
 				@content;
