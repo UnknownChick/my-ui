@@ -1,6 +1,6 @@
+@use "sass:map";
 @use '../abstracts/colors' as c;
 @use '../abstracts/variables' as v;
-@use "sass:map";
 
 $badge-config: (
 	border-radius: v.$border-radius,
@@ -62,8 +62,8 @@ $badge-colors: (
 	$high-color: map.get(map.get($badge-colors, $color), 'high');
 
 	background-color: $high-color;
+	border: map.get($badge-config, 'border-size') solid $high-color;
 	color: $soft-color;
-	border: none;
 }
 
 .badge {
