@@ -1,88 +1,76 @@
-@use "sass:map";
+@use 'sass:map';
 @use '../abstracts/colors' as c;
 @use '../abstracts/variables' as v;
 
-$badge-config: (
-	border-radius: v.$border-radius,
-	border-size: 1px,
-	font-weight: 600,
-	padding: 0.25rem
-);
-
-$badge-colors: (
-	"red": (
-		soft: c.$badge-soft-red,
-		high: c.$badge-high-red
+$badge: (
+	config: (
+		border-radius: map.get(v.$global, border-radius),
+		border-size: 1px,
+		font-weight: 600,
 	),
-	"orange": (
-		soft: c.$badge-soft-orange,
-		high: c.$badge-high-orange
-	),
-	"blue": (
-		soft: c.$badge-soft-blue,
-		high: c.$badge-high-blue
-	),
-	"green": (
-		soft: c.$badge-soft-green,
-		high: c.$badge-high-green
-	),
-	"purple": (
-		soft: c.$badge-soft-purple,
-		high: c.$badge-high-purple
-	),
-	"grey": (
-		soft: c.$badge-soft-grey,
-		high: c.$badge-high-grey
-	),
-	"brown": (
-		soft: c.$badge-soft-brown,
-		high: c.$badge-high-brown
-	),
-	"cyan": (
-		soft: c.$badge-soft-cyan,
-		high: c.$badge-high-cyan
-	),
-	"black": (
-		soft: c.$badge-soft-black,
-		high: c.$badge-high-black
+	sizes: (
+		xs: (
+			padding: 0.125rem,
+			font-size: 0.5rem,
+		),
+		sm: (
+			padding: 0.25rem,
+			font-size: 0.5rem
+		),
+		md: (
+			padding: 0.375rem,
+			font-size: 0.75rem
+		),
+		lg: (
+			padding: 0.5rem,
+			font-size: 1rem
+		)
 	)
 );
 
-@mixin badge-soft($color) {
-	$soft-color: map.get(map.get($badge-colors, $color), 'soft');
-	$high-color: map.get(map.get($badge-colors, $color), 'high');
-
-	background-color: $soft-color;
-	border: map.get($badge-config, 'border-size') solid $high-color;
-	color: $high-color;
-}
-
-@mixin badge-high($color) {
-	$soft-color: map.get(map.get($badge-colors, $color), 'soft');
-	$high-color: map.get(map.get($badge-colors, $color), 'high');
-
-	background-color: $high-color;
-	border: map.get($badge-config, 'border-size') solid $high-color;
-	color: $soft-color;
+@mixin badge-variant($background, $border, $color) {
+	background-color: $background;
+	border: map.get($badge, 'config', 'border-size') solid $border;
+	color: $color;
 }
 
 .badge {
 	display: block;
-	border-radius: map.get($badge-config, 'border-radius');
-	padding: map.get($badge-config, 'padding');
+	border-radius: map.get($badge, 'config', 'border-radius');
+	padding: map.get($badge, 'sizes', 'md', 'padding');
 	text-transform: uppercase;
-	font-weight: map.get($badge-config, 'font-weight');
+	font-weight: map.get($badge, 'config', 'font-weight');
+	font-size: map.get($badge, 'sizes', 'md', 'font-size');
 	width: max-content;
 	line-height: 1;
 	align-content: center;
 
-	@each $color-name, $color-values in $badge-colors {
+	@each $size, $values in map.get($badge, 'sizes') {
+		&--#{$size} {
+			padding: map.get($values, 'padding');
+			font-size: map.get($values, 'font-size');
+
+			@if map.has-key($values, 'line-height') {
+				line-height: map.get($values, 'line-height');
+			}
+		}
+	}
+
+	@each $color-name, $color-values in c.$accents {
 		&--soft-#{$color-name} {
-			@include badge-soft($color-name);
+			@include badge-variant(
+				map.get($color-values, 'soft'),
+				map.get($color-values, 'high'),
+				map.get($color-values, 'high')
+			);
 		}
 
 		&--high-#{$color-name} {
-			@include badge-high($color-name);
+			@include badge-variant(
+				map.get($color-values, 'high'),
+				map.get($color-values, 'high'),
+				map.get($color-values, 'soft')
+			);
 		}
 	}
 }
