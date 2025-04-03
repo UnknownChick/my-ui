@@ -1,13 +1,18 @@
-@use "../abstracts/colors" as c;
-@use "../abstracts/variables" as v;
+@use 'sass:map';
+@use '../abstracts/colors' as c;
+@use '../abstracts/variables' as v;
 
-$modal-padding: 2rem;
+$modal: (
+  background-color: map.get(c.$main, 'white'),
+  box-shadow: map.get(v.$global, box-shadow),
+  padding: 2rem
+);
 
 dialog {
-	background-color: c.$white-color;
-	box-shadow: v.$box-shadow;
+	background-color: map.get($modal, background-color);
+	box-shadow: map.get($modal, box-shadow);
 	border: none;
-	padding: $modal-padding;
+	padding: map.get($modal, padding);
 	margin: auto;
 	width: 100%;
 }
