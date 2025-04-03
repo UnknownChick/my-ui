@@ -1,28 +1,55 @@
-$white-color: #FFFFFF;
-$black-color: #000000;
+@use 'sass:map';
+@use 'mixins' as m;
+@use 'functions' as f;
 
-$primary-color: #0068ff;
-$secondary-color: $white-color;
+$main: (
+  primary: #0068ff,
+  secondary: #2f322a,
+  success:  #22b934,
+  danger: #ba2123,
+  warning: #f0ad4e,
+  info: #5abfdd,
+  text: #000000,
+  off: #f5f5f5,
+  'white': #FFFFFF,
+  'black': #000000,
+);
 
-$off-color: #f5f5f5;
-
-/* Badges */
-$badge-soft-red: #FFD9D9;
-$badge-soft-orange: #FFF0D6;
-$badge-soft-blue: #EBF0FF;
-$badge-soft-green: #DCFFEB;
-$badge-soft-purple: #E6DCFF;
-$badge-soft-grey: #F0F3F5;
-$badge-soft-brown: #FFF3D0;
-$badge-soft-cyan: #F2FFFF;
-$badge-soft-black: #F1F1F1;
-
-$badge-high-red: #EE6767;
-$badge-high-orange: #FFA200;
-$badge-high-blue: #4E7AFF;
-$badge-high-green: #00CB58;
-$badge-high-purple: #8454FF;
-$badge-high-grey: #809FB8;
-$badge-high-brown: #C56C4A;
-$badge-high-cyan: #51E5E6;
-$badge-high-black: #202020;
+$accents: (
+  'red': (
+    soft: #FFD9D9,
+    high: #EE6767,
+  ),
+  'orange': (
+    soft: #FFF0D6,
+    high: #FFA200,
+  ),
+  'blue': (
+    soft: #EBF0FF,
+    high: #4E7AFF,
+  ),
+  'green': (
+    soft: #DCFFEB,
+    high: #00CB58,
+  ),
+  'purple': (
+    soft: #E6DCFF,
+    high: #8454FF,
+  ),
+  'grey': (
+    soft: #F0F3F5,
+    high: #809FB8,
+  ),
+  'brown': (
+    soft: #FFF3D0,
+    high: #C56C4A,
+  ),
+  'cyan': (
+    soft: #F2FFFF,
+    high: #51E5E6,
+  ),
+  'black': (
+    soft: #F1F1F1,
+    high: #202020,
+  ),
+);
