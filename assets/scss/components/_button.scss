@@ -1,97 +1,173 @@
-@use "sass:map";
-@use "../abstracts/colors" as c;
-@use "../abstracts/variables" as v;
+@use 'sass:color';
+@use 'sass:map';
+@use '../abstracts/colors' as c;
+@use '../abstracts/variables' as v;
 
 $btn: (
-	border: none,
-	border-radius: v.$border-radius,
-	border-size: 2px,
-	font-size: 1rem,
-	font-weight: 500,
-	default-padding: 1rem 2rem,
-	sizes: (
-		sm: 0.75rem 1rem,
-		md: 1rem 1.5rem,
-		lg: 1.5rem 2rem,
-		xl: 2rem 2.5rem,
-	),
+  config: (
+    border: none,
+    border-radius: map.get(v.$global, border-radius),
+    border-width: 2px,
+    font-weight: 400,
+    transition: all map.get(v.$global, animation-duration) ease-in-out
+  ),
+  sizes: (
+    xs: (
+      padding: 0.5rem 0.75rem,
+      font-size: 0.75rem
+    ),
+    sm: (
+      padding: 0.5rem 1rem,
+      font-size: 0.875rem
+    ),
+    md: (
+      padding: 0.75rem 1rem,
+      font-size: 1rem
+    ),
+    lg: (
+      padding: 0.75rem 1.5rem,
+      font-size: 1.125rem
+    ),
+    xl: (
+      padding: 0.75rem 2rem,
+      font-size: 1.25rem
+    ),
+    xxl: (
+      padding: 0.75rem 2.5rem,
+      font-size: 1.375rem
+    )
+  ),
+  colors: (
+    primary: (
+      default: map.get(c.$main, primary),
+      hover: color.adjust(map.get(c.$main, primary), $blackness: 10%)
+    ),
+    secondary: (
+      default: map.get(c.$main, secondary),
+      hover: color.adjust(map.get(c.$main, secondary), $blackness: 10%)
+    ),
+    success: (
+      default: map.get(c.$main, success),
+      hover: color.adjust(map.get(c.$main, success), $blackness: 10%)
+    ),
+    danger: (
+      default: map.get(c.$main, danger),
+      hover: color.adjust(map.get(c.$main, danger), $blackness: 10%)
+    ),
+    warning: (
+      default: map.get(c.$main, warning),
+      hover: color.adjust(map.get(c.$main, warning), $blackness: 10%)
+    ),
+    info: (
+      default: map.get(c.$main, info),
+      hover: color.adjust(map.get(c.$main, info), $blackness: 10%)
+    )
+  )
 );
 
-@mixin button-states($bg-color, $text-color) {
-	background: $bg-color;
-	color: $text-color;
+@mixin button-solid($color, $hover-color) {
+  background-color: $color;
+  color: map.get(c.$main, 'white');
 
-	&:is(:hover, :active, :focus, .active) {
-		background: $text-color;
-		color: $bg-color;
-	}
+  &:not(:disabled):is(:hover, :active, :focus) {
+    background-color: $hover-color;
+  }
 }
 
-@mixin button-outline($bg-color, $text-color) {
-	background: $bg-color;
-	color: $text-color;
-	border: map.get($btn, border-size) solid $text-color;
+@mixin button-outline($color) {
+  background-color: transparent;
+  border: map.get($btn, config, border-width) solid $color;
+  color: $color;
 
-	&:is(:hover, :active, :focus, .active) {
-		background: $text-color;
-		color: $bg-color;
-	}
+  &:not(:disabled):is(:hover, :active, :focus) {
+    background-color: $color;
+    color: map.get(c.$main, 'white');
+  }
+}
+
+@mixin button-accent($bc-color, $color) {
+  background-color: $bc-color;
+  color: $color;
+
+  &:not(:disabled):is(:hover, :active, :focus) {
+    background-color: $color;
+    color: $bc-color;
+  }
 }
 
 .btn {
-	display: block;
-	width: fit-content;
-	color: c.$white-color;
-	padding: map.get($btn, default-padding);
-	border-radius: map.get($btn, border-radius);
-	border: map.get($btn, border);
-	font-size: map.get($btn, font-size);
-	font-weight: map.get($btn, font-weight);
-	line-height: 1;
-	cursor: pointer;
-	outline: none;
-	box-shadow: none;
-	transition: all 250ms ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: fit-content;
+  border-radius: map.get($btn, config, border-radius);
+  border: map.get($btn, config, border);
+  font-weight: map.get($btn, config, font-weight);
+  padding: map.get($btn, sizes, md, padding);
+  font-size: map.get($btn, sizes, md, font-size);
+  line-height: 1;
+  cursor: pointer;
+  outline: none;
+  transition: map.get($btn, config, transition);
 
-	@each $size, $padding in map.get($btn, sizes) {
-		&--#{$size} {
-			padding: $padding;
-		}
-	}
+  @each $size, $values in map.get($btn, sizes) {
+    &--#{$size} {
+      padding: map.get($values, padding);
+      font-size: map.get($values, font-size);
+    }
+  }
 
-	&--primary {
-		@include button-states(c.$primary-color, c.$secondary-color);
-	}
+  @each $color-name, $color-values in map.get($btn, colors) {
+    &--#{$color-name} {
+      @include button-solid(
+        map.get($color-values, default),
+        map.get($color-values, hover)
+      );
+    }
 
-	&--primary-outline {
-		@include button-outline(c.$secondary-color, c.$primary-color);
-	}
+    &--#{$color-name}-outline {
+      @include button-outline(map.get($color-values, default));
+    }
+  }
 
-	&--secondary {
-		@include button-states(c.$secondary-color, c.$primary-color);
-	}
+  @each $color-name, $color-values in c.$accents {
+    &--soft-#{$color-name} {
+      @include button-accent(
+        map.get($color-values, soft),
+        map.get($color-values, high),
+      );
+    }
 
-	&--secondary-outline {
-		@include button-outline(c.$primary-color, c.$secondary-color);
-	}
+    &--high-#{$color-name} {
+      @include button-accent(
+        map.get($color-values, high),
+        map.get($color-values, soft),
+      );
+    }
+  }
 
-	&--full {
-		width: 100%;
-		text-align: center;
-	}
+  &--fluid {
+    width: 100%;
+  }
 
-	&--centered {
-		margin-inline: auto;
-	}
+  &--center {
+    margin: auto;
+  }
 
-	&--with-icon {
-		display: flex;
-		gap: 0.5rem;
-	}
+  &--icon {
+    gap: 0.5rem;
+  }
+
+  &:disabled {
+    opacity: 0.65;
+    cursor: not-allowed;
+  }
 }
 
-.btn-link {
-	appearance: none;
-	background-color: unset;
-	border: unset;
+.btn--link {
+  appearance: none;
+  background-color: transparent;
+  border: none;
+  padding: 0;
+  cursor: pointer;
 }
