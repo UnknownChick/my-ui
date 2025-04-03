@@ -1,19 +1,22 @@
+@use 'sass:map';
 @use '../abstracts/colors' as c;
 @use '../abstracts/variables' as v;
 
-$loader-animation-duration: 1.5s;
-$loader-border-size: 3px;
-$loader-color: c.$primary-color;
-$loader-size: 2rem;
+$loader: (
+  animation-duration: 1.5s,
+  border-size: 3px,
+  color: map.get(c.$main, primary),
+  size: 2rem,
+);
 
 .loader {
-  width: $loader-size;
-  height: $loader-size;
-  border: $loader-border-size solid $loader-color;
+  width: map.get($loader, size);
+  height: map.get($loader, size);
+  border: map.get($loader, border-size) solid map.get($loader, color);
   border-bottom-color: transparent;
   border-radius: 100%;
   display: block;
-  animation: rotation $loader-animation-duration linear infinite;
+  animation: rotation map.get($loader, animation-duration) linear infinite;
 }
 
 @keyframes rotation {
