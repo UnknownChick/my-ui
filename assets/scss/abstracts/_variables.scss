@@ -1,8 +1,16 @@
-$line-height: 1.5;
-$title-line-height: 1.25;
+$font: (
+  primary: sans-serif,
+  secondary: sans-serif,
+);
 
-$primary-font:sans-serif;
-$secondary-font: sans-serif;
+$global: (
+  animation-duration: 250ms,
+  border-radius: 0.25rem,
+  box-shadow: 0px 10px 15px -3px rgba(0,0,0,0.1),
+  box-shadow-hover:0px 10px 15px -3px rgba(0,0,0,0.1),
+);
 
-$border-radius: 0.25rem;
-$box-shadow: 0px 10px 15px -3px rgba(0,0,0,0.1);
+$line-height: (
+  text: 1.5,
+  title: 1.25,
+);
