@@ -1,8 +1,11 @@
+@use 'sass:map';
 @use '../abstracts/colors' as c;
 @use '../abstracts/variables' as v;
 
-$breadcrumb-color: c.$primary-color;
-$breadcrumb-separator: '>';
+$breadcrumb: (
+  color: map.get(c.$main, primary),
+  separator: '>',
+);
 
 nav.breadcrumb {
 	ul {
@@ -13,12 +16,12 @@ nav.breadcrumb {
 		li {
 			height: max-content;
 			&:not(:last-child)::after {
-				content: $breadcrumb-separator;
+				content: map.get($breadcrumb, separator);
 				padding: 0 0.25rem;
 			}
 
 			a {
-				color: $breadcrumb-color;
+				color: map.get($breadcrumb, color);
 				text-decoration: none;
 				line-height: 1;
 			}
