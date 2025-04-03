@@ -1,27 +1,30 @@
-@use '../abstracts/colors' as *;
+@use 'sass:map';
+@use '../abstracts/colors' as c;
 @use '../abstracts/variables' as v;
 
-$card-border-radius: v.$border-radius;
-$card-padding: 2rem;
+$card: (
+  border-radius: map.get(v.$global, border-radius),
+  padding: 2rem,
+);
 
 .card {
-	border-radius: $card-border-radius;
-	box-shadow: v.$box-shadow;
+	border-radius: map.get($card, border-radius);
+	box-shadow: map.get(v.$global, box-shadow);
 	height: 100%;
 
 	&__title {
-		padding: $card-padding;
+		padding: map.get($card, padding);
 		display: flex;
 		align-items: center;
-		border-bottom: 2px solid $off-color;
+		border-bottom: 2px solid map.get(c.$main, off);
 
 		p {
 			font-size: 1.5rem;
-			color: $primary-color;
+			color: map.get(c.$main, text);
 		}
 	}
 
 	&__body {
-		padding: $card-padding;
+		padding: map.get($card, padding);
 	}
 }
