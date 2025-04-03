@@ -1,6 +1,7 @@
-@use "../abstracts/colors" as *;
-@use "../abstracts/media-queries" as *;
-@use "../abstracts/mixins" as *;
+@use 'sass:map';
+@use '../abstracts/colors' as c;
+@use '../abstracts/media-queries' as mq;
+@use '../abstracts/mixins' as m;
 
 @for $i from 1 through 5 {
 	/* Margin */
@@ -101,7 +102,7 @@ $fs: (
 	}
 }
 
-@include max-device(desktop) {
+@include mq.max-device(desktop) {
 	@for $i from 1 through 5 {
 		.mobile-order-#{$i} {
 			order: $i;
@@ -128,11 +129,11 @@ $fs: (
 }
 
 .white-text {
-	color: $white-color;
+	color: map.get(c.$main, 'white');
 }
 
 .black-text {
-	color: $black-color;
+	color: map.get(c.$main, 'black');
 }
 
 .subtitle {
@@ -149,15 +150,15 @@ $fs: (
 
 /* Flexbox */
 .df-vertical-align-center {
-	@include df-vertical-align-center;
+	@include m.df-vertical-align-center;
 }
 
 .df-vertical-align-end {
-	@include df-vertical-align-end;
+	@include m.df-vertical-align-end;
 }
 
 .df-vertical-align-sb {
-	@include df-vertical-align-sb;
+	@include m.df-vertical-align-sb;
 }
 
 .df-column {
