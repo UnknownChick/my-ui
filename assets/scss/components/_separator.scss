@@ -1,11 +1,14 @@
-@use '../abstracts/colors' as *;
+@use 'sass:map';
+@use '../abstracts/colors' as c;
 @use '../abstracts/variables' as v;
 
-$separator-color: $primary-color;
-$separator-height: 2px;
+$separator: (
+  color: map.get(c.$main, primary),
+  height: 2px,
+);
 
 hr {
-	height: $separator-height;
-	background-color: $separator-color;
+	height: map.get($separator, height);
+	background-color: map.get($separator, color);
 	border: none;
 }
