@@ -2,7 +2,7 @@
 @use '../abstracts/variables' as v;
 
 $img: (
-  border-radius: v.$border-radius,
+  border-radius: map.get(v.$global, border-radius),
 );
 
 img.img {
