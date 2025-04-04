@@ -50,6 +50,21 @@
 
         <hr class="my-2">
 
+        <alert class="mb-1">
+          <h2 class="mb-1">Avatars</h2>
+
+          <div class="d-flex gap-1 mb-1">
+            <div class="avatar">
+              AF
+            </div>
+            <figure class="avatar">
+              <img src="assets/imgs/avatar.jpg" alt="avatar">
+            </figure>
+          </div>
+        </alert>
+
+        <hr class="my-2">
+
         <article>
           <h2 class="mb-1">Badges</h2>
 
@@ -168,7 +183,27 @@
 
         <hr class="my-2">
 
-
+        <article class="mb-1">
+          <h2 class="mb-1">Modal</h2>
+          <div>
+            <dialog class="modal row-lg" id="modal">
+              <button class="modal__close">
+                <i data-lucide="x"></i>
+              </button>
+              <div class="modal__title">
+                <p>Titre de la modal</p>
+              </div>
+              <div class="modal__content">
+                <p>Contenu de la modal</p>
+              </div>
+              <div class="modal__footer">
+                <button class="btn btn--danger" data-modal-close="modal">Fermer</button>
+                <button class="btn btn--success">Valider</button>
+              </div>
+            </dialog>
+            <button class="btn btn--primary" data-modal-target="modal">Open modal</button>
+          </div>
+        </article>
       </div>
     </div>
     <script type="module" src="./assets/js/app.js"></script>
