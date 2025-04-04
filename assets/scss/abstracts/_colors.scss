@@ -53,3 +53,9 @@ $accents: (
     high: #202020,
   ),
 );
+
+$status: (
+  online: map.get($main, success),
+  absent: map.get($main, warning),
+  offline: map.get($main, danger),
+);
