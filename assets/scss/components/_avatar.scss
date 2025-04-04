@@ -1,0 +1,62 @@
+@use 'sass:map';
+@use '../abstracts/colors' as c;
+@use '../abstracts/mixins' as m;
+
+$avatar: (
+  config: (
+    bg-color: map.get(c.$main, primary),
+    border-radius: 100%,
+    color: map.get(c.$main, 'white'),
+    font-weight: 600,
+    padding: 0.25rem,
+  ),
+  sizes: (
+    xs: (
+      width: 2rem,
+      height: 2rem,
+      font-size: 0.875rem,
+    ),
+    sm: (
+      width: 2.5rem,
+      height: 2.5rem,
+      font-size: 1rem,
+    ),
+    md: (
+      width: 3rem,
+      height: 3rem,
+      font-size: 1.25rem,
+    ),
+    lg: (
+      width: 3.5rem,
+      height: 3.5rem,
+      font-size: 1.5rem,
+    ),
+    xl: (
+      width: 4rem,
+      height: 4rem,
+      font-size: 1.75rem,
+    ),
+  )
+);
+
+.avatar {
+  padding: map.get($avatar, 'config', 'padding');
+  border-radius: map.get($avatar, 'config', 'border-radius');
+  height: map.get($avatar, 'sizes', 'md', 'height');
+  width: map.get($avatar, 'sizes', 'md', 'width');
+  background-color: map.get($avatar, 'config', 'bg-color');
+  @include m.df-center;
+
+  &__content {
+    color: map.get($avatar, 'config', 'color');
+    font-size: map.get($avatar, 'sizes', 'md', 'font-size');
+    font-weight: map.get($avatar, 'config', 'font-weight');
+  }
+
+  @each $size, $values in map.get($avatar, 'sizes') {
+    &--#{$size} {
+      width: map.get($values, 'width');
+      height: map.get($values, 'height');
+    }
+  }
+}
