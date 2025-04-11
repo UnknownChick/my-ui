@@ -8,48 +8,48 @@ $square: (
   ),
   sizes: (
     xs: (
-      height: 1.5rem,
-      width: 1rem,
-    ),
-    sm: (
-      height: 1.75rem,
-      width: 1.25rem,
-    ),
-    md: (
-      height: 2rem,
+      height: 1rem,
       width: 1.5rem,
     ),
-    lg: (
-      height: 2.25rem,
+    sm: (
+      height: 1.25rem,
       width: 1.75rem,
     ),
-    xl: (
-      height: 2.5rem,
+    md: (
+      height: 1.5rem,
       width: 2rem,
+    ),
+    lg: (
+      height: 1.75rem,
+      width: 2.26rem,
+    ),
+    xl: (
+      height: 2rem,
+      width: 2.5rem,
     ),
   ),
 );
 
 .square {
   display: block;
-  border-radius: map.get($square, 'config', 'border-radius');
-  width: map.get($square, 'sizes', 'md', 'width');
-  height: map.get($square, 'sizes', 'md', 'height');
+  border-radius: map.get($square, config, border-radius);
+  width: map.get($square, sizes, md, width);
+  height: map.get($square, sizes, md, height);
 
-  @each $size, $values in map.get($square, 'sizes') {
+  @each $size, $values in map.get($square, sizes) {
     &--#{$size} {
-      width: map.get($values, 'width');
-      height: map.get($values, 'height');
+      width: map.get($values, width);
+      height: map.get($values, height);
     }
   }
 
   @each $color-name, $color-values in c.$accents {
     &--soft-#{$color-name} {
-      background-color: map.get($color-values, 'soft');
+      background-color: map.get($color-values, soft);
     }
 
     &--high-#{$color-name} {
-      background-color: map.get($color-values, 'high');
+      background-color: map.get($color-values, high);
     }
   }
 }
