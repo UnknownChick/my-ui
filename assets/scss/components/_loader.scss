@@ -9,21 +9,23 @@ $loader: (
   size: 2rem,
 );
 
-.loader {
-  width: map.get($loader, size);
-  height: map.get($loader, size);
-  border: map.get($loader, border-size) solid map.get($loader, color);
-  border-bottom-color: transparent;
-  border-radius: 100%;
-  display: block;
-  animation: rotation map.get($loader, animation-duration) linear infinite;
-}
-
-@keyframes rotation {
-  0% {
-    transform: rotate(0deg);
-  }
-  100% {
-    transform: rotate(360deg);
-  }
+@layer components {
+	.loader {
+		width: map.get($loader, size);
+		height: map.get($loader, size);
+		border: map.get($loader, border-size) solid map.get($loader, color);
+		border-bottom-color: transparent;
+		border-radius: 100%;
+		display: block;
+		animation: rotation map.get($loader, animation-duration) linear infinite;
+	}
+	
+	@keyframes rotation {
+		0% {
+			transform: rotate(0deg);
+		}
+		100% {
+			transform: rotate(360deg);
+		}
+	} 
 }

@@ -1,3 +1,4 @@
+@charset "utf-8";
 @use 'abstracts';
 @use 'base';
 @use 'components';
@@ -7,3 +8,5 @@
 @use 'themes';
 @use 'utilities';
 //@use 'vendors';
+
+@layer base, components, utilities;

@@ -6,20 +6,22 @@ $fs: (
   fs-5: clamp(2rem, 0.75rem + 4vw, 3rem),
 );
 
-@each $fs-class, $font-size in $fs {
-  .#{$fs-class} {
-    font-size: #{$font-size};
-  }
-}
+@layer utilities {
+	@each $fs-class, $font-size in $fs {
+		.#{$fs-class} {
+			font-size: #{$font-size};
+		}
+	}
 
-.bold-text {
-  font-weight: 700;
-}
+	.bold-text {
+		font-weight: 700;
+	}
 
-.italic-text {
-  font-style: italic;
-}
+	.italic-text {
+		font-style: italic;
+	}
 
-.uppercase-text {
-  text-transform: uppercase;
+	.uppercase-text {
+		text-transform: uppercase;
+	}
 }

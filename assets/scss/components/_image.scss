@@ -5,16 +5,18 @@ $img: (
   border-radius: map.get(v.$global, border-radius),
 );
 
-img.img {
-  &--fluid {
-    width: 100%;
-  }
-
-  &--rounded {
-    border-radius: map.get($img, border-radius);
-  }
-
-  &--circle {
-    border-radius: 50%;
-  }
+@layer components {
+	img.img {
+		&--fluid {
+			width: 100%;
+		}
+	
+		&--rounded {
+			border-radius: map.get($img, border-radius);
+		}
+	
+		&--circle {
+			border-radius: 50%;
+		}
+	}
 }

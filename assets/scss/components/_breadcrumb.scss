@@ -7,23 +7,25 @@ $breadcrumb: (
   separator: '>',
 );
 
-nav.breadcrumb {
-	ul {
-		list-style: none;
-		display: inline-flex;
-		align-items: flex-end;
-
-		li {
-			height: max-content;
-			&:not(:last-child)::after {
-				content: map.get($breadcrumb, separator);
-				padding: 0 0.25rem;
-			}
-
-			a {
-				color: map.get($breadcrumb, color);
-				text-decoration: none;
-				line-height: 1;
+@layer components {
+	nav.breadcrumb {
+		ul {
+			list-style: none;
+			display: inline-flex;
+			align-items: flex-end;
+	
+			li {
+				height: max-content;
+				&:not(:last-child)::after {
+					content: map.get($breadcrumb, separator);
+					padding: 0 0.25rem;
+				}
+	
+				a {
+					color: map.get($breadcrumb, color);
+					text-decoration: none;
+					line-height: 1;
+				}
 			}
 		}
 	}

@@ -39,33 +39,35 @@ $notification: (
 	font-size: map.get($notification, sizes, md, font-size);
 }
 
-.notification {
-	display: block;
-	padding: map.get($notification, config, padding);
-	border-radius: map.get($notification, config, border-radius);
+@layer components {
+  .notification {
+    display: block;
+    padding: map.get($notification, config, padding);
+    border-radius: map.get($notification, config, border-radius);
 
-	@each $size, $values in map.get($notification, 'sizes') {
-    &--#{$size} {
-      padding: map.get($values, 'padding');
-      font-size: map.get($values, 'font-size');
-    }
-  }
-
-	@each $color-name, $color-values in c.$accents {
-    &--soft-#{$color-name} {
-      @include notification-variant(
-        map.get($color-values, 'soft'),
-        map.get($color-values, 'high'),
-        map.get($color-values, 'high')
-      );
+    @each $size, $values in map.get($notification, 'sizes') {
+      &--#{$size} {
+        padding: map.get($values, 'padding');
+        font-size: map.get($values, 'font-size');
+      }
     }
 
-    &--high-#{$color-name} {
-      @include notification-variant(
-        map.get($color-values, 'high'),
-        map.get($color-values, 'soft'),
-        map.get($color-values, 'soft')
-      );
+    @each $color-name, $color-values in c.$accents {
+      &--soft-#{$color-name} {
+        @include notification-variant(
+          map.get($color-values, 'soft'),
+          map.get($color-values, 'high'),
+          map.get($color-values, 'high')
+        );
+      }
+
+      &--high-#{$color-name} {
+        @include notification-variant(
+          map.get($color-values, 'high'),
+          map.get($color-values, 'soft'),
+          map.get($color-values, 'soft')
+        );
+      }
     }
   }
 }

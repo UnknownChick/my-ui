@@ -8,24 +8,26 @@ $card: (
 	title-font-size: 1.5rem,
 );
 
-.card {
-	border-radius: map.get($card, border-radius);
-	box-shadow: map.get(v.$global, box-shadow);
-	height: 100%;
-
-	&__title {
-		padding: map.get($card, padding);
-		display: flex;
-		align-items: center;
-		border-bottom: 2px solid map.get(c.$main, off);
-
-		p {
-			font-size: map.get($card, title-font-size);
-			color: map.get(c.$main, text);
+@layer components {
+	.card {
+		border-radius: map.get($card, border-radius);
+		box-shadow: map.get(v.$global, box-shadow);
+		height: 100%;
+	
+		&__title {
+			padding: map.get($card, padding);
+			display: flex;
+			align-items: center;
+			border-bottom: 2px solid map.get(c.$main, off);
+	
+			p {
+				font-size: map.get($card, title-font-size);
+				color: map.get(c.$main, text);
+			}
 		}
-	}
-
-	&__body {
-		padding: map.get($card, padding);
+	
+		&__body {
+			padding: map.get($card, padding);
+		}
 	}
 }

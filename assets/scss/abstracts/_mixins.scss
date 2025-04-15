@@ -25,12 +25,17 @@
 }
 
 @mixin absolute-center {
-	@include absolute-horizontal-center;
-	@include absolute-vertical-center;
+	inset: 0;
+	margin: auto;
 }
 
 
 /* Flex Alignement */
+@mixin df-column {
+	display: flex;
+	flex-direction: column;
+}
+
 @mixin df-vertical-align-center {
 	display: flex;
 	flex-direction: column;
