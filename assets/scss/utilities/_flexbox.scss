@@ -1,0 +1,27 @@
+@use '../abstracts/mixins' as mix;
+
+@layer utilities {
+	.df {
+		display: flex;
+	}
+	
+	.df-column {
+		@include mix.df-column;
+	}
+	
+	.df-vertical-align-center {
+		@include mix.df-vertical-align-center;
+	}
+	
+	.df-vertical-align-end {
+		@include mix.df-vertical-align-end;
+	}
+	
+	.df-vertical-align-sb {
+		@include mix.df-vertical-align-sb;
+	}
+	
+	.df-center {
+		@include mix.df-center;
+	}
+}

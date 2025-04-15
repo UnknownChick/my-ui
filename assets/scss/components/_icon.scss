@@ -11,13 +11,15 @@ $icon: (
   fluid: 100%
 );
 
-.icon {
-  display: block;
-
-  @each $size, $value in $icon {
-    &--#{$size} {
-      height: $value;
-      width: $value;
-    }
-  }
+@layer components {
+	.icon {
+		display: block;
+	
+		@each $size, $value in $icon {
+			&--#{$size} {
+				height: $value;
+				width: $value;
+			}
+		}
+	}
 }
