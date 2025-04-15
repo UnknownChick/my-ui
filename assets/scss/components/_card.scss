@@ -5,6 +5,7 @@
 $card: (
   border-radius: map.get(v.$global, border-radius),
   padding: 2rem,
+	title-font-size: 1.5rem,
 );
 
 .card {
@@ -19,7 +20,7 @@ $card: (
 		border-bottom: 2px solid map.get(c.$main, off);
 
 		p {
-			font-size: 1.5rem;
+			font-size: map.get($card, title-font-size);
 			color: map.get(c.$main, text);
 		}
 	}
