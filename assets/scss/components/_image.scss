@@ -11,7 +11,7 @@ img.img {
   }
 
   &--rounded {
-    border-radius: map.get($img, 'border-radius');
+    border-radius: map.get($img, border-radius);
   }
 
   &--circle {
