@@ -95,79 +95,81 @@ $btn: (
   }
 }
 
-.btn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: fit-content;
-  border-radius: map.get($btn, config, border-radius);
-  border: map.get($btn, config, border);
-  font-weight: map.get($btn, config, font-weight);
-  padding: map.get($btn, sizes, md, padding);
-  font-size: map.get($btn, sizes, md, font-size);
-  line-height: 1;
-  cursor: pointer;
-  outline: none;
-  transition: map.get($btn, config, transition);
-
-  @each $size, $values in map.get($btn, sizes) {
-    &--#{$size} {
-      padding: map.get($values, padding);
-      font-size: map.get($values, font-size);
-    }
-  }
-
-  @each $color-name, $color-values in map.get($btn, colors) {
-    &--#{$color-name} {
-      @include button-solid(
-        map.get($color-values, default),
-        map.get($color-values, hover)
-      );
-    }
-
-    &--#{$color-name}-outline {
-      @include button-outline(map.get($color-values, default));
-    }
-  }
-
-  @each $color-name, $color-values in c.$accents {
-    &--soft-#{$color-name} {
-      @include button-accent(
-        map.get($color-values, soft),
-        map.get($color-values, high),
-      );
-    }
-
-    &--high-#{$color-name} {
-      @include button-accent(
-        map.get($color-values, high),
-        map.get($color-values, soft),
-      );
-    }
-  }
-
-  &--fluid {
-    width: 100%;
-  }
-
-  &--center {
-    margin: auto;
-  }
-
-  &--icon {
-    gap: 0.5rem;
-  }
-
-  &:disabled {
-    opacity: 0.65;
-    cursor: not-allowed;
-  }
-}
-
-.btn--link {
-  appearance: none;
-  background-color: transparent;
-  border: none;
-  padding: 0;
-  cursor: pointer;
+@layer {
+	.btn {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		width: fit-content;
+		border-radius: map.get($btn, config, border-radius);
+		border: map.get($btn, config, border);
+		font-weight: map.get($btn, config, font-weight);
+		padding: map.get($btn, sizes, md, padding);
+		font-size: map.get($btn, sizes, md, font-size);
+		line-height: 1;
+		cursor: pointer;
+		outline: none;
+		transition: map.get($btn, config, transition);
+	
+		@each $size, $values in map.get($btn, sizes) {
+			&--#{$size} {
+				padding: map.get($values, padding);
+				font-size: map.get($values, font-size);
+			}
+		}
+	
+		@each $color-name, $color-values in map.get($btn, colors) {
+			&--#{$color-name} {
+				@include button-solid(
+					map.get($color-values, default),
+					map.get($color-values, hover)
+				);
+			}
+	
+			&--#{$color-name}-outline {
+				@include button-outline(map.get($color-values, default));
+			}
+		}
+	
+		@each $color-name, $color-values in c.$accents {
+			&--soft-#{$color-name} {
+				@include button-accent(
+					map.get($color-values, soft),
+					map.get($color-values, high),
+				);
+			}
+	
+			&--high-#{$color-name} {
+				@include button-accent(
+					map.get($color-values, high),
+					map.get($color-values, soft),
+				);
+			}
+		}
+	
+		&--fluid {
+			width: 100%;
+		}
+	
+		&--center {
+			margin: auto;
+		}
+	
+		&--icon {
+			gap: 0.5rem;
+		}
+	
+		&:disabled {
+			opacity: 0.65;
+			cursor: not-allowed;
+		}
+	}
+	
+	.btn--link {
+		appearance: none;
+		background-color: transparent;
+		border: none;
+		padding: 0;
+		cursor: pointer;
+	}
 }

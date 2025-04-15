@@ -30,26 +30,28 @@ $square: (
   ),
 );
 
-.square {
-  display: block;
-  border-radius: map.get($square, config, border-radius);
-  width: map.get($square, sizes, md, width);
-  height: map.get($square, sizes, md, height);
-
-  @each $size, $values in map.get($square, sizes) {
-    &--#{$size} {
-      width: map.get($values, width);
-      height: map.get($values, height);
-    }
-  }
-
-  @each $color-name, $color-values in c.$accents {
-    &--soft-#{$color-name} {
-      background-color: map.get($color-values, soft);
-    }
-
-    &--high-#{$color-name} {
-      background-color: map.get($color-values, high);
-    }
-  }
+@layer components {
+	.square {
+		display: block;
+		border-radius: map.get($square, config, border-radius);
+		width: map.get($square, sizes, md, width);
+		height: map.get($square, sizes, md, height);
+	
+		@each $size, $values in map.get($square, sizes) {
+			&--#{$size} {
+				width: map.get($values, width);
+				height: map.get($values, height);
+			}
+		}
+	
+		@each $color-name, $color-values in c.$accents {
+			&--soft-#{$color-name} {
+				background-color: map.get($color-values, soft);
+			}
+	
+			&--high-#{$color-name} {
+				background-color: map.get($color-values, high);
+			}
+		}
+	}
 }

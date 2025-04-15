@@ -7,8 +7,10 @@ $separator: (
   height: 2px,
 );
 
-hr {
-	height: map.get($separator, height);
-	background-color: map.get($separator, color);
-	border: none;
+@layer components {
+	hr {
+		height: map.get($separator, height);
+		background-color: map.get($separator, color);
+		border: none;
+	}
 }
