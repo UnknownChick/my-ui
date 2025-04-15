@@ -1,15 +1,17 @@
-$fs: (
-  fs-1: clamp(1rem, 0.6875rem + 1vw, 1.25rem),
-  fs-2: clamp(1.25rem, 0.9375rem + 1vw, 1.5rem),
-  fs-3: clamp(1.5rem, 0.875rem + 2vw, 2rem),
-  fs-4: clamp(2rem, 1.375rem + 2vw, 2.5rem),
-  fs-5: clamp(2rem, 0.75rem + 4vw, 3rem),
-);
+@use 'sass:map';
+@use '../abstracts/colors' as c;
+@use '../abstracts/variables' as v;
 
 @layer utilities {
-	@each $fs-class, $font-size in $fs {
-		.#{$fs-class} {
+	@each $fs-class, $font-size in v.$fs {
+		.fs-#{$fs-class} {
 			font-size: #{$font-size};
+		}
+	}
+
+	@each $colot-text, $color in c.$main {
+		.#{$colot-text}-text {
+			color: map.get(c.$main, $colot-text);
 		}
 	}
 
