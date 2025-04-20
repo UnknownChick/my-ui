@@ -14,10 +14,16 @@ $loader: (
 		width: map.get($loader, size);
 		height: map.get($loader, size);
 		border: map.get($loader, border-size) solid map.get($loader, color);
-		border-bottom-color: transparent;
+		border-bottom-color: transparent !important;
 		border-radius: 100%;
 		display: block;
 		animation: rotation map.get($loader, animation-duration) linear infinite;
+	}
+
+	@each $color-name, $color-value in c.$main {
+		.loader--#{$color-name} {
+			border: map.get($loader, border-size) solid $color-value;
+		}
 	}
 	
 	@keyframes rotation {
