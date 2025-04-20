@@ -15,9 +15,9 @@ p, ul, a, input, button, label, table, select, ::placeholder {
 	font-weight: 400;
 }
 
-a:visited {
-	color: inherit;
-}
+// a:visited {
+// 	color: inherit;
+// }
 
 $title-font-size: (
 	h6: clamp(1rem, 0.6875rem + 1vw, 1.25rem),
