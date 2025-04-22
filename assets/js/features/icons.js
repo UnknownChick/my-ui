@@ -1,10 +1,11 @@
-import { createIcons, ChevronLeft, ChevronRight, Ellipsis, X } from 'lucide';
+import { createIcons, ChevronLeft, ChevronRight, Ellipsis, Smile, X } from 'lucide';
 
 createIcons({
     icons: {
         ChevronLeft,
         ChevronRight,
         Ellipsis,
+		Smile,
         X
     }
 });
