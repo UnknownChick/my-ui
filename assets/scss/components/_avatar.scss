@@ -37,7 +37,7 @@ $avatar: (
       font-size: 1.75rem,
     ),
   )
-);
+) !default;
 
 @layer components {
 	.avatar {

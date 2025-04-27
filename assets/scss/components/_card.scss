@@ -6,7 +6,7 @@ $card: (
   border-radius: map.get(v.$global, border-radius),
   padding: 2rem,
 	title-font-size: 1.5rem,
-);
+) !default;
 
 @layer components {
 	.card {

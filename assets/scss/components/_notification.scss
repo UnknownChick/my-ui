@@ -30,7 +30,7 @@ $notification: (
       font-size: 1.5rem
     )
   )
-);
+) !default;
 
 @mixin notification-variant($background, $border, $color) {
 	background-color: $background;

@@ -7,7 +7,7 @@ $loader: (
   border-size: 3px,
   color: map.get(c.$main, primary),
   size: 2rem,
-);
+) !default;
 
 @layer components {
 	.loader {

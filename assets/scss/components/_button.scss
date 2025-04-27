@@ -63,7 +63,7 @@ $btn: (
       hover: color.adjust(map.get(c.$main, info), $blackness: 10%)
     )
   )
-);
+) !default;
 
 @mixin button-solid($color, $hover-color) {
   background-color: $color;
