@@ -3,7 +3,7 @@
 
 $img: (
   border-radius: map.get(v.$global, border-radius),
-);
+) !default;
 
 @layer components {
 	img.img {

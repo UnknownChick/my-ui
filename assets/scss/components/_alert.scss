@@ -31,7 +31,7 @@ $alert: (
       font-size: 1.5rem
     )
   )
-);
+) !default;
 
 @mixin alert-variant($background, $border, $color) {
   background-color: $background;

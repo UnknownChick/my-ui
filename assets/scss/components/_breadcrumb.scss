@@ -5,7 +5,7 @@
 $breadcrumb: (
   color: map.get(c.$main, primary),
   separator: '>',
-);
+) !default;
 
 @layer components {
 	nav.breadcrumb {
