@@ -2,6 +2,8 @@
 @use '../abstracts/colors' as c;
 @use '../abstracts/variables' as v;
 
+$_cn: alert;
+
 $alert: (
   config: (
     border-color: black,
@@ -40,7 +42,7 @@ $alert: (
 }
 
 @layer components {
-	.alert {
+	.#{$_cn} {
 		display: block;
 		padding: map.get($alert, 'sizes', 'md', 'padding');
 		background-color: transparent;

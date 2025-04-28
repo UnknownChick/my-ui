@@ -3,6 +3,8 @@
 @use '../abstracts/colors' as c;
 @use '../abstracts/variables' as v;
 
+$_cn: btn;
+
 $btn: (
   config: (
     border: none,
@@ -96,7 +98,7 @@ $btn: (
 }
 
 @layer components {
-	.btn {
+	.#{$_cn} {
 		display: inline-flex;
 		align-items: center;
 		justify-content: center;
@@ -165,7 +167,7 @@ $btn: (
 		}
 	}
 	
-	.btn--link {
+	.#{$_cn}--link {
 		appearance: none;
 		background-color: transparent;
 		border: none;

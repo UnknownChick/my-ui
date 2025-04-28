@@ -2,13 +2,15 @@
 @use '../abstracts/colors' as c;
 @use '../abstracts/variables' as v;
 
+$_cn: breadcrumb;
+
 $breadcrumb: (
   color: map.get(c.$main, primary),
   separator: '>',
 ) !default;
 
 @layer components {
-	nav.breadcrumb {
+	nav.#{$_cn} {
 		ul {
 			list-style: none;
 			display: inline-flex;
