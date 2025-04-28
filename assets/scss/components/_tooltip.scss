@@ -1,39 +1,60 @@
-@use'../abstracts/colors' as *;
-@use '../abstracts/variables' as *;
+@use 'sass:map';
+@use '../abstracts/colors' as c;
+@use '../abstracts/mixins' as m;
+@use '../abstracts/variables' as v;
 
-.tooltip {
-  position: relative;
-  display: inline-block;
-  cursor: pointer;
+$cn: tooltip;
 
-  .tooltip-text {
-    visibility: hidden;
-    width: 345px;
-    background-color: $black-color;
-    color: $white-color;
-    border-radius: $border-radius;
-    padding: 5px;
-    position: absolute;
-    z-index: 1000;
-    //bottom: 125%; /* Position au-dessus du texte */
-    opacity: 0;
-    transition: opacity 0.3s;
-    white-space: pre-line; /* Pour gérer les retours à la ligne */
-  }
+$tooltip: (
+	background-color: map.get(c.$main, primary),
+	border-radius: 0.25rem,
+	color: map.get(c.$main, 'white'),
+	cursor: help,
+	max-width: 200px,
+	padding: 0.5rem,
+) !default;
 
-  &.tooltip-right .tooltip-text {
-    margin-left: -320px;
-  }
+@layer components {
+	.#{$cn} {
+		position: relative;
+		text-decoration: underline;
+		cursor: map.get($tooltip, cursor);
+		z-index: 1;
+	
+		&--target {
+			opacity: 0;
+			visibility: hidden;
+			background-color: map.get($tooltip, background-color);
+			position: absolute;
+			top: -3.25rem;
+			padding: map.get($tooltip, padding);
+			border-radius: map.get($tooltip, border-radius);
+			width: max-content;
+			color: map.get($tooltip, color);
+			z-index: 2;
+			transform: translateX(-50%);
+			left: 50%;
+			max-width: map.get($tooltip, max-width);
+			transition: opacity map.get(v.$global, animation-duration) ease-in-out;
+			pointer-events: none;
 
-  &.tooltip-left .tooltip-text{
-    margin-left: -228px;
-  }
+			&::before {
+				content: '';
+				position: absolute;
+				top: 100%;
+				left: 50%;
+				transform: translateX(-50%);
+				border-width: 0.5rem;
+				border-style: solid;
+				border-color: map.get($tooltip, background-color) transparent transparent transparent;
+			}
+		}
 
-  &:hover {
-    .tooltip-text {
-      visibility: visible;
-      opacity: 1;
-    }
-  }
+		&:hover {
+			.#{$cn}--target {
+				opacity: 1;
+				pointer-events: auto;
+			}
+		}
+	}
 }
-

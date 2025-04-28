@@ -2,6 +2,8 @@
 @use '../abstracts/colors' as c;
 @use '../abstracts/variables' as v;
 
+$_cn: notification;
+
 $notification: (
   config: (
 		border-radius: map.get(v.$global, border-radius),
@@ -30,7 +32,7 @@ $notification: (
       font-size: 1.5rem
     )
   )
-);
+) !default;
 
 @mixin notification-variant($background, $border, $color) {
 	background-color: $background;
@@ -40,7 +42,7 @@ $notification: (
 }
 
 @layer components {
-  .notification {
+  .#{$_cn} {
     display: block;
     padding: map.get($notification, config, padding);
     border-radius: map.get($notification, config, border-radius);

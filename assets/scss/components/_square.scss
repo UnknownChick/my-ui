@@ -2,6 +2,8 @@
 @use '../abstracts/colors' as c;
 @use '../abstracts/variables' as v;
 
+$_cn: square;
+
 $square: (
   config: (
     border-radius: map.get(v.$global, border-radius),
@@ -28,10 +30,10 @@ $square: (
       width: 2.5rem,
     ),
   ),
-);
+) !default;
 
 @layer components {
-	.square {
+	.#{$_cn} {
 		display: block;
 		border-radius: map.get($square, config, border-radius);
 		width: map.get($square, sizes, md, width);

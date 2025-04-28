@@ -2,10 +2,12 @@
 @use '../abstracts/colors' as c;
 @use '../abstracts/variables' as v;
 
+$_cn: separator;
+
 $separator: (
   color: map.get(c.$main, primary),
   height: 2px,
-);
+) !default;
 
 @layer components {
 	hr {

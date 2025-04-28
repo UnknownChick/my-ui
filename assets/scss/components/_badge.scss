@@ -2,6 +2,8 @@
 @use '../abstracts/colors' as c;
 @use '../abstracts/variables' as v;
 
+$_cn: badge;
+
 $badge: (
 	config: (
 		border-radius: map.get(v.$global, border-radius),
@@ -26,7 +28,7 @@ $badge: (
 			font-size: 1rem
 		)
 	)
-);
+) !default;
 
 @mixin badge-variant($background, $border, $color) {
 	background-color: $background;
@@ -35,7 +37,7 @@ $badge: (
 }
 
 @layer components {
-	.badge {
+	.#{$_cn} {
 		display: block;
 		border-radius: map.get($badge, 'config', 'border-radius');
 		padding: map.get($badge, 'sizes', 'md', 'padding');

@@ -1,21 +1,10 @@
 import { Modal } from './components/modal';
+import { Pagination } from './components/pagination';
 import './features/icons';
 
 document.addEventListener('DOMContentLoaded', () => {
-    new Modal();
+	new Modal();
+	Pagination.initialize();
 });
 
 console.log('Hello world');
-
-// import test from '../scss/_test.module.scss';
-//
-// let primary = test;
-//
-// console.log(test);
-//
-// primary = {
-//     primary: '#ff5722',
-//     secondary: '#455a64',
-// }
-//
-// console.log(primary);
