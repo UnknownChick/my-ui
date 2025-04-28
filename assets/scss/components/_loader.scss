@@ -2,6 +2,8 @@
 @use '../abstracts/colors' as c;
 @use '../abstracts/variables' as v;
 
+$_cn: loader;
+
 $loader: (
   animation-duration: 1.5s,
   border-size: 3px,
@@ -10,7 +12,7 @@ $loader: (
 ) !default;
 
 @layer components {
-	.loader {
+	.#{$_cn} {
 		width: map.get($loader, size);
 		height: map.get($loader, size);
 		border: map.get($loader, border-size) solid map.get($loader, color);

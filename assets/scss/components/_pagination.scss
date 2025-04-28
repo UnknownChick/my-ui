@@ -3,6 +3,8 @@
 @use '../abstracts/mixins' as m;
 @use '../abstracts/variables' as v;
 
+$_cn: pagination;
+
 $pagination: (
 	animation-duration: 0.15s,
 	border-colors-iddle: #dee2e6,
@@ -21,7 +23,7 @@ $pagination: (
 ) !default;
 
 @layer components {
-	.pagination {
+	.#{$_cn} {
 		font-size: map.get($pagination, font-size);
 
 		&__list {

@@ -1,12 +1,14 @@
 @use 'sass:map';
 @use '../abstracts/variables' as v;
 
+$_cn: img;
+
 $img: (
   border-radius: map.get(v.$global, border-radius),
 ) !default;
 
 @layer components {
-	img.img {
+	img.#{$_cn} {
 		&--fluid {
 			width: 100%;
 		}

@@ -1,5 +1,7 @@
 @use 'sass:map';
 
+$_cn: icon;
+
 $icon: (
   xxs: 1rem,
   xs: 2rem,
@@ -12,7 +14,7 @@ $icon: (
 ) !default;
 
 @layer components {
-	.icon {
+	.#{$_cn} {
 		display: block;
 	
 		@each $size, $value in $icon {

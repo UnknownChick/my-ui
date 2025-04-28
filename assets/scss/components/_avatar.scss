@@ -2,6 +2,8 @@
 @use '../abstracts/colors' as c;
 @use '../abstracts/mixins' as m;
 
+$_cn: avatar;
+
 $avatar: (
   config: (
     bg-color: map.get(c.$main, primary),
@@ -40,7 +42,7 @@ $avatar: (
 ) !default;
 
 @layer components {
-	.avatar {
+	.#{$_cn} {
 		padding: map.get($avatar, 'config', 'padding');
 		border-radius: map.get($avatar, 'config', 'border-radius');
 		height: map.get($avatar, 'sizes', 'md', 'height');

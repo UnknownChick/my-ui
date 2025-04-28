@@ -2,6 +2,8 @@
 @use '../abstracts/colors' as c;
 @use '../abstracts/variables' as v;
 
+$_cn: modal;
+
 $modal: (
   backdrop-color: rgba(0,0,0,0.5),
   background-color: map.get(c.$main, 'white'),
@@ -15,7 +17,7 @@ $modal: (
 ) !default;
 
 @layer components {
-	.modal {
+	.#{_cn} {
 		background-color: map.get($modal, background-color);
 		box-shadow: map.get($modal, box-shadow);
 		border-radius: map.get($modal, border-radius);

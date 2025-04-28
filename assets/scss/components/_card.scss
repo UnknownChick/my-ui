@@ -2,6 +2,8 @@
 @use '../abstracts/colors' as c;
 @use '../abstracts/variables' as v;
 
+$_cn: card;
+
 $card: (
   border-radius: map.get(v.$global, border-radius),
   padding: 2rem,
@@ -9,7 +11,7 @@ $card: (
 ) !default;
 
 @layer components {
-	.card {
+	.#{$_cn} {
 		border-radius: map.get($card, border-radius);
 		box-shadow: map.get(v.$global, box-shadow);
 		height: 100%;

@@ -2,6 +2,8 @@
 @use '../abstracts/colors'as c;
 @use '../abstracts/variables'as v;
 
+$_cn: dot;
+
 $dot: (
 	config: (
 		bg-color: map.get(c.$main, primary),
@@ -37,7 +39,7 @@ $dot: (
 ) !default;
 
 @layer components {
-	.dot {
+	.#{$_cn} {
 		display: block;
 		width: map.get($dot, sizes, sm, width);
 		height: map.get($dot, sizes, sm, height);
