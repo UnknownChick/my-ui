@@ -1,35 +1,37 @@
 @use 'sass:map';
 @use '../abstracts/variables' as v;
 
-body {
-	font-family: sans-serif;
-}
-
-h1, h2, h3 ,h4 ,h5, h6 {
-	font-family: map.get(v.$font, secondary);
-	line-height: map.get(v.$line-height, title);
-}
-
-p, ul, a, input, button, label, table, select, ::placeholder {
-	font-family: map.get(v.$font, primary);
-	font-weight: 400;
-}
-
-// a:visited {
-// 	color: inherit;
-// }
-
-$title-font-size: (
-	h6: clamp(1rem, 0.6875rem + 1vw, 1.25rem),
-	h5: clamp(1.25rem, 0.9375rem + 1vw, 1.5rem),
-	h4: clamp(1.5rem, 0.875rem + 2vw, 2rem),
-	h3: clamp(2rem, 1.375rem + 2vw, 2.5rem),
-	h2: clamp(2rem, 0.75rem + 4vw, 3rem),
-	h1: clamp(2rem, -0.5rem + 8vw, 4rem),
-);
-
-@each $title, $font-size in $title-font-size {
-	#{$title} {
-		font-size: #{$font-size};
+@layer base {
+	body {
+		font-family: sans-serif;
+	}
+	
+	h1, h2, h3 ,h4 ,h5, h6 {
+		font-family: map.get(v.$font, secondary);
+		line-height: map.get(v.$line-height, title);
+	}
+	
+	p, ul, a, input, button, label, table, select, ::placeholder {
+		font-family: map.get(v.$font, primary);
+		font-weight: 400;
+	}
+	
+	// a:visited {
+	// 	color: inherit;
+	// }
+	
+	$title-font-size: (
+		h6: clamp(1rem, 0.6875rem + 1vw, 1.25rem),
+		h5: clamp(1.25rem, 0.9375rem + 1vw, 1.5rem),
+		h4: clamp(1.5rem, 0.875rem + 2vw, 2rem),
+		h3: clamp(2rem, 1.375rem + 2vw, 2.5rem),
+		h2: clamp(2rem, 0.75rem + 4vw, 3rem),
+		h1: clamp(2rem, -0.5rem + 8vw, 4rem),
+	);
+	
+	@each $title, $font-size in $title-font-size {
+		#{$title} {
+			font-size: #{$font-size};
+		}
 	}
 }
