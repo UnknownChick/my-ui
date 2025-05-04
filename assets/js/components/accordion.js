@@ -59,7 +59,6 @@ export class Accordion {
 	}
 
 	open(acc) {
-		// Fermer les autres accordéons du même groupe (même name)
 		const groupName = acc.el.getAttribute('name');
 		if (groupName) {
 			Accordion.accordions.forEach(other => {
