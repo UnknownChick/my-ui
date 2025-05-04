@@ -5,8 +5,10 @@
 $_cn: breadcrumb;
 
 $breadcrumb: (
+	border-radius: 0.25rem,
   color: map.get(c.$main, primary),
-  separator: '>',
+	padding: 0.25rem,
+  separator: '/',
 ) !default;
 
 @layer components {
@@ -14,19 +16,32 @@ $breadcrumb: (
 		ul {
 			list-style: none;
 			display: inline-flex;
-			align-items: flex-end;
 	
 			li {
 				height: max-content;
 				&:not(:last-child)::after {
 					content: map.get($breadcrumb, separator);
-					padding: 0 0.25rem;
+					padding: map.get($breadcrumb, padding);
+				}
+
+				&:not(:last-child) {
+					a {
+						opacity: 0.75;
+					}
 				}
 	
 				a {
 					color: map.get($breadcrumb, color);
 					text-decoration: none;
 					line-height: 1;
+					padding: map.get($breadcrumb, padding);
+					border-radius: map.get($breadcrumb, border-radius);
+					display: inline-block;
+					transition: background-color 0.2s ease-in-out;
+					
+					&:hover {
+						background-color: #d5d5d5;
+					}
 				}
 			}
 		}

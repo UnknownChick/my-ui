@@ -17,7 +17,7 @@ $modal: (
 ) !default;
 
 @layer components {
-	.#{_cn} {
+	.#{$_cn} {
 		background-color: map.get($modal, background-color);
 		box-shadow: map.get($modal, box-shadow);
 		border-radius: map.get($modal, border-radius);

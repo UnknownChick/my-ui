@@ -3,11 +3,12 @@
 @use '../abstracts/mixins' as m;
 @use '../abstracts/variables' as v;
 
-$cn: tooltip;
+$_cn: tooltip;
 
 $tooltip: (
 	background-color: map.get(c.$main, primary),
 	border-radius: 0.25rem,
+	box-shadow: map.get(v.$global, box-shadow),
 	color: map.get(c.$main, 'white'),
 	cursor: help,
 	max-width: 200px,
@@ -15,45 +16,60 @@ $tooltip: (
 ) !default;
 
 @layer components {
-	.#{$cn} {
-		position: relative;
-		text-decoration: underline;
-		cursor: map.get($tooltip, cursor);
-		z-index: 1;
-	
-		&--target {
-			opacity: 0;
-			visibility: hidden;
-			background-color: map.get($tooltip, background-color);
-			position: absolute;
-			top: -3.25rem;
-			padding: map.get($tooltip, padding);
-			border-radius: map.get($tooltip, border-radius);
-			width: max-content;
-			color: map.get($tooltip, color);
-			z-index: 2;
-			transform: translateX(-50%);
-			left: 50%;
-			max-width: map.get($tooltip, max-width);
-			transition: opacity map.get(v.$global, animation-duration) ease-in-out;
-			pointer-events: none;
+	.#{$_cn} {
+		background-color: map.get($tooltip, background-color);
+		position: absolute;
+		padding: map.get($tooltip, padding);
+		border-radius: map.get($tooltip, border-radius);
+		width: max-content;
+		color: map.get($tooltip, color);
+		z-index: 1050;
+		box-shadow: map.get($tooltip, box-shadow);
+		transform: none;
+		max-width: map.get($tooltip, max-width);
+		transition: opacity map.get(v.$global, animation-duration) ease-in-out, visibility map.get(v.$global, animation-duration) ease-in-out;
+		pointer-events: none;
 
+		&::before {
+			content: '';
+			position: absolute;
+			border-width: 0.5rem;
+			border-style: solid;
+		}
+
+		&--top {
 			&::before {
-				content: '';
-				position: absolute;
 				top: 100%;
 				left: 50%;
 				transform: translateX(-50%);
-				border-width: 0.5rem;
-				border-style: solid;
 				border-color: map.get($tooltip, background-color) transparent transparent transparent;
 			}
 		}
 
-		&:hover {
-			.#{$cn}--target {
-				opacity: 1;
-				pointer-events: auto;
+		&--bottom {
+			&::before {
+				bottom: 100%;
+				left: 50%;
+				transform: translateX(-50%);
+				border-color: transparent transparent map.get($tooltip, background-color) transparent;
+			}
+		}
+
+		&--left {
+			&::before {
+				top: 50%;
+				left: 100%;
+				transform: translateY(-50%);
+				border-color: transparent transparent transparent map.get($tooltip, background-color);
+			}
+		}
+
+		&--right {
+			&::before {
+				top: 50%;
+				right: 100%;
+				transform: translateY(-50%);
+				border-color: transparent map.get($tooltip, background-color) transparent transparent;
 			}
 		}
 	}

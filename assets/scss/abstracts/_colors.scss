@@ -2,6 +2,22 @@
 @use 'mixins' as m;
 @use 'functions' as f;
 
+// $palette: (
+// 	primary: #0068ff,
+// 	secondary: #2f322a,
+// 	text: #000000,
+// 	off: #f5f5f5,
+// 	white: #FFFFFF,
+// 	black: #000000,
+// ) !default;
+
+// $semantic: (
+// 	success:  #22b934,
+// 	danger: #ba2123,
+// 	warning: #f0ad4e,
+// 	info: #5abfdd,
+// ) !default;
+
 $main: (
 	primary: #0068ff,
 	secondary: #2f322a,
