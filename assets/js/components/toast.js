@@ -13,6 +13,7 @@ export class Toast {
 			position: 'bottom right',
 			showProgress: true,
 			title: 'Titre par defaut',
+			transitionDuration: 300,
 			...options
 		};
 		this.activeToasts = [];
@@ -50,29 +51,26 @@ export class Toast {
 		showProgress = this.options.showProgress,
 		title = this.options.title,
 	) {
-		const positionClass = this.positionMap[position];
+		const positionClass = this.positionMap[position] || this.positionMap['bottom right'];
 
-		// Toast creation
 		const toastElement = document.createElement('div');
 		toastElement.className = `toast toast--${positionClass}`;
 		toastElement.setAttribute('role', 'alert');
 		toastElement.setAttribute('aria-live', 'assertive');
 		toastElement.setAttribute('aria-atomic', 'true');
 
-		// Progress bar
 		let progressBar;
 		if (showProgress) {
 			progressBar = document.createElement('div');
 			progressBar.className = 'toast__progress';
+			progressBar.style.animationDuration = `${this.options.duration / 1000}s`;
 			toastElement.appendChild(progressBar);
 		}
 
-		// Content
 		const content = document.createElement('div');
 		content.className = 'toast__content';
 		content.innerHTML = message;
 
-		// Title
 		if (title) {
 			const titleElement = document.createElement('b');
 			titleElement.innerHTML = title;
@@ -84,20 +82,16 @@ export class Toast {
 		document.body.appendChild(toastElement);
 		this.activeToasts.push(toastElement);
 
-		// Check if there's an active toast and close it
 		toastElement.offsetHeight;
 
-		// Animation
 		toastElement.classList.add('toast--active');
-		if (showProgress && progressBar) {
-			progressBar.style.animation = `toast-progress-decrease ${this.options.duration / 1000}s linear forwards`;
-		}
-		
+
 		const timeoutId = setTimeout(() => {
 			this.close(toastElement);
 		}, this.options.duration);
 
 		toastElement.dataset.timeoutId = timeoutId;
+		toastElement.dataset.position = positionClass;
 	}
 
 	close(toastElement) {
@@ -108,7 +102,12 @@ export class Toast {
 			clearTimeout(timeoutId);
 		}
 
+		const positionClass = toastElement.dataset.position;
+		const isLeft = positionClass && (positionClass.includes('l'));
+		const closingClass = isLeft ? 'toast--closing-left' : 'toast--closing-right';
+
 		toastElement.classList.remove('toast--active');
+		toastElement.classList.add(closingClass);
 
 		toastElement.addEventListener('transitionend', () => {
 			if (document.body.contains(toastElement)) {
@@ -119,9 +118,10 @@ export class Toast {
 
 		setTimeout(() => {
 			if (document.body.contains(toastElement)) {
+				console.warn('Toast: transitionend event did not fire, removing element via fallback timeout.');
 				document.body.removeChild(toastElement);
+				this.activeToasts = this.activeToasts.filter(t => t !== toastElement);
 			}
-			this.activeToasts = this.activeToasts.filter(t => t !== toastElement);
-		}, 500);
+		}, this.options.transitionDuration + 50);
 	}
 }
