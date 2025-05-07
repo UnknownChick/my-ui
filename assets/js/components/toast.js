@@ -49,7 +49,7 @@ export class Toast {
 		message = this.options.message,
 		position = this.options.position,
 		showProgress = this.options.showProgress,
-		title = this.options.title,
+		title = this.options.title, 
 	) {
 		const positionClass = this.positionMap[position] || this.positionMap['bottom right'];
 
