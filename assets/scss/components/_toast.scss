@@ -48,7 +48,6 @@ $toast: (
 		max-width: map.get($toast, max-width);
 		box-shadow: map.get($toast, box-shadow);
 		overflow: hidden;
-		transform: translateY(150%);
 		opacity: 0;
 		visibility: hidden;
 		transition: transform map.get($toast, transition-duration) ease-in-out,
@@ -61,6 +60,12 @@ $toast: (
 				right: map.get($val, right);
 				bottom: map.get($val, bottom);
 				left: map.get($val, left);
+
+				@if $pos == tl or $pos == tr {
+					transform: translateY(-150%);
+				} @else {
+					transform: translateY(150%);
+				}
 			}
 		}
 
@@ -83,9 +88,23 @@ $toast: (
 			opacity: 1;
 			visibility: visible;
 
-			&__progress {
-				animation: toast-progress-decrease map.get($toast, duration) linear forwards;
+			.#{$_cn}__progress {
+				animation-name: toast-progress-decrease;
+				animation-timing-function: linear;
+				animation-fill-mode: forwards;
 			}
+		}
+
+		&--closing-left {
+			transform: translateX(-150%);
+			opacity: 0;
+			visibility: hidden;
+		}
+
+		&--closing-right {
+			transform: translateX(150%);
+			opacity: 0;
+			visibility: hidden;
 		}
 	}
 }
