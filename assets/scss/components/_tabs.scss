@@ -1,17 +1,52 @@
-$tabs-button-gap: 0.5rem;
+@use 'sass:map';
+@use '../abstracts/colors'as c;
 
-.tabs__nav {
-  ul {
-    list-style: none;
-    display: flex;
-    gap: $tabs-button-gap;
+$_cn: tabs;
 
-    li {
-      cursor: pointer;
-    }
-  }
-}
+$tabs: (
+	button-active-border-color: map.get(c.$main, 'primary'),
+	button-active-color: map.get(c.$main, 'primary'),
+	button-border-bottom-width: 2px,
+	button-border-color: transparent,
+	button-hover-color: map.get(c.$main, 'secondary'),
+	button-padding: 0.75rem 1rem,
+	nav-border-bottom: 1px solid map.get(c.$main, 'grey', 'light'),
+	padding: 1rem
+);
 
-.tabs__content:not(.active) {
-    display: none;
+@layer components {
+	.#{$_cn} {
+		&__nav {
+			display: flex;
+			border-bottom: map.get($tabs, nav-border-bottom);
+
+			&__button {
+				padding: map.get($tabs, button-padding);
+				cursor: pointer;
+				border: none;
+				background-color: transparent;
+				border-bottom: map.get($tabs, button-border-bottom-width) solid map.get($tabs, button-border-color);
+				margin-bottom: -1px;
+				font-weight: 600;
+	
+				&:hover {
+					color: map.get($tabs, button-hover-color);
+				}
+	
+				&[aria-selected="true"] {
+					border-bottom-color: map.get($tabs, button-active-border-color);
+					color: map.get($tabs, button-active-color);
+					font-weight: 600;
+				}
+			}
+		}
+
+		&__content {
+			
+		}
+
+		&__panel {
+			padding: map.get($tabs, padding);
+		}
+	}
 }
