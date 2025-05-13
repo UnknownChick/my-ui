@@ -41,10 +41,6 @@ $tabs: (
 			}
 		}
 
-		&__content {
-			
-		}
-
 		&__panel {
 			padding: map.get($tabs, padding);
 		}
