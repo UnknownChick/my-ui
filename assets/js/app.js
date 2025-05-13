@@ -1,4 +1,5 @@
 import { Accordion } from './components/accordion';
+import { Dropdown } from './components/dropdown';
 import { Modal } from './components/modal';
 import { Pagination } from './components/pagination';
 import { Tabs } from './components/tabs';
@@ -8,6 +9,7 @@ import './features/icons';
 
 document.addEventListener('DOMContentLoaded', () => {
 	new Accordion();
+	new Dropdown();
 	new Modal();
 	new Tabs();
 
