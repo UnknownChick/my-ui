@@ -44,6 +44,13 @@ $dropdown: (
 			}
 		}
 
+		&__divider {
+			height: 2px;
+			width: 100%;
+			margin-block: 0.25rem;
+			background-color: map.get(c.$main, off);
+		}
+
 		// Position top-left
 		&--tl {
 			.#{$_cn}__content {
