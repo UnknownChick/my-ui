@@ -484,6 +484,73 @@
 				<hr class="my-2">
 
 				<article>
+					<h2 class="mb-1">Form</h2>
+
+					<div class="card">
+						<form action="" class="card__body">
+							<div class="input-container">
+								<label for="email">Email address</label>
+								<input type="email" id="email" placeholder="Enter email">
+								<p class="form-hint">We'll never share your email with anyone else.</p>
+							</div>
+
+							<div class="row">
+								<div class="col input-container">
+									<label for="lastname">Email lastname</label>
+									<input type="lastname" id="lastname" placeholder="Enter lastname">
+								</div>
+								<div class="col input-container">
+									<label for="firstname">Email firstname</label>
+									<input type="firstname" id="firstname" placeholder="Enter firstname">
+								</div>
+							</div>
+
+							<div class="input-container">
+								<label for="username">Your username</label>
+								<div class="input-group">
+									<span class="input-group__block">@</span>
+									<input type="text" id="username" name="username">
+								</div>
+							</div>
+
+							<div class="input-container">
+								<label for="link">Your profile url</label>
+								<div class="input-group">
+									<span class="input-group__block">https://example.com/users/</span>
+									<input type="text" id="link" name="link">
+								</div>
+							</div>
+
+							<div class="input-group">
+								<div class="input-group__block">$</div>
+								<input type="text" id="amount" name="amount">
+								<div class="input-group__block">.00</div>
+							</div>
+
+							<div class="input-group">
+								<input type="text">
+								<div class="input-group__block">@</div>
+								<input type="text">
+							</div>
+	
+							<div class="input-container">
+								<label for="message">Message</label>
+								<textarea name="message" id="message" placeholder="Enter message"></textarea>
+							</div>
+
+							<div class="check-container">
+								<input type="checkbox" id="checkbox">
+								<label for="checkbox">I agree to the terms and conditions</label>
+							</div>
+
+							<button type="submit" class="btn btn--primary">Send</button>
+						</form>
+					</div>
+				</article>
+
+				<hr class="my-2">
+
+				<article>
 					<h2 class="mb-1">Icons</h2>
 					<div class="df gap-1 mb-1">
 						<i data-lucide="smile" class="icon icon--xxs"></i>
