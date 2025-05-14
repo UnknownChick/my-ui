@@ -27,9 +27,11 @@ $dropdown: (
 			width: max-content;
 			background-color: white;
 			box-shadow: map.get($dropdown, box-shadow);
+			user-select: none;
 
 			&--open {
 				display: block;
+				user-select: auto;
 			}
 
 			a {
