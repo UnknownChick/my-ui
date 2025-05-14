@@ -9,6 +9,12 @@
 		}
 	}
 
+	@each $title, $font-size in v.$fs-title {
+		#{$title} {
+			font-size: #{$font-size};
+		}
+	}
+
 	@each $colot-text, $color in c.$main {
 		.#{$colot-text}-text {
 			color: map.get(c.$main, $colot-text);
