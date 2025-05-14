@@ -23,7 +23,8 @@ $dropdown: (
 			overflow: hidden;
 			z-index: 10;
 			display: none;
-			min-width: map.get($dropdown, width);
+			max-width: map.get($dropdown, width);
+			width: max-content;
 			background-color: white;
 			box-shadow: map.get($dropdown, box-shadow);
 
