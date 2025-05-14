@@ -3,17 +3,6 @@
 @use '../abstracts/media-queries' as mq;
 @use '../abstracts/mixins' as m;
 
-@for $i from 1 through 5 {
-	/* Width */
-	.mis-#{$i}00 {
-		max-inline-size: #{$i}00px;
-	}
-}
-
-.w-full {
-	width: 100%;
-}
-
 
 @include mq.max-device(md) {
 	@for $i from 1 through 5 {
@@ -27,19 +16,8 @@
 	}
 }
 
-/* Height */
-.h-100 {
-	height: 100%;
-}
-
-
 .hidden {
 	display: none !important;
 }
 
-@for $i from 1 through 10 {
-	/* Opacity */
-	.opacity-#{$i}0 {
-		opacity: 0.1 * $i;
-	}
-}
+
