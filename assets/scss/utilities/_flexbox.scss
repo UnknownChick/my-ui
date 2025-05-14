@@ -8,6 +8,10 @@
 	.df-vertical{
 		@include mix.df-vertical;
 	}
+
+	.df-horizontal-center {
+		@include mix.df-horizontal-center;
+	}
 	
 	.df-vertical-align-center {
 		@include mix.df-vertical-align-center;
