@@ -5,8 +5,8 @@
 		display: flex;
 	}
 	
-	.df-column {
-		@include mix.df-column;
+	.df-vertical{
+		@include mix.df-vertical;
 	}
 	
 	.df-vertical-align-center {
