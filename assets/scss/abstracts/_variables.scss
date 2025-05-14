@@ -24,6 +24,15 @@ $fs: (
 	xxxl: clamp(2rem, 0.75rem + 4vw, 3rem),
 ) !default;
 
+$fs-title: (
+	h6: clamp(1rem, 0.6875rem + 1vw, 1.25rem),
+	h5: clamp(1.25rem, 0.9375rem + 1vw, 1.5rem),
+	h4: clamp(1.5rem, 0.875rem + 2vw, 2rem),
+	h3: clamp(2rem, 1.375rem + 2vw, 2.5rem),
+	h2: clamp(2rem, 0.75rem + 4vw, 3rem),
+	h1: clamp(2rem, -0.5rem + 8vw, 4rem),
+) !default;
+
 $global: (
 	animation-duration: 250ms,
 	border-radius: 0.25rem,

@@ -31,7 +31,7 @@ $toast: (
 			right: 2rem,
 		),
 	)
-);
+) !default;
 
 @keyframes toast-progress-decrease {
 	from { width: 100%; }
