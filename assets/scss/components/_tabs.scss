@@ -12,7 +12,7 @@ $tabs: (
 	button-padding: 0.75rem 1rem,
 	nav-border-bottom: 1px solid map.get(c.$main, 'grey', 'light'),
 	padding: 1rem
-);
+) !default;
 
 @layer components {
 	.#{$_cn} {
