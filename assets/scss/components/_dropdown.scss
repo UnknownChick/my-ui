@@ -10,7 +10,7 @@ $dropdown: (
 	box-shadow: map.get(v.$global, box-shadow),
 	margin: 0.5rem,
 	width: 300px,
-);
+) !default;
 
 @layer components {
 	.#{$_cn} {
