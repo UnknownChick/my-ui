@@ -1,188 +1,125 @@
-@use "../abstracts/colors" as *;
-@use "../abstracts/variables" as *;
-@use "../abstracts/mixins" as *;
+@use 'sass:map';
+@use '../abstracts/colors' as c;
+@use '../abstracts/variables' as v;
 
-form {
-	label {
-		font-weight: 500;
-	}
+$form: (
+	border: 1px solid #dee2e6,
+	border-radius: map.get(v.$global, border-radius),
+	default-gap: 1rem,
+	padding: 0.375rem 0.75rem,
+) !default;
+
+@mixin input-default-style {
+	font-size: 1rem;
+	font-weight: 400;
+	padding: map.get($form, padding);
+	line-height: 1.5;
 }
 
-input[type="submit"] {
-	border: none;
-}
+@layer components {
+	form {
+		& > *:not(:last-child) {
+			margin-bottom: map.get($form, default-gap);
+		}
 
-.dz-button {
-	appearance: none;
-	display: block;
-	cursor: pointer;
-	height: 200px;
-	width: 100%;
-	font-weight: 500;
-	border: 2px solid $primary-color;
-	border-radius: $border-radius;
-	background-color: $white-color;
-}
+		input:not([type="checkbox"]), textarea {
+			display: block;
+			border-radius: map.get($form, border-radius);
+			border: map.get($form, border);
+			width: 100%;
+			@include input-default-style;
 
-textarea {
-	resize: vertical;
-	font-family: $primary-font;
-	min-height: 150px;
-}
+			&::placeholder {
+				color: #b6b6b6;
+			}
+		}
+	
+		textarea {
+			resize: vertical;
+			min-width: 100px;
+		}
+	
+		label {
+			display: block;
+			font-weight: 500;
+			line-height: 1;
+		}
 
-.custom-select {
-	&__selection {
-		background-color: $white-color !important;
-		border-radius: $border-radius !important;
-		border: 1px solid $primary-color !important;
-		padding: 1rem;
-		height: auto !important;
-		line-height: 1 !important;
-
-		&.small {
-			padding: 0.5rem;
-
-			.select2-selection__arrow {
-				width: 1rem !important;
+		.form-hint {
+			margin-top: 0.25rem;
+			font-size: 0.875rem;
+			color: #6c757d;
+			cursor: help;
+		}
+	
+		.input-container {
+			position: relative;
+	
+			label {
+				margin-bottom: 0.5rem;
 			}
 		}
 
-		.select2-selection__rendered {
-			line-height: 1 !important;
-			font-family: $primary-font;
-			padding-left: 0 !important;
-		}
+		.check-container {
+			display: flex;
+			align-items: center;
+			gap: 0.5rem;
 
-		.select2-selection__arrow {
-			height: 100% !important;
-			width: 2rem !important;
-			align-content: center;
-
-			svg {
-				width: 1.25rem;
-			}
-		}
-	}
-
-	&__dropdown {
-		border: 1px solid $primary-color !important;
-		overflow: hidden !important;
-
-		ul {
-			scrollbar-color: $primary-color $white-color;
-			scrollbar-width: thin;
-
-			li {
-				padding: 0.25rem 1rem;
-
-				&.select2-results__option--disabled {
-					display: none !important;
+			input[type="checkbox"] {
+				appearance: none;
+				position: relative;
+				background-color: map.get(c.$main, 'white');
+				width: 1rem;
+				height: 1rem;
+				border-radius: map.get($form, border-radius);
+				border: map.get($form, border);
+				cursor: pointer;
+		
+				&:checked {
+					background-color: map.get(c.$main, primary);
+					border: 1px solid map.get(c.$main, primary);
+		
+					&::before {
+						content: '';
+						position: absolute;
+						top: 0.15rem;
+						left: 0.3rem;
+						display: block;
+						width: 0.3rem;
+						height:  0.5rem;
+						border-bottom: 2px solid map.get(c.$main, 'white');
+						border-right: 2px solid map.get(c.$main, 'white');
+						transform: rotate(45deg);
+					}
 				}
 			}
 		}
 
-		.select2-results__option--highlighted.select2-results__option--selectable {
-			background-color: $primary-color !important;
-		}
-	}
-}
+		.input-group {
+			display: flex;
+			border-radius: map.get($form, border-radius);
+			border: map.get($form, border);
+			overflow: hidden;
 
-.select2-container--open {
-	.custom-select {
-		&__selection {
-			border-radius: 0.25rem 0.25rem 0 0 !important;
-		}
+			& > * {
+				&:not(:last-child) {
+					border-right: map.get($form, border);
+				}
+			}
 
-		&__dropdown {
-			border-top: none !important;
-		}
-	}
+			&__block {
+				display: flex;
+				align-items: center;
+				white-space: nowrap;
+				background-color: map.get(c.$main, off);
+				color: #6c757d;
+				@include input-default-style;
+			}
 
-
-	.select2-selection__arrow {
-		svg {
-			transform: rotate(180deg);
-		}
-	}
-}
-
-input:not(:is([type="checkbox"], input[type="submit"])), textarea, select, label[input-type="file"] {
-	background-color: $white-color;
-	border-radius: $border-radius;
-	border: 1px solid $primary-color;
-	padding: 1rem;
-	line-height: 1;
-	width: 100%;
-
-	&.small {
-		padding: 0.5rem;
-	}
-}
-
-.password-container {
-	display: flex;
-	border-radius: $border-radius;
-	border: 1px solid $primary-color;
-	overflow: hidden;
-
-	input:is([type="password"], [type="text"]) {
-		border-radius: 0;
-		border: none;
-		flex: 1;
-	}
-
-	&__icon {
-		width: 3.125rem;
-		background-color: #c9c9c9;
-		cursor: pointer;
-		align-content: center;
-
-		svg {
-			width: 1.5rem;
-			margin: auto;
-		}
-	}
-}
-
-.checkbox-container {
-	display: flex;
-	align-items: center;
-	gap: 0.5rem;
-
-	input[type="checkbox"] {
-		appearance: none;
-		position: relative;
-		background-color: $white-color;
-		min-width: 1rem;
-		min-height: 1rem;
-		border-radius: $border-radius;
-		border: 1px solid $primary-color;
-
-		&:checked {
-			background-color: $primary-color;
-			border: 1px solid $primary-color;
-
-			&::before {
-				content: '';
-				position: absolute;
-				top: 0.15rem;
-				left: 0.3rem;
-				display: block;
-				width: 0.3rem;
-				height:  0.5rem;
-				border-bottom: 2px solid $white-color;
-				border-right: 2px solid $white-color;
-				transform: rotate(45deg);
+			input {
+				border: none;
+				border-radius: 0;
 			}
 		}
 	}
-}
-
-p:has(+ :is(input, select, textarea, .checkbox-container)), .row:has(+ :is(input, select, textarea, .password-container)), label:has(+ :is(input, select, textarea, .checkbox-container)) {
-	line-height: 1;
-	margin-bottom: 0.5rem;
-}
-
-label:has(+ :is(input, select, textarea, .checkbox-container)) {
-	display: block;
 }
