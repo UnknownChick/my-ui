@@ -12,8 +12,12 @@ $form: (
 @mixin input-default-style {
 	font-size: 1rem;
 	font-weight: 400;
-	padding: map.get($form, padding);
 	line-height: 1.5;
+
+	&:not(:is([type="color"])) {
+		padding: map.get($form, padding);
+	}
+	
 }
 
 @layer components {
@@ -23,6 +27,8 @@ $form: (
 		}
 
 		input:not(:is([type="checkbox"], input[type="submit"])), textarea {
+			position: relative;
+			appearance: none;
 			display: block;
 			border-radius: map.get($form, border-radius);
 			border: map.get($form, border);
