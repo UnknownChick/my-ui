@@ -22,7 +22,7 @@ $form: (
 			margin-bottom: map.get($form, default-gap);
 		}
 
-		input:not([type="checkbox"]), textarea {
+		input:not(:is([type="checkbox"], input[type="submit"])), textarea {
 			display: block;
 			border-radius: map.get($form, border-radius);
 			border: map.get($form, border);
