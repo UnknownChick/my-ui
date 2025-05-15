@@ -31,9 +31,14 @@
 
 
 /* Flex Alignement */
-@mixin df-column {
+@mixin df-vertical {
 	display: flex;
 	flex-direction: column;
+}
+
+@mixin df-horizontal-center {
+	display: flex;
+	justify-content: center;
 }
 
 @mixin df-vertical-align-center {
@@ -53,12 +58,6 @@
 	flex-direction: column;
 	justify-content: center;
 	align-items: end;
-}
-
-@mixin df-align-center {
-	display: flex;
-	flex-direction: column;
-	justify-content: center;
 }
 
 @mixin df-center {
