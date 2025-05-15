@@ -104,22 +104,18 @@ $form: (
 
 		.input-group {
 			display: flex;
-			border-radius: map.get($form, border-radius);
-			border: map.get($form, border);
 
 			& > * {
-				&:not(:last-child) {
-					border-right: map.get($form, border);
-				}
-
 				&:first-child {
 					border-top-left-radius: map.get($form, border-radius);
 					border-bottom-left-radius: map.get($form, border-radius);
+					border-left: map.get($form, border);
 				}
 
 				&:last-child {
 					border-top-right-radius: map.get($form, border-radius);
 					border-bottom-right-radius: map.get($form, border-radius);
+					border-right: map.get($form, border);
 				}
 			}
 
@@ -129,15 +125,24 @@ $form: (
 				white-space: nowrap;
 				background-color: map.get(c.$main, off);
 				color: #6c757d;
+				border-top: map.get($form, border);
+				border-bottom: map.get($form, border);
 				@include input-default-style;
 			}
 
 			input {
-				border: none;
-				border-radius: 0;
+				&:first-child {
+					border-top-right-radius: 0;
+					border-bottom-right-radius: 0;
+				}
 
-				&:focus {
-					margin: -1px;
+				&:last-child {
+					border-top-left-radius: 0;
+					border-bottom-left-radius: 0;
+				}
+
+				&:not(:is(:first-child, :last-child)) {
+					border-radius: 0;
 				}
 			}
 		}
