@@ -15,11 +15,32 @@ document.addEventListener('DOMContentLoaded', () => {
 		saveSelection: false
 	});
 
-	new Toast('#mytoast', {
+	new Toast('#myToastFromTopRight', {
+		title: 'Top right toast !',
+		message: '<p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Eligendi, repellat!<p>',
+		position: 'top right',
+		showProgress: true,
+	});
+
+	new Toast('#myToastFromBottomRight', {
+		title: 'Bottom right toast !',
 		message: '<p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Eligendi, repellat!<p>',
 		position: 'bottom right',
 		showProgress: true,
-		title: 'Mon titre'
+	});
+
+	new Toast('#myToastFromBottomLeft', {
+		title: 'Bottom left toast !',
+		message: '<p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Eligendi, repellat!<p>',
+		position: 'bottom left',
+		showProgress: true,
+	});
+
+	new Toast('#myToastFromTopLeft', {
+		title: 'Top left toast !',
+		message: '<p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Eligendi, repellat!<p>',
+		position: 'top left',
+		showProgress: true,
 	});
 
 	new Tooltip('#mytooltip', {
