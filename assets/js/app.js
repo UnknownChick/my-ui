@@ -43,9 +43,24 @@ document.addEventListener('DOMContentLoaded', () => {
 		showProgress: true,
 	});
 
-	new Tooltip('#mytooltip', {
+	new Tooltip('#myTooltipFromTop', {
 		message: 'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Eligendi, repellat!',
 		position: 'top'
+	});
+
+	new Tooltip('#myTooltipFromRight', {
+		message: 'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Eligendi, repellat!',
+		position: 'right'
+	});
+
+	new Tooltip('#myTooltipFromBottom', {
+		message: 'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Eligendi, repellat!',
+		position: 'bottom'
+	});
+
+	new Tooltip('#myTooltipFromLeft', {
+		message: 'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Eligendi, repellat!',
+		position: 'left'
 	});
 	Pagination.initialize();
 });
