@@ -1,10 +1,14 @@
 export class Tabs {
-	constructor() {
+	constructor(selector, options = {}) {
 		this.tabGroups = [];
+		this.saveSelection = options.saveSelection ?? false;
 
-		const tabElements = document.querySelectorAll('.tabs');
-		if (tabElements.length === 0) {
-			console.warn('No tabs elements found.');
+		const tabElements = typeof selector === 'string'
+			? document.querySelectorAll(selector)
+			: (selector instanceof Element ? [selector] : []);
+
+		if (!tabElements.length) {
+			console.warn('Aucun élément tabs trouvé.');
 			return;
 		}
 
@@ -13,7 +17,7 @@ export class Tabs {
 			const content = tabElement.querySelector('.tabs__content');
 
 			if (!nav || !content) {
-				console.warn('Tabs component is missing essential .tabs__nav or .tabs__content elements.', tabElement);
+				console.warn('Le composant Tabs manque des éléments essentiels .tabs__nav ou .tabs__content.', tabElement);
 				return;
 			}
 
@@ -22,13 +26,13 @@ export class Tabs {
 			const tabsContainerId = tabElement.id || '';
 
 			if (buttons.length === 0 || panels.length === 0) {
-				console.warn('Tabs component is missing .tabs__nav__button or .tabs__panel elements.', tabElement);
+				console.warn('Le composant Tabs manque des éléments .tabs__nav__button ou .tabs__panel.', tabElement);
 				return;
 			}
 			
 			buttons.forEach(btn => {
 				if (!btn.id) {
-					console.warn('A tab button is missing an ID, which is required for URL hash management.', btn);
+					console.warn('Un bouton d\'onglet n\'a pas d\'ID, requis pour la gestion du hash URL.', btn);
 				}
 			});
 
@@ -46,9 +50,19 @@ export class Tabs {
 			this._initSingleTabGroup(groupData);
 		});
 
-		if (this.tabGroups.length > 0) {
+		if (this.tabGroups.length > 0 && this.saveSelection) {
 			this._handleHash(false);
 			window.addEventListener('hashchange', () => this._handleHash(true), false);
+		} else if (this.tabGroups.length > 0) {
+			// Active le premier onglet par défaut si saveSelection est false
+			this.tabGroups.forEach(groupData => {
+				const preSelectedButton = groupData.buttons.find(btn => btn.getAttribute('aria-selected') === 'true' && btn.id);
+				if (preSelectedButton) {
+					this.activateTab(preSelectedButton, groupData, false, true);
+				} else if (groupData.buttons.length > 0 && groupData.buttons[0].id) {
+					this.activateTab(groupData.buttons[0], groupData, false, true);
+				}
+			});
 		}
 	}
 
@@ -63,7 +77,7 @@ export class Tabs {
 
 	activateTab(buttonToActivate, groupData, setFocus = true, isHashChange = false) {
 		if (!buttonToActivate || !buttonToActivate.id) {
-			console.warn('Attempted to activate a tab without a valid button or button ID.');
+			console.warn('Tentative d\'activation d\'un onglet sans bouton ou ID valide.');
 			return;
 		}
 		const { buttons, panels, tabsContainerId } = groupData;
@@ -87,7 +101,7 @@ export class Tabs {
 			}
 		});
 
-		if (!isHashChange) {
+		if (this.saveSelection && !isHashChange) {
 			const hashValue = tabsContainerId ? `${tabsContainerId}-${buttonToActivate.id}` : buttonToActivate.id;
 			if (window.location.hash !== `#${hashValue}`) {
 				history.replaceState(null, '', `#${hashValue}`);
@@ -126,7 +140,7 @@ export class Tabs {
 			} else if (groupData.buttons.length > 0 && groupData.buttons[0].id) {
 				this.activateTab(groupData.buttons[0], groupData, false, true);
 			} else if (groupData.buttons.length > 0 && !groupData.buttons[0].id) {
-                console.warn('Default tab for a group could not be activated as the first button has no ID.', groupData.element);
+                console.warn('Impossible d\'activer l\'onglet par défaut car le premier bouton n\'a pas d\'ID.', groupData.element);
             }
 		});
 	}

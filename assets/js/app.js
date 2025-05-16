@@ -11,7 +11,9 @@ document.addEventListener('DOMContentLoaded', () => {
 	new Accordion();
 	new Dropdown();
 	new Modal();
-	new Tabs();
+	new Tabs('#myTabs', {
+		saveSelection: false
+	});
 
 	new Toast('#mytoast', {
 		message: '<p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Eligendi, repellat!<p>',
