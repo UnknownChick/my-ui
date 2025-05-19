@@ -5,10 +5,10 @@
 $_cn: loader;
 
 $loader: (
-  animation-duration: 1.5s,
-  border-size: 3px,
-  color: map.get(c.$main, primary),
-  size: 2rem,
+	animation-duration: 1.5s,
+	border-size: 3px,
+	color: map.get(c.$palette, primary),
+	size: 2rem,
 ) !default;
 
 @layer components {
@@ -20,20 +20,26 @@ $loader: (
 		border-radius: 100%;
 		display: block;
 		animation: rotation map.get($loader, animation-duration) linear infinite;
-	}
-
-	@each $color-name, $color-value in c.$main {
-		.loader--#{$color-name} {
-			border: map.get($loader, border-size) solid $color-value;
-		}
-	}
 	
-	@keyframes rotation {
-		0% {
-			transform: rotate(0deg);
+		@each $color-name, $color-value in c.$semantic {
+			&--#{$color-name} {
+				border: map.get($loader, border-size) solid $color-value;
+			}
 		}
-		100% {
-			transform: rotate(360deg);
+
+		@each $color-name, $color-value in c.$palette {
+			&--#{$color-name} {
+				border: map.get($loader, border-size) solid $color-value;
+			}
 		}
-	} 
+		
+		@keyframes rotation {
+			0% {
+				transform: rotate(0deg);
+			}
+			100% {
+				transform: rotate(360deg);
+			}
+		}
+	}
 }

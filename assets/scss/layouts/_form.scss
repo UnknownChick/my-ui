@@ -5,7 +5,7 @@
 @use '../abstracts/variables' as v;
 
 $form: (
-	border: 1px solid #dee2e6,
+	border: 1px solid map.get(c.$greyscale, 200),
 	border-radius: map.get(v.$global, border-radius),
 	default-gap: 1rem,
 	padding: 0.375rem 0.75rem,
@@ -28,11 +28,11 @@ $form: (
 			margin-bottom: map.get($form, default-gap);
 		}
 
-		input {
+		input, textarea {
 			&:focus {
-				border: 1px solid map.get(c.$main, primary);
+				border: 1px solid map.get(c.$palette, primary) !important;
 				outline: 0;
-				box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+				box-shadow: 0 0 0 0.2rem map.get(c.$primary, 100);
 				z-index: 5;
 			}
 		}
@@ -55,7 +55,7 @@ $form: (
 			appearance: none;
 			position: relative;
 			display: block;
-			background-color: map.get(c.$main, 'white');
+			background-color: map.get(c.$semantic, 'white');
 			width: 1rem;
 			height: 1rem;
 			border-radius: map.get($form, border-radius);
@@ -63,8 +63,8 @@ $form: (
 			cursor: pointer;
 	
 			&:checked {
-				background-color: map.get(c.$main, primary);
-				border: 1px solid map.get(c.$main, primary);
+				background-color: map.get(c.$palette, primary);
+				border: 1px solid map.get(c.$palette, primary);
 	
 				&::before {
 					content: '';
@@ -74,8 +74,8 @@ $form: (
 					display: block;
 					width: 0.3rem;
 					height:  0.5rem;
-					border-bottom: 2px solid map.get(c.$main, 'white');
-					border-right: 2px solid map.get(c.$main, 'white');
+					border-bottom: 2px solid map.get(c.$semantic, 'white');
+					border-right: 2px solid map.get(c.$semantic, 'white');
 					transform: rotate(45deg);
 					z-index: 10;
 				}
@@ -86,7 +86,7 @@ $form: (
 			appearance: none;
 			position: relative;
 			display: block;
-			background-color: map.get(c.$main, 'white');
+			background-color: map.get(c.$semantic, 'white');
 			width: 1rem;
 			height: 1rem;
 			border-radius: 50%;
@@ -94,8 +94,8 @@ $form: (
 			cursor: pointer;
 
 			&:checked {
-				background-color: map.get(c.$main, primary);
-				border: 1px solid map.get(c.$main, primary);
+				background-color: map.get(c.$palette, primary);
+				border: 1px solid map.get(c.$palette, primary);
 
 				&::before {
 					content: '';
@@ -103,7 +103,7 @@ $form: (
 					position: absolute;
 					width: 0.5rem; 
 					height: 0.5rem;
-					background-color: map.get(c.$main, 'white');
+					background-color: map.get(c.$semantic, 'white');
 					border-radius: 50%;
 					z-index: 10;
 					@include m.absolute-center;
@@ -125,16 +125,16 @@ $form: (
 				appearance: none;
 				width: 1.25rem;
 				height: 1.25rem;
-				background: map.get(c.$main, primary);
+				background: map.get(c.$palette, primary);
 				border-radius: 50%;
 				border: none;
 
 				&:hover {
-					background-color: color.adjust(map.get(c.$main, primary), $lightness: -5%);
+					background-color: color.adjust(map.get(c.$palette, primary), $lightness: -5%);
 				}
 
 				&:active {
-					background-color: color.adjust(map.get(c.$main, primary), $lightness: -10%);
+					background-color: color.adjust(map.get(c.$palette, primary), $lightness: -10%);
 				}
 			}
 
@@ -142,16 +142,16 @@ $form: (
 			&::-moz-range-thumb {
 				width: 1.25rem;
 				height: 1.25rem;
-				background: map.get(c.$main, primary);
+				background: map.get(c.$palette, primary);
 				border-radius: 50%;
 				border: none;
 
 				&:hover {
-					background-color: color.adjust(map.get(c.$main, primary), $lightness: -5%);
+					background-color: color.adjust(map.get(c.$palette, primary), $lightness: -5%);
 				}
 
 				&:active {
-					background-color: color.adjust(map.get(c.$main, primary), $lightness: -10%);
+					background-color: color.adjust(map.get(c.$palette, primary), $lightness: -10%);
 				}
 			}
 
@@ -175,7 +175,7 @@ $form: (
 			}
 
 			&::-ms-fill-lower {
-				background: map.get(c.$main, primary);
+				background: map.get(c.$palette, primary);
 				border-radius: map.get($form, border-radius);
 			}
 
@@ -187,7 +187,7 @@ $form: (
 			&::-ms-thumb { 
 				width: 1.25rem;
 				height: 1.25rem;
-				background: map.get(c.$main, primary);
+				background: map.get(c.$palette, primary);
 				border-radius: 50%;
 				border: none;
 			}
@@ -207,7 +207,7 @@ $form: (
 		.form-hint {
 			margin-top: 0.25rem;
 			font-size: 0.875rem;
-			color: #6c757d;
+			color: map.get(c.$greyscale, 600);
 			cursor: help;
 		}
 	
@@ -246,8 +246,8 @@ $form: (
 				display: flex;
 				align-items: center;
 				white-space: nowrap;
-				background-color: map.get(c.$main, off);
-				color: #6c757d;
+				background-color: map.get(c.$greyscale, 100);
+				color: map.get(c.$greyscale, 600);
 				border-top: map.get($form, border);
 				border-bottom: map.get($form, border);
 				@include input-default-style;

@@ -4,13 +4,13 @@
 $_cn: tabs;
 
 $tabs: (
-	button-active-border-color: map.get(c.$main, 'primary'),
-	button-active-color: map.get(c.$main, 'primary'),
+	button-active-border-color: map.get(c.$palette, primary),
+	button-active-color: map.get(c.$palette, primary),
 	button-border-bottom-width: 2px,
 	button-border-color: transparent,
-	button-hover-color: map.get(c.$main, 'secondary'),
+	button-hover-color: map.get(c.$semantic, 'secondary'),
 	button-padding: 0.75rem 1rem,
-	nav-border-bottom: 1px solid map.get(c.$main, 'grey', 'light'),
+	nav-border-bottom: 1px solid map.get(c.$semantic, 'grey', 'light'),
 	padding: 1rem
 ) !default;
 

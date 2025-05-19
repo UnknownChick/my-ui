@@ -6,9 +6,9 @@ $_cn: avatar;
 
 $avatar: (
   config: (
-    bg-color: map.get(c.$main, primary),
+    bg-color: map.get(c.$palette, primary),
     border-radius: 100%,
-    color: map.get(c.$main, 'white'),
+    color: map.get(c.$semantic, 'white'),
     font-weight: 600,
     padding: 0.25rem,
   ),

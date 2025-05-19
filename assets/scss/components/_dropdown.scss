@@ -5,7 +5,7 @@
 $_cn: dropdown;
 
 $dropdown: (
-	border: 1px solid map.get(c.$main, off),
+	border: 1px solid map.get(c.$semantic, greyscale),
 	border-radius: map.get(v.$global, border-radius),
 	box-shadow: map.get(v.$global, box-shadow),
 	margin: 0.5rem,
@@ -38,10 +38,10 @@ $dropdown: (
 				display: block;
 				padding: 0.5rem 1rem;
 				text-decoration: none;
-				color: map.get(c.$main, text);
+				color: map.get(c.$semantic, text);
 
 				&:hover {
-					background-color: map.get(c.$main, off);
+					background-color: map.get(c.$semantic, greyscale);
 				}
 			}
 		}
@@ -50,7 +50,7 @@ $dropdown: (
 			height: 2px;
 			width: 100%;
 			margin-block: 0.25rem;
-			background-color: map.get(c.$main, off);
+			background-color: map.get(c.$semantic, greyscale);
 		}
 
 		// Position top-left
