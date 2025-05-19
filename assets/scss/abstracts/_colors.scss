@@ -1,35 +1,6 @@
 @use 'sass:map';
-@use 'mixins' as m;
-@use 'functions' as f;
-
-// $palette: (
-// 	primary: #0068ff,
-// 	secondary: #2f322a,
-// 	text: #000000,
-// 	off: #f5f5f5,
-// 	white: #FFFFFF,
-// 	black: #000000,
-// ) !default;
-
-// $semantic: (
-// 	success:  #22b934,
-// 	danger: #ba2123,
-// 	warning: #f0ad4e,
-// 	info: #5abfdd,
-// ) !default;
-
-$main: (
-	primary: #0068ff,
-	secondary: #2f322a,
-	success:  #22b934,
-	danger: #ba2123,
-	warning: #f0ad4e,
-	info: #5abfdd,
-	text: #000000,
-	off: #f5f5f5,
-	'white': #FFFFFF,
-	'black': #000000,
-) !default;
+@use 'mixins' as mix;
+@use 'functions' as func;
 
 $accents: (
 	'red': (
@@ -70,8 +41,34 @@ $accents: (
 	),
 ) !default;
 
-$status: (
-	online: map.get($main, success),
-	absent: map.get($main, warning),
-	offline: map.get($main, danger),
+$palette: (
+	primary: #0068ff,
+	secondary: #2f322a,
 ) !default;
+
+$semantic: (
+	success:  #22b934,
+	danger: #ba2123,
+	warning: #f0ad4e,
+	info: #5abfdd,
+	link: #3347EF,
+	greyscale: #adadad,
+	text: #191919,
+	'white': #FFFFFF,
+	'black': #000000,
+) !default;
+
+$status: (
+	online: map.get($semantic, success),
+	absent: map.get($semantic, warning),
+	offline: map.get($semantic, danger),
+) !default;
+
+$primary: func.generate-color-palette(map.get($palette, primary));
+$secondary: func.generate-color-palette(map.get($palette, secondary));
+$success: func.generate-color-palette(map.get($semantic, success));
+$danger: func.generate-color-palette(map.get($semantic, danger));
+$warning: func.generate-color-palette(map.get($semantic, warning));
+$info: func.generate-color-palette(map.get($semantic, info));
+$greyscale: func.generate-color-palette(map.get($semantic, greyscale));
+$text: func.generate-color-palette(map.get($semantic, text));

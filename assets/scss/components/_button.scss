@@ -41,35 +41,35 @@ $btn: (
   ),
   colors: (
     primary: (
-      default: map.get(c.$main, primary),
-      hover: color.adjust(map.get(c.$main, primary), $blackness: 10%)
+      default: map.get(c.$primary, 500),
+      hover: map.get(c.$primary, 600)
     ),
     secondary: (
-      default: map.get(c.$main, secondary),
-      hover: color.adjust(map.get(c.$main, secondary), $blackness: 10%)
+      default: map.get(c.$secondary, 500),
+      hover: map.get(c.$secondary, 600)
     ),
     success: (
-      default: map.get(c.$main, success),
-      hover: color.adjust(map.get(c.$main, success), $blackness: 10%)
+      default: map.get(c.$success, 500),
+      hover: map.get(c.$success, 600)
     ),
     danger: (
-      default: map.get(c.$main, danger),
-      hover: color.adjust(map.get(c.$main, danger), $blackness: 10%)
+      default: map.get(c.$danger, 500),
+      hover: map.get(c.$danger, 600)
     ),
     warning: (
-      default: map.get(c.$main, warning),
-      hover: color.adjust(map.get(c.$main, warning), $blackness: 10%)
+      default: map.get(c.$warning, 500),
+      hover: map.get(c.$warning, 600)
     ),
     info: (
-      default: map.get(c.$main, info),
-      hover: color.adjust(map.get(c.$main, info), $blackness: 10%)
+      default: map.get(c.$info, 500),
+      hover: map.get(c.$info, 600)
     )
   )
 ) !default;
 
 @mixin button-solid($color, $hover-color) {
   background-color: $color;
-  color: map.get(c.$main, 'white');
+  color: map.get(c.$semantic, 'white');
 
   &:not(:disabled):is(:hover, :active, :focus) {
     background-color: $hover-color;
@@ -83,7 +83,7 @@ $btn: (
 
   &:not(:disabled):is(:hover, :active, :focus) {
     background-color: $color;
-    color: map.get(c.$main, 'white');
+    color: map.get(c.$semantic, 'white');
   }
 }
 

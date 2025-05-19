@@ -5,7 +5,7 @@
 $_cn: progress;
 
 $progress: (
-	bg-color: map.get(c.$main, off),
+	bg-color: map.get(c.$semantic, greyscale),
 	border: none,
 	border-radius: map.get(v.$global, border-radius),
 	heigh: 1rem,
@@ -35,7 +35,15 @@ $progress: (
 		background-color: map.get($progress, bg-color);
 
 		&.#{$_cn} {
-			@each $color-name, $color-values in c.$main {
+			@each $color-name, $color-values in c.$semantic {
+				&--#{$color-name} {
+					@include progress-variant(
+						$color-values,
+					);
+				}
+			}
+
+			@each $color-name, $color-values in c.$palette {
 				&--#{$color-name} {
 					@include progress-variant(
 						$color-values,
