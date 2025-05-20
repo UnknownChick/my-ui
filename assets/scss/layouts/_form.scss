@@ -9,6 +9,7 @@ $form: (
 	border-radius: map.get(v.$global, border-radius),
 	default-gap: 1rem,
 	padding: 0.375rem 0.75rem,
+	transition-duration: 150ms,
 ) !default;
 
 @mixin input-default-style {
@@ -22,6 +23,10 @@ $form: (
 	
 }
 
+@mixin input-transition {
+	transition: border-color map.get($form, transition-duration) ease-in-out, box-shadow map.get($form, transition-duration) ease-in-out;
+}
+
 @layer components {
 	form {
 		& > *:not(:last-child) {
@@ -29,6 +34,8 @@ $form: (
 		}
 
 		input, textarea {
+			@include input-transition;
+
 			&:focus {
 				border: 1px solid map.get(c.$palette, primary) !important;
 				outline: 0;
@@ -65,6 +72,7 @@ $form: (
 			&:checked {
 				background-color: map.get(c.$palette, primary);
 				border: 1px solid map.get(c.$palette, primary);
+				@include input-transition;
 	
 				&::before {
 					content: '';
