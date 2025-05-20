@@ -1,4 +1,4 @@
-export class Tabs {
+export default class Tabs {
 	constructor(selector, options = {}) {
 		this.tabGroups = [];
 		this.saveSelection = options.saveSelection ?? false;

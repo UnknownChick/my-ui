@@ -1,4 +1,4 @@
-export class Accordion {
+export default class Accordion {
 	static instance = null;
 	static accordions = [];
 
