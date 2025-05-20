@@ -54,7 +54,7 @@ $form: (
 			@include input-default-style;
 
 			&::placeholder {
-				color: #b6b6b6;
+				color: map.get(c.$greyscale, 600);
 			}
 		}
 
