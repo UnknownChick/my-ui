@@ -1,4 +1,5 @@
 import Accordion from './components/accordion';
+import Drawer from './components/drawer';
 import Dropdown from './components/dropdown';
 import Modal from './components/modal';
 import Pagination from './components/pagination';
@@ -9,6 +10,11 @@ import './features/icons';
 
 document.addEventListener('DOMContentLoaded', () => {
 	new Accordion();
+
+	new Drawer('#myDrawerleft', {
+		position: 'left'
+	});
+
 	new Dropdown();
 	new Modal();
 	new Tabs('#myTabs', {
