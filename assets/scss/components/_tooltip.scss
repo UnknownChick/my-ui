@@ -6,10 +6,10 @@
 $_cn: tooltip;
 
 $tooltip: (
-	background-color: map.get(c.$main, primary),
+	background-color: map.get(c.$palette, primary),
 	border-radius: 0.25rem,
 	box-shadow: map.get(v.$global, box-shadow),
-	color: map.get(c.$main, 'white'),
+	color: map.get(c.$semantic, 'white'),
 	cursor: help,
 	max-width: 200px,
 	padding: 0.5rem,

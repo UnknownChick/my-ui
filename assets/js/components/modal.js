@@ -1,4 +1,4 @@
-export class Modal {
+export default class Modal {
     constructor() {
         if (Modal.instance) {
             return Modal.instance;

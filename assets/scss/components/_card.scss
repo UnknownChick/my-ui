@@ -20,11 +20,11 @@ $card: (
 			padding: map.get($card, padding);
 			display: flex;
 			align-items: center;
-			border-bottom: 2px solid map.get(c.$main, off);
+			border-bottom: 2px solid map.get(c.$semantic, greyscale);
 	
 			p {
 				font-size: map.get($card, title-font-size);
-				color: map.get(c.$main, text);
+				color: map.get(c.$semantic, text);
 			}
 		}
 	

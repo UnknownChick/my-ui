@@ -15,9 +15,9 @@
 		}
 	}
 
-	@each $colot-text, $color in c.$main {
+	@each $colot-text, $color in c.$semantic {
 		.#{$colot-text}-text {
-			color: map.get(c.$main, $colot-text);
+			color: map.get(c.$semantic, $colot-text);
 		}
 	}
 

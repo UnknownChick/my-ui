@@ -1,4 +1,4 @@
-export class Dropdown {
+export default class Dropdown {
 	constructor() {
 		this.dropdownGroups = [];
 

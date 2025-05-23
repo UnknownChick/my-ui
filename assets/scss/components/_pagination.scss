@@ -10,9 +10,9 @@ $pagination: (
 	border-colors-iddle: #dee2e6,
 	border-radius: map.get(v.$global, border-radius),
 	border-size: 1px,
-	color-active: map.get(c.$main, primary),
-	color-default: map.get(c.$main, off),
-	color-hover: map.get(c.$main, primary),
+	color-active: map.get(c.$palette, primary),
+	color-default: map.get(c.$semantic, greyscale),
+	color-hover: map.get(c.$palette, primary),
 	color-iddle: #6c757d,
 	color-iddle-hover: #e9ecef,
 	font-size: 1rem,
@@ -39,7 +39,7 @@ $pagination: (
 			padding: map.get($pagination, padding);
 			text-decoration: none;
 			color: map.get($pagination, color-active);
-			background-color: map.get(c.$main, 'white');
+			background-color: map.get(c.$semantic, 'white');
 			border: map.get($pagination, border-size) solid map.get($pagination, border-colors-iddle);
 			border-radius: map.get($pagination, border-radius);
 			line-height: 1;
@@ -63,7 +63,7 @@ $pagination: (
 		&__item {
 			&--active {
 				.pagination__link {
-					color: map.get(c.$main, 'white');
+					color: map.get(c.$semantic, 'white');
 					background-color: map.get($pagination, color-active);
 					border-color: map.get($pagination, color-active);
 					pointer-events: none;
@@ -75,7 +75,7 @@ $pagination: (
 					color: map.get($pagination, color-iddle);
 					pointer-events: none;
 					cursor: default;
-					background-color: map.get(c.$main, 'white');
+					background-color: map.get(c.$semantic, 'white');
 					border-color: map.get($pagination, border-colors-iddle);
 				}	
 			}

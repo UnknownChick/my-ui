@@ -6,9 +6,9 @@ $_cn: dot;
 
 $dot: (
 	config: (
-		bg-color: map.get(c.$main, primary),
+		bg-color: map.get(c.$palette, primary),
 		border-radius: 100%,
-		color: map.get(c.$main, 'white'),
+		color: map.get(c.$semantic, 'white'),
 	),
 	sizes: (
 		xs: (
@@ -76,7 +76,13 @@ $dot: (
 			}
 		}
 
-		@each $color-name, $color-values in c.$main {
+		@each $color-name, $color-values in c.$semantic {
+			&--#{$color-name} {
+				background-color: $color-values;
+			}
+		}
+
+		@each $color-name, $color-values in c.$palette {
 			&--#{$color-name} {
 				background-color: $color-values;
 			}

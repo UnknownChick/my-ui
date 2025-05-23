@@ -1,4 +1,4 @@
-export class Pagination {
+export default class Pagination {
 	// Static method to initialize pagination components based on a selector
 	static initialize(options = {}) {
 		const defaults = {

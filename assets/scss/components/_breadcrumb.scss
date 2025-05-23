@@ -6,7 +6,7 @@ $_cn: breadcrumb;
 
 $breadcrumb: (
 	border-radius: 0.25rem,
-  color: map.get(c.$main, primary),
+  color: map.get(c.$palette, primary),
 	padding: 0.25rem,
   separator: '/',
 ) !default;

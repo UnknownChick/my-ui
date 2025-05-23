@@ -1,4 +1,4 @@
-export class Toast {
+export default class Toast {
 	constructor(selector, options = {}) {
 		this.selector = selector;
 		this.positionMap = {
