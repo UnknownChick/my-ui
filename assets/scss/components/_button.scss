@@ -6,95 +6,98 @@
 $_cn: btn;
 
 $btn: (
-  config: (
-    border: none,
-    border-radius: map.get(v.$global, border-radius),
-    border-width: 2px,
-    font-weight: 400,
-    transition: all map.get(v.$global, animation-duration) ease-in-out
-  ),
-  sizes: (
-    xs: (
-      padding: 0.5rem 0.75rem,
-      font-size: 0.75rem
-    ),
-    sm: (
-      padding: 0.5rem 1rem,
-      font-size: 0.875rem
-    ),
-    md: (
-      padding: 0.75rem 1rem,
-      font-size: 1rem
-    ),
-    lg: (
-      padding: 0.75rem 1.5rem,
-      font-size: 1.125rem
-    ),
-    xl: (
-      padding: 0.75rem 2rem,
-      font-size: 1.25rem
-    ),
-    xxl: (
-      padding: 0.75rem 2.5rem,
-      font-size: 1.375rem
-    )
-  ),
-  colors: (
-    primary: (
-      default: map.get(c.$primary, 500),
-      hover: map.get(c.$primary, 600)
-    ),
-    secondary: (
-      default: map.get(c.$secondary, 500),
-      hover: map.get(c.$secondary, 600)
-    ),
-    success: (
-      default: map.get(c.$success, 500),
-      hover: map.get(c.$success, 600)
-    ),
-    danger: (
-      default: map.get(c.$danger, 500),
-      hover: map.get(c.$danger, 600)
-    ),
-    warning: (
-      default: map.get(c.$warning, 500),
-      hover: map.get(c.$warning, 600)
-    ),
-    info: (
-      default: map.get(c.$info, 500),
-      hover: map.get(c.$info, 600)
-    )
-  )
+	config: (
+		border-radius: map.get(v.$global, border-radius),
+		border-width: 2px,
+		font-weight: 400,
+		transition: all map.get(v.$global, animation-duration) ease-in-out
+	),
+	sizes: (
+		xs: (
+			padding: 0.5rem 0.75rem,
+			font-size: 0.75rem
+		),
+		sm: (
+			padding: 0.5rem 1rem,
+			font-size: 0.875rem
+		),
+		md: (
+			padding: 0.75rem 1rem,
+			font-size: 1rem
+		),
+		lg: (
+			padding: 0.75rem 1.5rem,
+			font-size: 1.125rem
+		),
+		xl: (
+			padding: 0.75rem 2rem,
+			font-size: 1.25rem
+		),
+		xxl: (
+			padding: 0.75rem 2.5rem,
+			font-size: 1.375rem
+		)
+	),
+	colors: (
+		primary: (
+			default: map.get(c.$primary, 500),
+			hover: map.get(c.$primary, 600)
+		),
+		secondary: (
+			default: map.get(c.$secondary, 500),
+			hover: map.get(c.$secondary, 600)
+		),
+		success: (
+			default: map.get(c.$success, 500),
+			hover: map.get(c.$success, 600)
+		),
+		danger: (
+			default: map.get(c.$danger, 500),
+			hover: map.get(c.$danger, 600)
+		),
+		warning: (
+			default: map.get(c.$warning, 500),
+			hover: map.get(c.$warning, 600)
+		),
+		info: (
+			default: map.get(c.$info, 500),
+			hover: map.get(c.$info, 600)
+		)
+	)
 ) !default;
 
 @mixin button-solid($color, $hover-color) {
-  background-color: $color;
-  color: map.get(c.$semantic, 'white');
+	background-color: $color;
+	border-color: $color;
+	color: map.get(c.$semantic, 'white');
 
-  &:not(:disabled):is(:hover, :active, :focus) {
-    background-color: $hover-color;
-  }
+	&:not(:disabled):is(:hover, :active, :focus) {
+		background-color: $hover-color;
+		border-color: $hover-color;
+	}
 }
 
 @mixin button-outline($color) {
-  background-color: transparent;
-  border: map.get($btn, config, border-width) solid $color;
-  color: $color;
+	background-color: transparent;
+	border-color: $color;
+	color: $color;
 
-  &:not(:disabled):is(:hover, :active, :focus) {
-    background-color: $color;
-    color: map.get(c.$semantic, 'white');
-  }
+	&:not(:disabled):is(:hover, :active, :focus) {
+		background-color: $color;
+		color: map.get(c.$semantic, 'white');
+	}
 }
 
 @mixin button-accent($bc-color, $color) {
-  background-color: $bc-color;
-  color: $color;
+	background-color: $bc-color;
+	border-color: $bc-color;
+	color: $color;
 
-  &:not(:disabled):is(:hover, :active, :focus) {
-    background-color: $color;
-    color: $bc-color;
-  }
+	&:not(:disabled):is(:hover, :active, :focus) {
+		background-color: $color;
+		border-color: $color;
+		color: $bc-color;
+	}
 }
 
 @layer components {
@@ -104,7 +107,6 @@ $btn: (
 		justify-content: center;
 		width: fit-content;
 		border-radius: map.get($btn, config, border-radius);
-		border: map.get($btn, config, border);
 		font-weight: map.get($btn, config, font-weight);
 		padding: map.get($btn, sizes, md, padding);
 		font-size: map.get($btn, sizes, md, font-size);
@@ -112,6 +114,8 @@ $btn: (
 		cursor: pointer;
 		outline: none;
 		transition: map.get($btn, config, transition);
+		border-width: map.get($btn, config, border-width);
+		border-style: solid;
 	
 		@each $size, $values in map.get($btn, sizes) {
 			&--#{$size} {
