@@ -41,27 +41,27 @@ $btn: (
 	colors: (
 		primary: (
 			default: map.get(c.$primary, 500),
-			hover: map.get(c.$primary, 600)
+			hover: map.get(c.$primary, 700)
 		),
 		secondary: (
 			default: map.get(c.$secondary, 500),
-			hover: map.get(c.$secondary, 600)
+			hover: map.get(c.$secondary, 700)
 		),
 		success: (
 			default: map.get(c.$success, 500),
-			hover: map.get(c.$success, 600)
+			hover: map.get(c.$success, 700)
 		),
 		danger: (
 			default: map.get(c.$danger, 500),
-			hover: map.get(c.$danger, 600)
+			hover: map.get(c.$danger, 700)
 		),
 		warning: (
 			default: map.get(c.$warning, 500),
-			hover: map.get(c.$warning, 600)
+			hover: map.get(c.$warning, 700)
 		),
 		info: (
 			default: map.get(c.$info, 500),
-			hover: map.get(c.$info, 600)
+			hover: map.get(c.$info, 700)
 		)
 	)
 ) !default;
