@@ -1,15 +1,46 @@
-import {defineConfig} from "vite";
+import { defineConfig } from "vite";
+import autoprefixer from "autoprefixer";
+import { browserslistToTargets } from 'lightningcss';
+import browserslist from 'browserslist';
+import { purgeCSSPlugin } from '@fullhuman/postcss-purgecss';
 import path from 'path';
 
 export default defineConfig({
-    root: './',
     css: {
         preprocessorOptions: {
             scss: {
-                api: 'modern-compiler'
+                quietDeps: true,
+                silenceDeprecations: ['import'],
             }
+        },
+        transformer: 'lightningcss',
+        lightningcss: {
+            targets: browserslistToTargets(
+                browserslist('>= 0.25%')
+            ),
+        },
+		postcss: {
+			plugins: [
+				autoprefixer()
+			]
+		}
+    },
+	resolve: {
+        alias: {
+            '~': path.resolve(__dirname, 'node_modules'),
+            '@img': path.resolve(__dirname, 'assets/img'),
+            '@js': path.resolve(__dirname, 'assets/js'),
+            '@scss': path.resolve(__dirname, 'assets/scss'),
         }
     },
+	server: {
+		port: 5173,
+		host: 'localhost',
+		watch: {
+			disableGlobbing: false,
+			usePolling: false,
+		}
+	},
     build: {
         copyPublicDir: false,
         rollupOptions: {
