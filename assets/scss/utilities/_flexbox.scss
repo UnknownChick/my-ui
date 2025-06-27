@@ -17,12 +17,12 @@
     @include mix.flex-wrap;
   }
 
-  .flex-row-center {
-    @include mix.flex-row-center;
+	.flex-center {
+    @include mix.flex-center;
   }
 
-  .flex-row-center-center {
-    @include mix.flex-row-center-center;
+  .flex-row-center {
+    @include mix.flex-row-center;
   }
 
   .flex-row-space-between {

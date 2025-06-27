@@ -44,7 +44,7 @@ $pagination: (
 			border-radius: map.get($pagination, border-radius);
 			line-height: 1;
 			transition: background-color map.get($pagination, animation-duration) ease-in-out, color map.get($pagination, animation-duration) ease-in-out, border-color 0.15s ease-in-out;
-			@include mix.flex-column-center;
+			@include mix.flex-center;
 
 			&:hover {
 				background-color: map.get($pagination, color-iddle-hover);

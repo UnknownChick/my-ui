@@ -63,18 +63,18 @@
 	flex-wrap: wrap;
 }
 
+@mixin flex-center {
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
+}
+
 // Row alignments
 @mixin flex-row-center {
 	display: flex;
 	flex-direction: row;
 	justify-content: center;
-}
-
-@mixin flex-row-center-center {
-	display: flex;
-	flex-direction: row;
-	justify-content: center;
-	align-items: center;
 }
 
 @mixin flex-row-space-between {
