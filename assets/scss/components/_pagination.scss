@@ -1,6 +1,6 @@
 @use 'sass:map';
 @use '../abstracts/colors' as c;
-@use '../abstracts/mixins' as m;
+@use '../abstracts/mixins' as mix;
 @use '../abstracts/variables' as v;
 
 $_cn: pagination;
@@ -31,7 +31,7 @@ $pagination: (
 			list-style: none;
 			gap: map.get($pagination, gap);
 		}
-	
+
 		&__link,
 		&__ellipsis {
 			min-width: map.get($pagination, size);
@@ -44,15 +44,15 @@ $pagination: (
 			border-radius: map.get($pagination, border-radius);
 			line-height: 1;
 			transition: background-color map.get($pagination, animation-duration) ease-in-out, color map.get($pagination, animation-duration) ease-in-out, border-color 0.15s ease-in-out;
-			@include m.df-center;
-	
+			@include mix.flex-column-center;
+
 			&:hover {
 				background-color: map.get($pagination, color-iddle-hover);
 				border-color: map.get($pagination, border-colors-iddle);
 				color: map.get($pagination, color-hover);
 			}
 		}
-	
+
 		&__ellipsis {
 			border: none;
 			background-color: transparent;
@@ -77,10 +77,10 @@ $pagination: (
 					cursor: default;
 					background-color: map.get(c.$semantic, 'white');
 					border-color: map.get($pagination, border-colors-iddle);
-				}	
+				}
 			}
 		}
-	
+
 		&__icon {
 			width: map.get($pagination, size-icon);
 			height: map.get($pagination, size-icon);

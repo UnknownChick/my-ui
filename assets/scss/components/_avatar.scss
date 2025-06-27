@@ -1,6 +1,6 @@
 @use 'sass:map';
 @use '../abstracts/colors' as c;
-@use '../abstracts/mixins' as m;
+@use '../abstracts/mixins' as mix;
 
 $_cn: avatar;
 
@@ -52,18 +52,18 @@ $avatar: (
 		font-size: map.get($avatar, 'sizes', 'md', 'font-size');
 		font-weight: map.get($avatar, 'config', 'font-weight');
 		overflow: hidden;
-		@include m.df-center;
-	
+		@include mix.flex-column-center;
+
 		&:has(img) {
 			padding: 0;
 		}
-	
+
 		img {
 			width: 100%;
 			height: 100%;
 			object-fit: cover;
 		}
-	
+
 		@each $size, $values in map.get($avatar, 'sizes') {
 			&--#{$size} {
 				width: map.get($values, 'width');

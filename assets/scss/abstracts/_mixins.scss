@@ -9,7 +9,7 @@
 	}
 }
 
-/* Absolute posision */
+/*--- Absolute posision ---*/
 @mixin absolute-horizontal-center {
 	left: 0;
 	right: 0;
@@ -28,43 +28,8 @@
 	inset: 0;
 	margin: auto;
 }
+/*--- Absolute position end ---*/
 
-
-/* Flex Alignement */
-@mixin df-vertical {
-	display: flex;
-	flex-direction: column;
-}
-
-@mixin df-horizontal-center {
-	display: flex;
-	justify-content: center;
-}
-
-@mixin df-vertical-align-center {
-	display: flex;
-	flex-direction: column;
-	justify-content: center;
-}
-
-@mixin df-vertical-align-sb {
-	display: flex;
-	flex-direction: column;
-	justify-content: space-between;
-}
-
-@mixin df-vertical-align-end {
-	display: flex;
-	flex-direction: column;
-	justify-content: center;
-	align-items: end;
-}
-
-@mixin df-center {
-	display: flex;
-	justify-content: center;
-	align-items: center;
-}
 
 /* Background */
 @mixin bg-image($image) {
@@ -79,3 +44,119 @@
 	background-position: center;
 	background-size: cover;
 }
+/*--- Background end ---*/
+
+
+/*--- Flexbox ---*/
+@mixin flex-row {
+	display: flex;
+	flex-direction: row;
+}
+
+@mixin flex-column {
+	display: flex;
+	flex-direction: column;
+}
+
+@mixin flex-wrap {
+	display: flex;
+	flex-wrap: wrap;
+}
+
+// Row alignments
+@mixin flex-row-center {
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+}
+
+@mixin flex-row-center-center {
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
+}
+
+@mixin flex-row-space-between {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+}
+
+@mixin flex-row-space-around {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-around;
+}
+
+@mixin flex-row-end {
+	display: flex;
+	flex-direction: row;
+	justify-content: flex-end;
+}
+
+@mixin flex-row-center-start {
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: flex-start;
+}
+
+@mixin flex-row-center-end {
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: flex-end;
+}
+
+@mixin flex-row-align-center {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+}
+
+// Column alignments
+@mixin flex-column-center {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+}
+
+@mixin flex-column-center-center {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+}
+
+@mixin flex-column-start {
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+}
+
+@mixin flex-column-end {
+	display: flex;
+	flex-direction: column;
+	align-items: flex-end;
+}
+
+@mixin flex-column-space-between {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+@mixin flex-column-space-around {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-around;
+}
+
+@mixin flex-column-center-end {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: flex-end;
+}
+/*--- Flexbox end ---*/
