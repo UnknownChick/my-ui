@@ -1,38 +1,74 @@
+@use 'sass:map';
+@use '../abstracts/colors' as c;
+@use '../abstracts/mixins' as mix;
+
 @layer utilities {
-	.hidden {
-		display: none;
-	}
+  @include mix.generate-color-classes('primary', c.$primary);
+  @include mix.generate-color-classes('secondary', c.$secondary);
+  @include mix.generate-color-classes('success', c.$success);
+  @include mix.generate-color-classes('danger', c.$danger);
+  @include mix.generate-color-classes('warning', c.$warning);
+  @include mix.generate-color-classes('info', c.$info);
+  @include mix.generate-color-classes('greyscale', c.$greyscale);
+  @include mix.generate-color-classes('text', c.$text);
+  @include mix.generate-color-classes('white', c.$white);
+  @include mix.generate-color-classes('black', c.$black);
 
-	.invisible {
-		visibility: hidden;
-	}
+  .hidden {
+    display: none;
+  }
 
-	.clearfix::after {
-		content: "";
-		clear: both;
-		display: table;
-	}
+  .visible {
+    display: block;
+  }
 
-	.sr-only {
-		position: absolute;
-		width: 1px;
-		height: 1px;
-		padding: 0;
-		margin: -1px;
-		overflow: hidden;
-		clip: rect(0, 0, 0, 0);
-		white-space: nowrap;
-		border-width: 0;
+  .invisible {
+    visibility: hidden;
+  }
 
-		&-focusable:is(:active, :focus) {
-			position: static;
-			width: auto;
-			height: auto;
-			padding: 0;
-			margin: 0;
-			overflow: visible;
-			clip: auto;
-			white-space: normal;
-		}
-	}
+  .clearfix::after {
+    content: "";
+    clear: both;
+    display: table;
+  }
+
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border-width: 0;
+
+    &-focusable:is(:active, :focus) {
+      position: static;
+      width: auto;
+      height: auto;
+      padding: 0;
+      margin: 0;
+      overflow: visible;
+      clip: auto;
+      white-space: normal;
+    }
+  }
+
+  .subtitle {
+    text-transform: uppercase;
+    font-size: clamp(1.25rem, 0.9375rem + 1vw, 1.5rem);
+  }
+
+  .text-center {
+    text-align: center;
+  }
+
+  .text-left {
+    text-align: left;
+  }
+
+  .text-right {
+    text-align: right;
+  }
 }
