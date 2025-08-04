@@ -17,12 +17,12 @@
     @include mix.flex-wrap;
   }
 
-	.flex-center {
-    @include mix.flex-center;
-  }
-
   .flex-row-center {
     @include mix.flex-row-center;
+  }
+
+  .flex-row-center-center {
+    @include mix.flex-row-center-center;
   }
 
   .flex-row-space-between {
@@ -45,8 +45,16 @@
     @include mix.flex-row-center-end;
   }
 
+  .flex-row-align-start {
+    @include mix.flex-row-align-start;
+  }
+
   .flex-row-align-center {
     @include mix.flex-row-align-center;
+  }
+
+  .flex-row-align-end {
+    @include mix.flex-row-align-end;
   }
 
 
