@@ -42,33 +42,33 @@ $avatar: (
 ) !default;
 
 @layer components {
-	.#{$_cn} {
-		padding: map.get($avatar, 'config', 'padding');
-		border-radius: map.get($avatar, 'config', 'border-radius');
-		height: map.get($avatar, 'sizes', 'md', 'height');
-		width: map.get($avatar, 'sizes', 'md', 'width');
-		background-color: map.get($avatar, 'config', 'bg-color');
-		color: map.get($avatar, 'config', 'color');
-		font-size: map.get($avatar, 'sizes', 'md', 'font-size');
-		font-weight: map.get($avatar, 'config', 'font-weight');
-		overflow: hidden;
-		@include mix.flex-center;
+  .#{$_cn} {
+    padding: map.get($avatar, 'config', 'padding');
+    border-radius: map.get($avatar, 'config', 'border-radius');
+    height: map.get($avatar, 'sizes', 'md', 'height');
+    width: map.get($avatar, 'sizes', 'md', 'width');
+    background-color: map.get($avatar, 'config', 'bg-color');
+    color: map.get($avatar, 'config', 'color');
+    font-size: map.get($avatar, 'sizes', 'md', 'font-size');
+    font-weight: map.get($avatar, 'config', 'font-weight');
+    overflow: hidden;
+    @include mix.flex-column-center;
 
-		&:has(img) {
-			padding: 0;
-		}
+    &:has(img) {
+      padding: 0;
+    }
 
-		img {
-			width: 100%;
-			height: 100%;
-			object-fit: cover;
-		}
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
 
-		@each $size, $values in map.get($avatar, 'sizes') {
-			&--#{$size} {
-				width: map.get($values, 'width');
-				height: map.get($values, 'height');
-			}
-		}
-	}
+    @each $size, $values in map.get($avatar, 'sizes') {
+      &--#{$size} {
+        width: map.get($values, 'width');
+        height: map.get($values, 'height');
+      }
+    }
+  }
 }
