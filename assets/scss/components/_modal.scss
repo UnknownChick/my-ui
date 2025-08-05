@@ -11,66 +11,68 @@ $modal: (
   box-shadow: map.get(var.$global, box-shadow),
   close-background-color: map.get(c.$semantic, greyscale),
   close-border-radius: 50%,
+  close-color: map.get(c.$semantic, 'white'),
   close-size: 1.5rem,
   color: map.get(c.$semantic, text),
   padding: 1rem,
 ) !default;
 
 @layer components {
-	.#{$_cn} {
-		background-color: map.get($modal, background-color);
-		box-shadow: map.get($modal, box-shadow);
-		border-radius: map.get($modal, border-radius);
-		margin: auto;
-		width: 100%;
-		overflow: visible;
+  .#{$_cn} {
+    background-color: map.get($modal, background-color);
+    box-shadow: map.get($modal, box-shadow);
+    border-radius: map.get($modal, border-radius);
+    margin: auto;
+    width: 100%;
+    overflow: visible;
 
-		p, ul, ol, a {
-			color: map.get($modal, color);
-		}
+    p, ul, ol, a {
+      color: map.get($modal, color);
+    }
 
-		&__close {
-			position: absolute;
-			background-color: map.get($modal, close-background-color);
-			border-radius: map.get($modal, close-border-radius);
-			width: map.get($modal, close-size);
-			height: map.get($modal, close-size);
-			top: map.get($modal, padding);
-			right: map.get($modal, padding);
-			padding: 0.125rem;
-			display: flex;
-			justify-content: center;
-			align-items: center;
-			cursor: pointer;
-			transition: transform map.get(var.$global, animation-duration) ease-in-out;
+    &__close {
+      position: absolute;
+      background-color: map.get($modal, close-background-color);
+      color: map.get($modal, close-color);
+      border-radius: map.get($modal, close-border-radius);
+      width: map.get($modal, close-size);
+      height: map.get($modal, close-size);
+      top: map.get($modal, padding);
+      right: map.get($modal, padding);
+      padding: 0.125rem;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+      transition: transform map.get(var.$global, animation-duration) ease-in-out;
 
-			&:hover {
-				transform: scale(1.1);
-			}
-		}
+      &:hover {
+        transform: scale(1.1);
+      }
+    }
 
-		&__title {
-			padding: map.get($modal, padding);
-			border-bottom: 1px solid map.get(c.$semantic, greyscale);
-		}
+    &__title {
+      padding: map.get($modal, padding);
+      border-bottom: 1px solid map.get(c.$semantic, greyscale);
+    }
 
-		&__content {
-			padding: map.get($modal, padding);
-		}
+    &__content {
+      padding: map.get($modal, padding);
+    }
 
-		&__footer {
-			padding: map.get($modal, padding);
-			display: flex;
-			justify-content: flex-end;
-			gap: 1rem;
-		}
-	}
+    &__footer {
+      padding: map.get($modal, padding);
+      display: flex;
+      justify-content: flex-end;
+      gap: 1rem;
+    }
+  }
 
-	dialog.preview {
-		padding: 0;
-	}
+  dialog.preview {
+    padding: 0;
+  }
 
-	::backdrop {
-		background-color: map.get($modal, backdrop-color);
-	}
+  ::backdrop {
+    background-color: map.get($modal, backdrop-color);
+  }
 }
