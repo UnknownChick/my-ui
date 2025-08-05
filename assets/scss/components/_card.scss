@@ -6,7 +6,7 @@ $_cn: card;
 
 $card: (
   background-color: map.get(c.$white, 500),
-  border-radius: map.get(v.$global, border-radius),
+  border-radius: map.get(var.$global, border-radius),
   padding: 2rem,
   title-font-size: 1.5rem,
 ) !default;
