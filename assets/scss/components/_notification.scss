@@ -6,11 +6,11 @@ $_cn: notification;
 
 $notification: (
   config: (
-		border-radius: map.get(var.$global, border-radius),
-		border-size: 0.25rem,
-		padding: 0.75rem 1rem,
+    border-radius: map.get(var.$global, border-radius),
+    border-size: 0.25rem,
+    padding: 0.75rem 1rem,
   ),
-	sizes: (
+  sizes: (
     xs: (
       padding: 0.5rem 0.75rem,
       font-size: 0.75rem
@@ -35,10 +35,10 @@ $notification: (
 ) !default;
 
 @mixin notification-variant($background, $border, $color) {
-	background-color: $background;
-	border-left: map.get($notification, config, border-size) solid $border;
-	color: $color;
-	font-size: map.get($notification, sizes, md, font-size);
+  background-color: $background;
+  border-left: map.get($notification, config, border-size) solid $border;
+  color: $color;
+  font-size: map.get($notification, sizes, md, font-size);
 }
 
 @layer components {
