@@ -42,42 +42,42 @@ $alert: (
 }
 
 @layer components {
-	.#{$_cn} {
-		display: block;
-		padding: map.get($alert, 'sizes', 'md', 'padding');
-		background-color: transparent;
-		color: inherit;
-		border: solid 1px black;
-		border-radius: map.get(v.$global, border-radius);
-		position: relative;
-		line-height: 1;
-		font-weight: 600;
-		font-size: map.get($alert, 'sizes', 'md', 'font-size');
-		width: 100%;
-	
-		@each $size, $values in map.get($alert, 'sizes') {
-			&--#{$size} {
-				padding: map.get($values, 'padding');
-				font-size: map.get($values, 'font-size');
-			}
-		}
-	
-		@each $color-name, $color-values in c.$accents {
-			&--soft-#{$color-name} {
-				@include alert-variant(
-					map.get($color-values, 'soft'),
-					map.get($color-values, 'high'),
-					map.get($color-values, 'high')
-				);
-			}
-	
-			&--high-#{$color-name} {
-				@include alert-variant(
-					map.get($color-values, 'high'),
-					map.get($color-values, 'high'),
-					map.get($color-values, 'soft')
-				);
-			}
-		}
-	}
+  .#{$_cn} {
+    display: block;
+    padding: map.get($alert, 'sizes', 'md', 'padding');
+    background-color: transparent;
+    color: inherit;
+    border: solid 1px black;
+    border-radius: map.get(v.$global, border-radius);
+    position: relative;
+    line-height: 1;
+    font-weight: 600;
+    font-size: map.get($alert, 'sizes', 'md', 'font-size');
+    width: 100%;
+
+    @each $size, $values in map.get($alert, 'sizes') {
+      &--#{$size} {
+        padding: map.get($values, 'padding');
+        font-size: map.get($values, 'font-size');
+      }
+    }
+
+    @each $color-name, $color-values in c.$accents {
+      &--soft-#{$color-name} {
+        @include alert-variant(
+          map.get($color-values, 'soft'),
+          map.get($color-values, 'high'),
+          map.get($color-values, 'high')
+        );
+      }
+
+      &--high-#{$color-name} {
+        @include alert-variant(
+          map.get($color-values, 'high'),
+          map.get($color-values, 'high'),
+          map.get($color-values, 'soft')
+        );
+      }
+    }
+  }
 }
