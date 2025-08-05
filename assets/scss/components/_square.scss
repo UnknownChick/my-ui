@@ -1,12 +1,12 @@
 @use 'sass:map';
 @use '../abstracts/colors' as c;
-@use '../abstracts/variables' as v;
+@use '../abstracts/variables' as var;
 
 $_cn: square;
 
 $square: (
   config: (
-    border-radius: map.get(v.$global, border-radius),
+    border-radius: map.get(var.$global, border-radius),
   ),
   sizes: (
     xs: (
@@ -38,19 +38,19 @@ $square: (
 		border-radius: map.get($square, config, border-radius);
 		width: map.get($square, sizes, md, width);
 		height: map.get($square, sizes, md, height);
-	
+
 		@each $size, $values in map.get($square, sizes) {
 			&--#{$size} {
 				width: map.get($values, width);
 				height: map.get($values, height);
 			}
 		}
-	
+
 		@each $color-name, $color-values in c.$accents {
 			&--soft-#{$color-name} {
 				background-color: map.get($color-values, soft);
 			}
-	
+
 			&--high-#{$color-name} {
 				background-color: map.get($color-values, high);
 			}

@@ -1,14 +1,14 @@
 @use 'sass:map';
 @use '../abstracts/colors' as c;
-@use '../abstracts/variables' as v;
+@use '../abstracts/variables' as var;
 
 $_cn: modal;
 
 $modal: (
   backdrop-color: rgba(0,0,0,0.5),
   background-color: map.get(c.$semantic, 'white'),
-  border-radius: map.get(v.$global, border-radius),
-  box-shadow: map.get(v.$global, box-shadow),
+  border-radius: map.get(var.$global, border-radius),
+  box-shadow: map.get(var.$global, box-shadow),
   close-background-color: map.get(c.$semantic, greyscale),
   close-border-radius: 50%,
   close-size: 1.5rem,
@@ -24,11 +24,11 @@ $modal: (
 		margin: auto;
 		width: 100%;
 		overflow: visible;
-	
+
 		p, ul, ol, a {
 			color: map.get($modal, color);
 		}
-	
+
 		&__close {
 			position: absolute;
 			background-color: map.get($modal, close-background-color);
@@ -42,22 +42,22 @@ $modal: (
 			justify-content: center;
 			align-items: center;
 			cursor: pointer;
-			transition: transform map.get(v.$global, animation-duration) ease-in-out;
-	
+			transition: transform map.get(var.$global, animation-duration) ease-in-out;
+
 			&:hover {
 				transform: scale(1.1);
 			}
 		}
-	
+
 		&__title {
 			padding: map.get($modal, padding);
 			border-bottom: 1px solid map.get(c.$semantic, greyscale);
 		}
-	
+
 		&__content {
 			padding: map.get($modal, padding);
 		}
-	
+
 		&__footer {
 			padding: map.get($modal, padding);
 			display: flex;
@@ -65,11 +65,11 @@ $modal: (
 			gap: 1rem;
 		}
 	}
-	
+
 	dialog.preview {
 		padding: 0;
 	}
-	
+
 	::backdrop {
 		background-color: map.get($modal, backdrop-color);
 	}

@@ -1,15 +1,15 @@
 @use 'sass:map';
 @use '../abstracts/colors' as c;
-@use '../abstracts/variables' as v;
+@use '../abstracts/variables' as var;
 
 @layer utilities {
-	@each $fs-class, $font-size in v.$fs {
+	@each $fs-class, $font-size in var.$fs {
 		.fs-#{$fs-class} {
 			font-size: #{$font-size};
 		}
 	}
 
-	@each $title, $font-size in v.$fs-title {
+	@each $title, $font-size in var.$fs-title {
 		#{$title} {
 			font-size: #{$font-size};
 		}

@@ -1,11 +1,11 @@
 @use 'sass:map';
-@use '../abstracts/variables' as v;
+@use '../abstracts/variables' as var;
 
 $percentages: 25, 50, 75;
 $window-percentages: 25, 50, 75, 100;
 
 @layer utilities {
-	@each $name, $width in v.$breakpoints {
+	@each $name, $width in var.$breakpoints {
 		.w-#{$name} {
 			width: $width;
 		}
@@ -28,7 +28,7 @@ $window-percentages: 25, 50, 75, 100;
 			height: #{$p}#{"%"};
 		}
 	}
-	
+
 	@each $wp in $window-percentages {
 		.vw-#{$wp} {
 			width: #{$wp}vw;

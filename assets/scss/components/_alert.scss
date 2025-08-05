@@ -1,13 +1,13 @@
 @use 'sass:map';
 @use '../abstracts/colors' as c;
-@use '../abstracts/variables' as v;
+@use '../abstracts/variables' as var;
 
 $_cn: alert;
 
 $alert: (
   config: (
     border-color: black,
-    border-radius: map.get(v.$global, border-radius),
+    border-radius: map.get(var.$global, border-radius),
     border-size: 2px,
     font-weight: 600,
   ),
@@ -48,7 +48,7 @@ $alert: (
     background-color: transparent;
     color: inherit;
     border: solid 1px black;
-    border-radius: map.get(v.$global, border-radius);
+    border-radius: map.get(var.$global, border-radius);
     position: relative;
     line-height: 1;
     font-weight: 600;

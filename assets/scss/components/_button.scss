@@ -1,16 +1,16 @@
 @use 'sass:color';
 @use 'sass:map';
 @use '../abstracts/colors' as c;
-@use '../abstracts/variables' as v;
+@use '../abstracts/variables' as var;
 
 $_cn: btn;
 
 $btn: (
 	config: (
-		border-radius: map.get(v.$global, border-radius),
+		border-radius: map.get(var.$global, border-radius),
 		border-width: 2px,
 		font-weight: 400,
-		transition: all map.get(v.$global, animation-duration) ease-in-out
+		transition: all map.get(var.$global, animation-duration) ease-in-out
 	),
 	sizes: (
 		xs: (
@@ -116,14 +116,14 @@ $btn: (
 		transition: map.get($btn, config, transition);
 		border-width: map.get($btn, config, border-width);
 		border-style: solid;
-	
+
 		@each $size, $values in map.get($btn, sizes) {
 			&--#{$size} {
 				padding: map.get($values, padding);
 				font-size: map.get($values, font-size);
 			}
 		}
-	
+
 		@each $color-name, $color-values in map.get($btn, colors) {
 			&--#{$color-name} {
 				@include button-solid(
@@ -131,12 +131,12 @@ $btn: (
 					map.get($color-values, hover)
 				);
 			}
-	
+
 			&--#{$color-name}-outline {
 				@include button-outline(map.get($color-values, default));
 			}
 		}
-	
+
 		@each $color-name, $color-values in c.$accents {
 			&--soft-#{$color-name} {
 				@include button-accent(
@@ -144,7 +144,7 @@ $btn: (
 					map.get($color-values, high),
 				);
 			}
-	
+
 			&--high-#{$color-name} {
 				@include button-accent(
 					map.get($color-values, high),
@@ -152,25 +152,25 @@ $btn: (
 				);
 			}
 		}
-	
+
 		&--fluid {
 			width: 100%;
 		}
-	
+
 		&--center {
 			margin: auto;
 		}
-	
+
 		&--icon {
 			gap: 0.5rem;
 		}
-	
+
 		&:disabled {
 			opacity: 0.65;
 			cursor: not-allowed;
 		}
 	}
-	
+
 	.#{$_cn}--link {
 		appearance: none;
 		background-color: transparent;

@@ -2,11 +2,11 @@
 @use 'sass:map';
 @use '../abstracts/colors' as c;
 @use '../abstracts/mixins' as m;
-@use '../abstracts/variables' as v;
+@use '../abstracts/variables' as var;
 
 $form: (
 	border: 1px solid map.get(c.$greyscale, 200),
-	border-radius: map.get(v.$global, border-radius),
+	border-radius: map.get(var.$global, border-radius),
 	default-gap: 1rem,
 	padding: 0.375rem 0.75rem,
 	transition-duration: 150ms,
@@ -20,7 +20,7 @@ $form: (
 	&:not(:is([type="color"])) {
 		padding: map.get($form, padding);
 	}
-	
+
 }
 
 @mixin input-transition {
@@ -68,12 +68,12 @@ $form: (
 			border-radius: map.get($form, border-radius);
 			border: map.get($form, border);
 			cursor: pointer;
-	
+
 			&:checked {
 				background-color: map.get(c.$palette, primary);
 				border: 1px solid map.get(c.$palette, primary);
 				@include input-transition;
-	
+
 				&::before {
 					content: '';
 					position: absolute;
@@ -109,7 +109,7 @@ $form: (
 					content: '';
 					display: block;
 					position: absolute;
-					width: 0.5rem; 
+					width: 0.5rem;
 					height: 0.5rem;
 					background-color: map.get(c.$semantic, 'white');
 					border-radius: 50%;
@@ -192,7 +192,7 @@ $form: (
 				border-radius: map.get($form, border-radius);
 			}
 
-			&::-ms-thumb { 
+			&::-ms-thumb {
 				width: 1.25rem;
 				height: 1.25rem;
 				background: map.get(c.$palette, primary);
@@ -200,12 +200,12 @@ $form: (
 				border: none;
 			}
 		}
-	
+
 		textarea {
 			resize: vertical;
 			min-width: 100px;
 		}
-	
+
 		label {
 			display: block;
 			font-weight: 500;
@@ -218,10 +218,10 @@ $form: (
 			color: map.get(c.$greyscale, 600);
 			cursor: help;
 		}
-	
+
 		.input-container {
 			position: relative;
-	
+
 			label {
 				margin-bottom: 0.5rem;
 			}

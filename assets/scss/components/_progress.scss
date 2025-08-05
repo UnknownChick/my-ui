@@ -1,13 +1,13 @@
 @use 'sass:map';
 @use '../abstracts/colors' as c;
-@use '../abstracts/variables' as v;
+@use '../abstracts/variables' as var;
 
 $_cn: progress;
 
 $progress: (
 	bg-color: map.get(c.$semantic, greyscale),
 	border: none,
-	border-radius: map.get(v.$global, border-radius),
+	border-radius: map.get(var.$global, border-radius),
 	heigh: 1rem,
 	track-bg-color: green,
 	value-bg-color: red,

@@ -1,13 +1,13 @@
 @use 'sass:map';
 @use '../abstracts/colors' as c;
-@use '../abstracts/variables' as v;
+@use '../abstracts/variables' as var;
 
 $_cn: toast;
 
 $toast: (
 	border: 1px solid map.get(c.$semantic, greyscale),
-	border-radius: map.get(v.$global, border-radius),
-	box-shadow: map.get(v.$global, box-shadow),
+	border-radius: map.get(var.$global, border-radius),
+	box-shadow: map.get(var.$global, box-shadow),
 	max-width: 400px,
 	padding: 1.5rem,
 	progress-color: map.get(c.$palette, primary),

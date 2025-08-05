@@ -1,14 +1,14 @@
 @use 'sass:map';
 @use '../abstracts/colors' as c;
 @use '../abstracts/mixins' as mix;
-@use '../abstracts/variables' as v;
+@use '../abstracts/variables' as var;
 
 $_cn: pagination;
 
 $pagination: (
   animation-duration: 0.15s,
   border-colors-iddle: #dee2e6,
-  border-radius: map.get(v.$global, border-radius),
+  border-radius: map.get(var.$global, border-radius),
   border-size: 1px,
   color-active: map.get(c.$palette, primary),
   color-default: map.get(c.$semantic, greyscale),

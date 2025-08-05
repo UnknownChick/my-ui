@@ -1,14 +1,14 @@
 @use 'sass:map';
 @use '../abstracts/colors' as c;
-@use '../abstracts/variables' as v;
+@use '../abstracts/variables' as var;
 
 $_cn: notification;
 
 $notification: (
   config: (
-		border-radius: map.get(v.$global, border-radius),
+		border-radius: map.get(var.$global, border-radius),
 		border-size: 0.25rem,
-		padding: 0.75rem 1rem,	
+		padding: 0.75rem 1rem,
   ),
 	sizes: (
     xs: (

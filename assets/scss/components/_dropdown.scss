@@ -1,13 +1,13 @@
 @use 'sass:map';
 @use '../abstracts/colors' as c;
-@use '../abstracts/variables' as v;
+@use '../abstracts/variables' as var;
 
 $_cn: dropdown;
 
 $dropdown: (
 	border: 1px solid map.get(c.$greyscale, 100),
-	border-radius: map.get(v.$global, border-radius),
-	box-shadow: map.get(v.$global, box-shadow),
+	border-radius: map.get(var.$global, border-radius),
+	box-shadow: map.get(var.$global, box-shadow),
 	margin: 0.5rem,
 	transition-duration: 150ms,
 	width: 300px,

@@ -1,6 +1,6 @@
 @use 'sass:map';
 @use '../abstracts/colors' as c;
-@use '../abstracts/variables' as v;
+@use '../abstracts/variables' as var;
 
 $_cn: loader;
 
@@ -20,7 +20,7 @@ $loader: (
 		border-radius: 100%;
 		display: block;
 		animation: rotation map.get($loader, animation-duration) linear infinite;
-	
+
 		@each $color-name, $color-value in c.$semantic {
 			&--#{$color-name} {
 				border: map.get($loader, border-size) solid $color-value;
@@ -32,7 +32,7 @@ $loader: (
 				border: map.get($loader, border-size) solid $color-value;
 			}
 		}
-		
+
 		@keyframes rotation {
 			0% {
 				transform: rotate(0deg);

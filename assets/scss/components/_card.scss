@@ -1,11 +1,11 @@
 @use 'sass:map';
 @use '../abstracts/colors' as c;
-@use '../abstracts/variables' as v;
+@use '../abstracts/variables' as var;
 
 $_cn: card;
 
 $card: (
-  border-radius: map.get(v.$global, border-radius),
+  border-radius: map.get(var.$global, border-radius),
   padding: 2rem,
 	title-font-size: 1.5rem,
 ) !default;
@@ -13,21 +13,21 @@ $card: (
 @layer components {
 	.#{$_cn} {
 		border-radius: map.get($card, border-radius);
-		box-shadow: map.get(v.$global, box-shadow);
+		box-shadow: map.get(var.$global, box-shadow);
 		height: 100%;
-	
+
 		&__title {
 			padding: map.get($card, padding);
 			display: flex;
 			align-items: center;
 			border-bottom: 2px solid map.get(c.$semantic, greyscale);
-	
+
 			p {
 				font-size: map.get($card, title-font-size);
 				color: map.get(c.$semantic, text);
 			}
 		}
-	
+
 		&__body {
 			padding: map.get($card, padding);
 		}

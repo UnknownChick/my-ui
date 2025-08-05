@@ -1,14 +1,14 @@
 @use 'sass:map';
 @use '../abstracts/colors' as c;
 @use '../abstracts/mixins' as m;
-@use '../abstracts/variables' as v;
+@use '../abstracts/variables' as var;
 
 $_cn: tooltip;
 
 $tooltip: (
 	background-color: map.get(c.$palette, primary),
 	border-radius: 0.25rem,
-	box-shadow: map.get(v.$global, box-shadow),
+	box-shadow: map.get(var.$global, box-shadow),
 	color: map.get(c.$semantic, 'white'),
 	cursor: help,
 	max-width: 200px,
@@ -27,7 +27,7 @@ $tooltip: (
 		box-shadow: map.get($tooltip, box-shadow);
 		transform: none;
 		max-width: map.get($tooltip, max-width);
-		transition: opacity map.get(v.$global, animation-duration) ease-in-out, visibility map.get(v.$global, animation-duration) ease-in-out;
+		transition: opacity map.get(var.$global, animation-duration) ease-in-out, visibility map.get(var.$global, animation-duration) ease-in-out;
 		pointer-events: none;
 
 		&::before {
