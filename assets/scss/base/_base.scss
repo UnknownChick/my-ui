@@ -4,6 +4,7 @@
 @layer base {
   body {
     font-family: sans-serif;
+    line-height: calc(1em + 0.5rem);
   }
 
   h1, h2, h3 ,h4 ,h5, h6 {
