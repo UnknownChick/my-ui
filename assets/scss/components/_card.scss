@@ -5,31 +5,37 @@
 $_cn: card;
 
 $card: (
-  border-radius: map.get(var.$global, border-radius),
+  background-color: map.get(c.$white, 500),
+  border-radius: map.get(v.$global, border-radius),
   padding: 2rem,
-	title-font-size: 1.5rem,
+  title-font-size: 1.5rem,
 ) !default;
 
 @layer components {
-	.#{$_cn} {
-		border-radius: map.get($card, border-radius);
-		box-shadow: map.get(var.$global, box-shadow);
-		height: 100%;
+  .#{$_cn} {
+    background-color: map.get($card, background-color);
+    border-radius: map.get($card, border-radius);
+    box-shadow: map.get(var.$global, box-shadow);
 
-		&__title {
-			padding: map.get($card, padding);
-			display: flex;
-			align-items: center;
-			border-bottom: 2px solid map.get(c.$semantic, greyscale);
+    &__title {
+      padding: map.get($card, padding);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 2px solid map.get(c.$greyscale, 100);
 
-			p {
-				font-size: map.get($card, title-font-size);
-				color: map.get(c.$semantic, text);
-			}
-		}
+      p {
+        font-size: map.get($card, title-font-size);
+        color: map.get(c.$semantic, text);
+      }
+    }
 
-		&__body {
-			padding: map.get($card, padding);
-		}
-	}
+    &__body {
+      padding: map.get($card, padding);
+    }
+
+    &__footer {
+      padding: 0 map.get($card, padding) map.get($card, padding);
+    }
+  }
 }
