@@ -1,16 +1,16 @@
 @use 'sass:color';
 @use 'sass:map';
 @use '../abstracts/colors' as c;
-@use '../abstracts/variables' as v;
+@use '../abstracts/variables' as var;
 
 $_cn: btn;
 
 $btn: (
   config: (
-    border-radius: map.get(v.$global, border-radius),
+    border-radius: map.get(var.$global, border-radius),
     border-width: 2px,
     font-weight: 400,
-    transition: all map.get(v.$global, animation-duration) ease-in-out
+    transition: all map.get(var.$global, animation-duration) ease-in-out
   ),
   sizes: (
     xs: (
@@ -177,7 +177,7 @@ $btn: (
     border: none;
     padding: 0;
     cursor: pointer;
-    transition: color map.get(v.$global, animation-duration) ease-in-out;
+    transition: color map.get(var.$global, animation-duration) ease-in-out;
 
     &:hover {
       color: map.get(c.$primary, 500);
