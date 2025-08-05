@@ -14,14 +14,14 @@ $icon: (
 ) !default;
 
 @layer components {
-	.#{$_cn} {
-		display: block;
-	
-		@each $size, $value in $icon {
-			&--#{$size} {
-				height: $value;
-				width: $value;
-			}
-		}
-	}
+  .#{$_cn} {
+    display: block;
+
+    @each $size, $value in $icon {
+      &--#{$size} {
+        height: $value;
+        width: $value;
+      }
+    }
+  }
 }
