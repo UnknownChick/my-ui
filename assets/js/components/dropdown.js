@@ -52,11 +52,11 @@ export default class Dropdown {
 			}
 		});
 		dropdownGroup.isOpen = true;
-		dropdownGroup.content.classList.add('dropdown__content--open');
+		dropdownGroup.button.closest('.dropdown').classList.add('dropdown--open');
 	}
 
 	closeDropdown(dropdownGroup) {
 		dropdownGroup.isOpen = false;
-		dropdownGroup.content.classList.remove('dropdown__content--open');
+		dropdownGroup.button.closest('.dropdown').classList.remove('dropdown--open');
 	}
 }

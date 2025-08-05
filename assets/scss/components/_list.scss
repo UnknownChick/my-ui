@@ -4,19 +4,19 @@
 $_cn: list;
 
 $list: (
-	border: 1px solid map.get(c.$greyscale, 200),
-	padding: 1rem
+  border: 1px solid map.get(c.$greyscale, 200),
+  padding: 1rem
 ) !default;
 
 @layer components {
-	.#{$_cn} {
+  .#{$_cn} {
 
-		&__item {
-			padding: map.get($list, padding) 0;
+    &__item {
+      padding: map.get($list, padding) 0;
 
-			&:not(:last-child) {
-				border-bottom: map.get($list, border);
-			}
-		}
-	}
+      &:not(:last-child) {
+        border-bottom: map.get($list, border);
+      }
+    }
+  }
 }

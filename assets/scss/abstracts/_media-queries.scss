@@ -1,9 +1,9 @@
 @use 'sass:map';
-@use 'variables' as v;
+@use 'variables' as var;
 
 @mixin min-device($breakpoint) {
-  @if map.has-key(v.$breakpoints, $breakpoint) {
-    @media screen and (min-width: map.get(v.$breakpoints, $breakpoint)) {
+  @if map.has-key(var.$breakpoints, $breakpoint) {
+    @media screen and (min-width: map.get(var.$breakpoints, $breakpoint)) {
       @content;
     }
   } @else {
@@ -12,8 +12,8 @@
 }
 
 @mixin max-device($breakpoint) {
-	@if map.has-key(v.$breakpoints, $breakpoint) {
-		@media screen and (max-width: (map.get(v.$breakpoints, $breakpoint) - 1)) {
+	@if map.has-key(var.$breakpoints, $breakpoint) {
+		@media screen and (max-width: (map.get(var.$breakpoints, $breakpoint) - 1)) {
 			@content;
 		}
 	} @else {
@@ -22,9 +22,9 @@
 }
 
 @mixin only-device($breakpoint) {
-	@if map.has-key(v.$breakpoints, $breakpoint) {
-		$breakpoints-length: length(v.$breakpoints);
-		$map-list: map.keys(v.$breakpoints);
+	@if map.has-key(var.$breakpoints, $breakpoint) {
+		$breakpoints-length: length(var.$breakpoints);
+		$map-list: map.keys(var.$breakpoints);
 
 		@if index($map-list, $breakpoint) == $breakpoints-length {
 			@include min-device($breakpoint) {
@@ -46,7 +46,7 @@
 }
 
 @mixin between-devices($min-device, $max-device) {
-	@if map.has-key(v.$breakpoints, $min-device) and map.has-key(v.$breakpoints, $max-device) {
+	@if map.has-key(var.$breakpoints, $min-device) and map.has-key(var.$breakpoints, $max-device) {
 		@include min-device($min-device) {
 			@include max-device($max-device) {
 				@content;

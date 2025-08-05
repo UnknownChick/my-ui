@@ -1,25 +1,25 @@
 @use 'sass:map';
-@use '../abstracts/variables' as v;
+@use '../abstracts/variables' as var;
 
 $_cn: img;
 
 $img: (
-  border-radius: map.get(v.$global, border-radius),
+  border-radius: map.get(var.$global, border-radius),
 ) !default;
 
 @layer components {
-	img.#{$_cn} {
-		&--fluid {
-			width: 100%;
-		}
-	
-		&--rounded {
-			border-radius: map.get($img, border-radius);
-		}
-	
-		&--circle {
-			border-radius: 50%;
-			aspect-ratio: 1/1;
-		}
-	}
+  img.#{$_cn} {
+    &--fluid {
+      width: 100%;
+    }
+
+    &--rounded {
+      border-radius: map.get($img, border-radius);
+    }
+
+    &--circle {
+      border-radius: 50%;
+      aspect-ratio: 1/1;
+    }
+  }
 }

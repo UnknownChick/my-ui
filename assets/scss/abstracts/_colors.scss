@@ -3,65 +3,65 @@
 @use 'functions' as func;
 
 $accents: (
-	'red': (
-		soft: #FFD9D9,
-		high: #EE6767,
-	),
-	'orange': (
-		soft: #FFF0D6,
-		high: #FFA200,
-	),
-	'blue': (
-		soft: #EBF0FF,
-		high: #4E7AFF,
-	),
-	'green': (
-		soft: #DCFFEB,
-		high: #00CB58,
-	),
-	'purple': (
-		soft: #E6DCFF,
-		high: #8454FF,
-	),
-	'grey': (
-		soft: #F0F3F5,
-		high: #809FB8,
-	),
-	'brown': (
-		soft: #FFF3D0,
-		high: #C56C4A,
-	),
-	'cyan': (
-		soft: #F2FFFF,
-		high: #51E5E6,
-	),
-	'black': (
-		soft: #F1F1F1,
-		high: #202020,
-	),
+  'red': (
+    soft: #FFD9D9,
+    high: #EE6767,
+  ),
+  'orange': (
+    soft: #FFF0D6,
+    high: #FFA200,
+  ),
+  'blue': (
+    soft: #EBF0FF,
+    high: #4E7AFF,
+  ),
+  'green': (
+    soft: #DCFFEB,
+    high: #00CB58,
+  ),
+  'purple': (
+    soft: #E6DCFF,
+    high: #8454FF,
+  ),
+  'grey': (
+    soft: #F0F3F5,
+    high: #809FB8,
+  ),
+  'brown': (
+    soft: #FFF3D0,
+    high: #C56C4A,
+  ),
+  'cyan': (
+    soft: #F2FFFF,
+    high: #51E5E6,
+  ),
+  'black': (
+    soft: #F1F1F1,
+    high: #202020,
+  ),
 ) !default;
 
 $palette: (
-	primary: #0068ff,
-	secondary: #2f322a,
+  primary: #0068ff,
+  secondary: #2f322a,
 ) !default;
 
 $semantic: (
-	success:  #22b934,
-	danger: #ba2123,
-	warning: #f0ad4e,
-	info: #5abfdd,
-	link: #3347EF,
-	greyscale: #adadad,
-	text: #191919,
-	'white': #FFFFFF,
-	'black': #000000,
+  success:  #22b934,
+  danger: #ba2123,
+  warning: #f0ad4e,
+  info: #5abfdd,
+  link: #3347EF,
+  greyscale: #adadad,
+  text: #191919,
+  'white': #FFFFFF,
+  'black': #000000,
 ) !default;
 
 $status: (
-	online: map.get($semantic, success),
-	absent: map.get($semantic, warning),
-	offline: map.get($semantic, danger),
+  online: map.get($semantic, success),
+  absent: map.get($semantic, warning),
+  offline: map.get($semantic, danger),
 ) !default;
 
 $primary: func.generate-color-palette(map.get($palette, primary));
@@ -72,3 +72,5 @@ $warning: func.generate-color-palette(map.get($semantic, warning));
 $info: func.generate-color-palette(map.get($semantic, info));
 $greyscale: func.generate-color-palette(map.get($semantic, greyscale));
 $text: func.generate-color-palette(map.get($semantic, text));
+$white: func.generate-color-palette(map.get($semantic, 'white'));
+$black: func.generate-color-palette(map.get($semantic, 'black'));
