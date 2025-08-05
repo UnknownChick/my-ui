@@ -52,7 +52,7 @@ $avatar: (
     font-size: map.get($avatar, 'sizes', 'md', 'font-size');
     font-weight: map.get($avatar, 'config', 'font-weight');
     overflow: hidden;
-    @include mix.flex-column-center;
+    @include mix.flex-column-center-center;
 
     &:has(img) {
       padding: 0;
@@ -68,6 +68,7 @@ $avatar: (
       &--#{$size} {
         width: map.get($values, 'width');
         height: map.get($values, 'height');
+        font-size: map.get($values, 'font-size');
       }
     }
   }
