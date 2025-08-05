@@ -1,20 +1,21 @@
-.pos-absolute {
-  position: absolute;
-}
+@layer utilities {
+  .pos-absolute {
+    position: absolute;
+  }
 
-.pos-fixed {
-  position: fixed;
-}
+  .pos-fixed {
+    position: fixed;
+  }
 
-.pos-relative {
-  position: relative;
-}
+  .pos-relative {
+    position: relative;
+  }
 
-.pos-static {
-  position: static;
-}
+  .pos-static {
+    position: static;
+  }
 
-.post-sticky {
-  position: sticky;
+  .post-sticky {
+    position: sticky;
+  }
 }
-

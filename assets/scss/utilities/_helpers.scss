@@ -58,6 +58,8 @@
   .subtitle {
     text-transform: uppercase;
     font-size: clamp(1.25rem, 0.9375rem + 1vw, 1.5rem);
+    font-weight: 800;
+    color: map.get(c.$secondary, 500);
   }
 
   .text-center {
@@ -70,5 +72,10 @@
 
   .text-right {
     text-align: right;
+  }
+
+  .icon-link {
+    gap: 0.5rem;
+    @include mix.flex-row-align-center;
   }
 }

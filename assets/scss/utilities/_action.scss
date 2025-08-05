@@ -1,4 +1,14 @@
-.help {
-	text-decoration: underline;
-	cursor: help;
+@layer utilities {
+  .dragging {
+    cursor: grabbing;
+  }
+
+  .clickable {
+    cursor: pointer;
+  }
+
+  .help {
+    text-decoration: underline;
+    cursor: help;
+  }
 }
