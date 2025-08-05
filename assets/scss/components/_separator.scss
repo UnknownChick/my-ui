@@ -1,6 +1,5 @@
 @use 'sass:map';
 @use '../abstracts/colors' as c;
-@use '../abstracts/variables' as var;
 
 $_cn: separator;
 
@@ -10,9 +9,22 @@ $separator: (
 ) !default;
 
 @layer components {
-	hr {
-		height: map.get($separator, height);
-		background-color: map.get($separator, color);
-		border: none;
-	}
+  .#{$_cn} {
+    height: map.get($separator, height);
+    background-color: map.get($separator, color);
+    border: none;
+    display: block;
+
+    @each $color-name, $color-value in c.$palette {
+      &--#{$color-name} {
+        background-color: $color-value;
+      }
+    }
+
+    @each $color-name, $color-value in c.$semantic {
+      &--#{$color-name} {
+        background-color: $color-value;
+      }
+    }
+  }
 }
