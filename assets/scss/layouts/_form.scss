@@ -27,7 +27,7 @@ $form: (
 	transition: border-color map.get($form, transition-duration) ease-in-out, box-shadow map.get($form, transition-duration) ease-in-out;
 }
 
-@layer components {
+@layer sidevui.components {
 	form {
 		& > *:not(:last-child) {
 			margin-bottom: map.get($form, default-gap);

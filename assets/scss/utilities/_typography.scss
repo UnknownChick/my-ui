@@ -2,7 +2,7 @@
 @use '../abstracts/colors' as c;
 @use '../abstracts/variables' as v;
 
-@layer utilities {
+@layer sidevui.utilities {
   @each $fs-class, $font-size in v.$fs {
     .fs-#{$fs-class} {
       font-size: #{$font-size};

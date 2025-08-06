@@ -17,7 +17,7 @@ $modal: (
   padding: 1rem,
 ) !default;
 
-@layer components {
+@layer sidevui.components {
   .#{$_cn} {
     background-color: map.get($modal, background-color);
     box-shadow: map.get($modal, box-shadow);

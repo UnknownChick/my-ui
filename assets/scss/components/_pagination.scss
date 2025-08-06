@@ -22,7 +22,7 @@ $pagination: (
   size-icon: 1rem
 ) !default;
 
-@layer components {
+@layer sidevui.components {
   .#{$_cn} {
     font-size: map.get($pagination, font-size);
 

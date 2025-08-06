@@ -1,7 +1,7 @@
 @use 'sass:map';
 @use '../abstracts/variables' as var;
 
-@layer base {
+@layer sidevui.base {
   body {
     font-family: sans-serif;
     line-height: calc(1em + 0.5rem);

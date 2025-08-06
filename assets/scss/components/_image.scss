@@ -7,7 +7,7 @@ $img: (
   border-radius: map.get(var.$global, border-radius),
 ) !default;
 
-@layer components {
+@layer sidevui.components {
   img.#{$_cn} {
     &--fluid {
       width: 100%;

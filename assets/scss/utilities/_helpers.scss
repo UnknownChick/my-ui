@@ -2,7 +2,7 @@
 @use '../abstracts/colors' as c;
 @use '../abstracts/mixins' as mix;
 
-@layer utilities {
+@layer sidevui.utilities {
   @include mix.generate-color-classes('primary', c.$primary);
   @include mix.generate-color-classes('secondary', c.$secondary);
   @include mix.generate-color-classes('success', c.$success);

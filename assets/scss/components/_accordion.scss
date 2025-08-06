@@ -8,7 +8,7 @@ $accordion: (
   title-font-weight: 700,
 ) !default;
 
-@layer components {
+@layer sidevui.components {
   .#{$_cn} {
     border-bottom: 1px solid #e0e0e6;
 

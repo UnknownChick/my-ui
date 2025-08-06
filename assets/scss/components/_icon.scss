@@ -13,7 +13,7 @@ $icon: (
   fluid: 100%
 ) !default;
 
-@layer components {
+@layer sidevui.components {
   .#{$_cn} {
     display: block;
 

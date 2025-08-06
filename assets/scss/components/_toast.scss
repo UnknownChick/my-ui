@@ -38,7 +38,7 @@ $toast: (
   to { width: 0%; }
 }
 
-@layer components {
+@layer sidevui.components {
   .#{$_cn} {
     display: block;
     position: fixed;

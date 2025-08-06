@@ -41,7 +41,7 @@ $alert: (
   color: $color;
 }
 
-@layer components {
+@layer sidevui.components {
   .#{$_cn} {
     display: block;
     padding: map.get($alert, 'sizes', 'md', 'padding');

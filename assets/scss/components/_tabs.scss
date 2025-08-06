@@ -14,7 +14,7 @@ $tabs: (
   padding: 1rem
 ) !default;
 
-@layer components {
+@layer sidevui.components {
   .#{$_cn} {
     &__nav {
       display: flex;

@@ -100,7 +100,7 @@ $btn: (
   }
 }
 
-@layer components {
+@layer sidevui.components {
   .#{$_cn} {
     display: inline-flex;
     align-items: center;

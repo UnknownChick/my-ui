@@ -32,7 +32,7 @@ $square: (
   ),
 ) !default;
 
-@layer components {
+@layer sidevui.components {
   .#{$_cn} {
     display: block;
     border-radius: map.get($square, config, border-radius);

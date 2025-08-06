@@ -3,7 +3,7 @@
 
 $window-percentages: 25, 50, 75, 100;
 
-@layer utilities {
+@layer sidevui.utilities {
   @each $name, $width in v.$breakpoints {
     .w-#{$name} {
       width: $width;

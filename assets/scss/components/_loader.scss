@@ -11,7 +11,7 @@ $loader: (
   size: 2rem,
 ) !default;
 
-@layer components {
+@layer sidevui.components {
   .#{$_cn} {
     width: map.get($loader, size);
     height: map.get($loader, size);

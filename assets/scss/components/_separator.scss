@@ -8,7 +8,7 @@ $separator: (
   height: 2px,
 ) !default;
 
-@layer components {
+@layer sidevui.components {
   .#{$_cn} {
     height: map.get($separator, height);
     background-color: map.get($separator, color);

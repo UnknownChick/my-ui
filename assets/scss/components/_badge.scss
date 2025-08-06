@@ -36,7 +36,7 @@ $badge: (
   color: $color;
 }
 
-@layer components {
+@layer sidevui.components {
   .#{$_cn} {
     display: block;
     border-radius: map.get($badge, 'config', 'border-radius');

@@ -5,7 +5,7 @@ $border: (
   range: 8,
 );
 
-@layer utilities {
+@layer sidevui.utilities {
   @for $i from 1 through map.get($border, range) {
     @each $color-name, $color-value in c.$palette {
       .border-#{$color-name}-#{$i} {

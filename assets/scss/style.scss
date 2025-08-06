@@ -9,4 +9,6 @@
 @use 'utilities';
 //@use 'vendors';
 
-@layer base, components, utilities;
+@layer sidevui {
+  @layer sidevui.base, components, utilities;
+}

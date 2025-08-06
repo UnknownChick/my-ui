@@ -1,4 +1,4 @@
-@layer base {
+@layer sidevui.base {
   *, *::before, *::after {
     box-sizing: border-box;
     margin: 0;
@@ -83,21 +83,21 @@
     max-inline-size: 100%;
   }
 
-  :where(svg) {
-    stroke: none;
-    fill: currentColor;
+  // :where(svg) {
+  //   stroke: none;
+  //   fill: currentColor;
 
-    &:where(:not([width])) {
-      inline-size: 5rem;
-    }
+  //   &:where(:not([width])) {
+  //     inline-size: 5rem;
+  //   }
 
-    :where(:not([fill])) {
-      stroke: currentColor;
-      fill: none;
-      stroke-linecap: round;
-      stroke-linejoin: round;
-    }
-  }
+  //   :where(:not([fill])) {
+  //     stroke: currentColor;
+  //     fill: none;
+  //     stroke-linecap: round;
+  //     stroke-linejoin: round;
+  //   }
+  // }
 
   :where(input, button, textarea, select),
   :where(input[type="file"])::-webkit-file-upload-button {

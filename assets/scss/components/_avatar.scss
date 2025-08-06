@@ -41,7 +41,7 @@ $avatar: (
   )
 ) !default;
 
-@layer components {
+@layer sidevui.components {
   .#{$_cn} {
     padding: map.get($avatar, 'config', 'padding');
     border-radius: map.get($avatar, 'config', 'border-radius');

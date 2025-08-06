@@ -11,7 +11,7 @@ $breadcrumb: (
   separator: '/',
 ) !default;
 
-@layer components {
+@layer sidevui.components {
   navar.#{$_cn} {
     ul {
       list-style: none;

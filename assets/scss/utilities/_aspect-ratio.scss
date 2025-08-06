@@ -14,7 +14,7 @@ $aspect-ratio: (
 ) !default;
 
 
-@layer utilities {
+@layer sidevui.utilities {
   .ratio {
     display: block;
     width: 100%;

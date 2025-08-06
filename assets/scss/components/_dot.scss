@@ -38,7 +38,7 @@ $dot: (
   )
 ) !default;
 
-@layer components {
+@layer sidevui.components {
   .#{$_cn} {
     display: block;
     width: map.get($dot, sizes, sm, width);

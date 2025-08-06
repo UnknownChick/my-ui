@@ -1,4 +1,4 @@
-@layer utilities {
+@layer sidevui.utilities {
   @for $i from 1 through 10 {
     /* Margin */
     .m-#{$i} {
