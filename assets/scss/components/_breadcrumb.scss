@@ -12,7 +12,7 @@ $breadcrumb: (
 ) !default;
 
 @layer sidevui.components {
-  navar.#{$_cn} {
+  .#{$_cn} {
     ul {
       list-style: none;
       display: inline-flex;
