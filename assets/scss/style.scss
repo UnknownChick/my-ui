@@ -10,5 +10,5 @@
 //@use 'vendors';
 
 @layer sidevui {
-  @layer sidevui.base, components, utilities;
+  @layer base, components, utilities;
 }
