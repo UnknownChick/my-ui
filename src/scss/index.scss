@@ -1,0 +1,12 @@
+@charset "utf-8";
+@use 'abstracts';
+@use 'base';
+@use 'components';
+@use 'layouts';
+@use 'themes';
+@use 'utilities';
+//@use 'vendor';
+
+@layer sidevui {
+  @layer base, components, utilities;
+}
