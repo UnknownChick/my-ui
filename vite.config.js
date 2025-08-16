@@ -4,8 +4,12 @@ import { browserslistToTargets } from 'lightningcss';
 import browserslist from 'browserslist';
 import { purgeCSSPlugin } from '@fullhuman/postcss-purgecss';
 import path from 'path';
+import { sidevuiThemePlugin } from './vite-plugin-sidevui.js';
 
 export default defineConfig({
+    plugins: [
+        sidevuiThemePlugin()
+    ],
     css: {
         preprocessorOptions: {
             scss: {
@@ -45,6 +49,7 @@ export default defineConfig({
         copyPublicDir: false,
         rollupOptions: {
             input: {
+                theme: './src/theme.css',
                 style: './assets/scss/style.scss',
                 app: './assets/js/app.js',
             },

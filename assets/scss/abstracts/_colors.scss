@@ -2,6 +2,10 @@
 @use 'mixins' as mix;
 @use 'functions' as func;
 
+.test {
+  color: var(--colors-primary);
+}
+
 $accents: (
   'red': (
     soft: #FFD9D9,
