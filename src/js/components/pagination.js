@@ -151,9 +151,8 @@ export default class Pagination {
 		let prevItem = activeItem?.previousElementSibling;
 
 		// Skip ellipsis if moving backwards onto one
-		if (prevItem && prevItem.querySelector(".pagination__ellipsis")) {
+		if·(prevItem?.querySelector(".pagination__ellipsis"))
 			prevItem = prevItem.previousElementSibling;
-		}
 
 		const prevLink = prevItem?.querySelector(
 			".pagination__link:not(.pagination__link--prev)",
@@ -175,9 +174,8 @@ export default class Pagination {
 		let nextItem = activeItem?.nextElementSibling;
 
 		// Skip ellipsis if moving forwards onto one
-		if (nextItem && nextItem.querySelector(".pagination__ellipsis")) {
+		if·(nextItem?.querySelector(".pagination__ellipsis"))
 			nextItem = nextItem.nextElementSibling;
-		}
 
 		const nextLink = nextItem?.querySelector(
 			".pagination__link:not(.pagination__link--next)",
