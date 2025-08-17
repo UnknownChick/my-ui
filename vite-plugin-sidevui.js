@@ -1,5 +1,5 @@
-import { writeFile } from "fs/promises";
-import path from "path";
+import { writeFile } from "node:fs/promises";
+import path from "node:path";
 
 const mapTheme = ([key, value]) => {
 	if (typeof value === "string") {
