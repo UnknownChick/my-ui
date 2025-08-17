@@ -5,8 +5,8 @@
 @use '../abstracts/variables' as var;
 
 $form: (
-  background-color: map.get(c.$grayscale, 100),
-  border: 1px solid map.get(c.$grayscale, 200),
+  background-color: map.get(c.$grayscale-map, 100),
+  border: 1px solid map.get(c.$grayscale-map, 200),
   border-radius: map.get(var.$global, border-radius),
   default-gap: 1rem,
   padding: 0.375rem 0.75rem,
@@ -24,7 +24,7 @@ $form: (
   font-size: 1rem;
   font-weight: 400;
   line-height: 1.5;
-  color: map.get(c.$black, 500);
+  color: map.get(c.$black-map, 500);
 
   // &:not(:is([type="color"])) {
   //   padding: map.get($form, padding);
@@ -35,7 +35,7 @@ $form: (
   &:is(:focus, :focus-within, :active) {
     border: 1px solid map.get(c.$palette, primary) !important;
     outline: 0;
-    box-shadow: 0 0 0 0.2rem map.get(c.$primary, 100);
+    box-shadow: 0 0 0 0.2rem map.get(c.$primary-map, 100);
     z-index: 5;
   }
 }
@@ -88,7 +88,7 @@ $form: (
     @include input-font-styles;
 
     &::placeholder {
-      color: map.get(c.$grayscale, 600);
+      color: map.get(c.$grayscale-map, 600);
     }
   }
 
@@ -249,7 +249,7 @@ $form: (
   .form-hint {
     margin-top: 0.25rem;
     font-size: 0.875rem;
-    color: map.get(c.$grayscale, 600);
+    color: map.get(c.$grayscale-map, 600);
     cursor: help;
   }
 
@@ -288,8 +288,8 @@ $form: (
       display: flex;
       align-items: center;
       white-space: nowrap;
-      background-color: map.get(c.$grayscale, 100);
-      color: map.get(c.$grayscale, 600);
+      background-color: map.get(c.$grayscale-map, 100);
+      color: map.get(c.$grayscale-map, 600);
       border-top: map.get($form, border);
       border-bottom: map.get($form, border);
       padding: map.get($form, padding);

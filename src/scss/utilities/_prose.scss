@@ -44,12 +44,12 @@
     }
 
     a {
-      color: map.get(c.$primary, 500);
+      color: map.get(c.$primary-map, 500);
       text-decoration: underline;
       transition: color map.get(var.$global, animation-duration) ease-in-out;
 
       &:hover {
-        color: map.get(c.$secondary, 500);
+        color: map.get(c.$secondary-map, 500);
       }
     }
 
@@ -92,7 +92,7 @@
     }
 
     code {
-      background-color: map.get(c.$grayscale, 200);
+      background-color: map.get(c.$grayscale-map, 200);
       padding: 0.15em 0.3em;
       border-radius: 0.2rem;
     }

@@ -3,16 +3,16 @@
 @use '../abstracts/mixins' as mix;
 
 @layer sidevui.utilities {
-  @include mix.generate-color-classes('primary', c.$primary);
-  @include mix.generate-color-classes('secondary', c.$secondary);
-  @include mix.generate-color-classes('success', c.$success);
-  @include mix.generate-color-classes('danger', c.$danger);
-  @include mix.generate-color-classes('warning', c.$warning);
-  @include mix.generate-color-classes('info', c.$info);
-  @include mix.generate-color-classes('grayscale', c.$grayscale);
-  @include mix.generate-color-classes('text', c.$text);
-  @include mix.generate-color-classes('white', c.$white);
-  @include mix.generate-color-classes('black', c.$black);
+  @include mix.generate-color-classes('primary', c.$primary-map);
+  @include mix.generate-color-classes('secondary', c.$secondary-map);
+  @include mix.generate-color-classes('success', c.$success-map);
+  @include mix.generate-color-classes('danger', c.$danger-map);
+  @include mix.generate-color-classes('warning', c.$warning-map);
+  @include mix.generate-color-classes('info', c.$info-map);
+  @include mix.generate-color-classes('grayscale', c.$grayscale-map);
+  @include mix.generate-color-classes('text', c.$text-map);
+  @include mix.generate-color-classes('white', c.$white-map);
+  @include mix.generate-color-classes('black', c.$black-map);
 
   .hidden {
     display: none;
@@ -59,7 +59,7 @@
     text-transform: uppercase;
     font-size: clamp(1.25rem, 0.9375rem + 1vw, 1.5rem);
     font-weight: 800;
-    color: map.get(c.$secondary, 500);
+    color: map.get(c.$secondary-map, 500);
   }
 
   .text-center {

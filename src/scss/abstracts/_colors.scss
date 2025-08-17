@@ -111,13 +111,13 @@ $absent: map.get($status, absent) !default;
 $offline: map.get($status, offline) !default;
 /* --- Status colors end --- */
 
-$primary: func.generate-color-palette(map.get($palette, primary));
-$secondary: func.generate-color-palette(map.get($palette, secondary));
-$success: func.generate-color-palette(map.get($semantic, success));
-$danger: func.generate-color-palette(map.get($semantic, danger));
-$warning: func.generate-color-palette(map.get($semantic, warning));
-$info: func.generate-color-palette(map.get($semantic, info));
-$grayscale: func.generate-color-palette(map.get($semantic, grayscale));
-$text: func.generate-color-palette(map.get($semantic, text));
-$white: func.generate-color-palette(map.get($semantic, 'white'));
-$black: func.generate-color-palette(map.get($semantic, 'black'));
+$primary-map: func.generate-color-palette(map.get($palette, primary));
+$secondary-map: func.generate-color-palette(map.get($palette, secondary));
+$success-map: func.generate-color-palette(map.get($semantic, success));
+$danger-map: func.generate-color-palette(map.get($semantic, danger));
+$warning-map: func.generate-color-palette(map.get($semantic, warning));
+$info-map: func.generate-color-palette(map.get($semantic, info));
+$grayscale-map: func.generate-color-palette(map.get($semantic, grayscale));
+$text-map: func.generate-color-palette(map.get($semantic, text));
+$white-map: func.generate-color-palette(map.get($semantic, 'white'));
+$black-map: func.generate-color-palette(map.get($semantic, 'black'));
