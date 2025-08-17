@@ -1,7 +1,8 @@
 export default class Modal {
 	constructor() {
 		if (Modal.instance) {
-			return Modal.instance;
+			// Do not reinitialize if instance exists
+			return;
 		}
 		Modal.instance = this;
 
@@ -11,20 +12,27 @@ export default class Modal {
 		this.init();
 	}
 
+	static getInstance() {
+		if (!Modal.instance) {
+			new Modal();
+		}
+		return Modal.instance;
+	}
+
 	init() {
 		if (!this.modalsTarget || !this.modalsClose) return;
 
-		this.modalsTarget.forEach((modal) =>
-			modal.addEventListener("click", (e) => this.openModal(e)),
-		);
+		this.modalsTarget.forEach((modal) => {
+			modal.addEventListener("click", (e) => this.openModal(e));
+		});
 
-		this.modalsClose.forEach((modal) =>
-			modal.addEventListener("click", (e) => this.closeModal(e)),
-		);
+		this.modalsClose.forEach(modal => {
+			modal.addEventListener("click", (e) => this.closeModal(e));
+		});
 
-		this.modalCloseButtons.forEach((button) =>
-			button.addEventListener("click", (e) => this.closeParentModal(e)),
-		);
+		this.modalCloseButtons.forEach(button => {
+			button.addEventListener("click", (e) => this.closeParentModal(e));
+		});
 	}
 
 	openModal(e) {
