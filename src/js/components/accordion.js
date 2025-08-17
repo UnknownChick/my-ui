@@ -66,7 +66,9 @@ export default class Accordion {
 		);
 
 		acc.animation.onfinish = () => this.onAnimationFinish(acc, false);
-		acc.animation.oncancel = () => (acc.isClosing = false);
+		acc.animation.oncancel = () => {
+			acc.isClosing = false;
+		};
 	}
 
 	open(acc) {
@@ -106,7 +108,9 @@ export default class Accordion {
 			},
 		);
 		acc.animation.onfinish = () => this.onAnimationFinish(acc, true);
-		acc.animation.oncancel = () => (acc.isExpanding = false);
+		acc.animation.oncancel = () => {
+			acc.isExpanding = false;
+		};
 	}
 
 	onAnimationFinish(acc, open) {
