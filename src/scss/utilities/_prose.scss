@@ -92,7 +92,7 @@
     }
 
     code {
-      background-color: map.get(c.$greyscale, 200);
+      background-color: map.get(c.$grayscale, 200);
       padding: 0.15em 0.3em;
       border-radius: 0.2rem;
     }

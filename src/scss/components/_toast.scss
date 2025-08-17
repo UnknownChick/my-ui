@@ -5,7 +5,7 @@
 $_cn: toast;
 
 $toast: (
-  border: 1px solid map.get(c.$semantic, greyscale),
+  border: 1px solid map.get(c.$semantic, grayscale),
   border-radius: map.get(var.$global, border-radius),
   box-shadow: map.get(var.$global, box-shadow),
   max-width: 400px,

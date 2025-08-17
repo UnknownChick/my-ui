@@ -5,7 +5,7 @@
 $_cn: dropdown;
 
 $dropdown: (
-  border: 1px solid map.get(c.$greyscale, 100),
+  border: 1px solid map.get(c.$grayscale, 100),
   border-radius: map.get(var.$global, border-radius),
   box-shadow: map.get(var.$global, box-shadow),
   margin: 0.5rem,
@@ -64,7 +64,7 @@ $dropdown: (
 
         &:is(a) {
           &:hover {
-            background-color: map.get(c.$greyscale, 200);
+            background-color: map.get(c.$grayscale, 200);
           }
         }
       }
@@ -74,7 +74,7 @@ $dropdown: (
       height: 2px;
       width: 100%;
       margin-block: 0.25rem;
-      background-color: map.get(c.$greyscale, 100);
+      background-color: map.get(c.$grayscale, 100);
     }
 
     // Position top-left

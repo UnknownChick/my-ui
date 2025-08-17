@@ -5,7 +5,7 @@
 $_cn: progress;
 
 $progress: (
-  bg-color: map.get(c.$greyscale, 100),
+  bg-color: map.get(c.$grayscale, 100),
   border: none,
   border-radius: map.get(var.$global, border-radius),
   height: 1rem,

@@ -45,10 +45,32 @@ $accents: (
   ),
 ) !default;
 
+$accent-red-soft: map.get($accents, soft, 'red');
+$accent-red-high: map.get($accents, high, 'red');
+$accent-orange-soft: map.get($accents, soft, 'orange');
+$accent-orange-high: map.get($accents, high, 'orange');
+$accent-blue-soft: map.get($accents, soft, 'blue');
+$accent-blue-high: map.get($accents, high, 'blue');
+$accent-green-soft: map.get($accents, soft, 'green');
+$accent-green-high: map.get($accents, high, 'green');
+$accent-purple-soft: map.get($accents, soft, 'purple');
+$accent-purple-high: map.get($accents, high, 'purple');
+$accent-grey-soft: map.get($accents, soft, 'grey');
+$accent-grey-high: map.get($accents, high, 'grey');
+$accent-brown-soft: map.get($accents, soft, 'brown');
+$accent-brown-high: map.get($accents, high, 'brown');
+$accent-cyan-soft: map.get($accents, soft, 'cyan');
+$accent-cyan-high: map.get($accents, high, 'cyan');
+$accent-black-soft: map.get($accents, soft, 'black');
+$accent-black-high: map.get($accents, high, 'black');
+
 $palette: (
   primary: #0068ff,
   secondary: #2f322a,
 ) !default;
+
+$primary: map.get($palette, primary);
+$secondary: map.get($palette, secondary);
 
 $semantic: (
   success:  #22b934,
@@ -56,11 +78,20 @@ $semantic: (
   warning: #f0ad4e,
   info: #5abfdd,
   link: #3347EF,
-  greyscale: #adadad,
+  grayscale: #adadad,
   text: #191919,
   'white': #FFFFFF,
   'black': #000000,
 ) !default;
+
+$success: map.get($semantic, success);
+$danger: map.get($semantic, danger);
+$warning: map.get($semantic, warning);
+$info: map.get($semantic, info);
+$grayscale: map.get($semantic, grayscale);
+$text: map.get($semantic, text);
+$white: map.get($semantic, 'white');
+$black: map.get($semantic, 'black');
 
 $status: (
   online: map.get($semantic, success),
@@ -68,13 +99,15 @@ $status: (
   offline: map.get($semantic, danger),
 ) !default;
 
+
+
 $primary: func.generate-color-palette(map.get($palette, primary));
 $secondary: func.generate-color-palette(map.get($palette, secondary));
 $success: func.generate-color-palette(map.get($semantic, success));
 $danger: func.generate-color-palette(map.get($semantic, danger));
 $warning: func.generate-color-palette(map.get($semantic, warning));
 $info: func.generate-color-palette(map.get($semantic, info));
-$greyscale: func.generate-color-palette(map.get($semantic, greyscale));
+$grayscale: func.generate-color-palette(map.get($semantic, grayscale));
 $text: func.generate-color-palette(map.get($semantic, text));
 $white: func.generate-color-palette(map.get($semantic, 'white'));
 $black: func.generate-color-palette(map.get($semantic, 'black'));

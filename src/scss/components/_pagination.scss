@@ -11,7 +11,7 @@ $pagination: (
   border-radius: map.get(var.$global, border-radius),
   border-size: 1px,
   color-active: map.get(c.$palette, primary),
-  color-default: map.get(c.$semantic, greyscale),
+  color-default: map.get(c.$semantic, grayscale),
   color-hover: map.get(c.$palette, primary),
   color-iddle: #6c757d,
   color-iddle-hover: #e9ecef,

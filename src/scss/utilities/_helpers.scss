@@ -9,7 +9,7 @@
   @include mix.generate-color-classes('danger', c.$danger);
   @include mix.generate-color-classes('warning', c.$warning);
   @include mix.generate-color-classes('info', c.$info);
-  @include mix.generate-color-classes('greyscale', c.$greyscale);
+  @include mix.generate-color-classes('grayscale', c.$grayscale);
   @include mix.generate-color-classes('text', c.$text);
   @include mix.generate-color-classes('white', c.$white);
   @include mix.generate-color-classes('black', c.$black);
