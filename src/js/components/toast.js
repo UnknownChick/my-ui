@@ -108,7 +108,7 @@ export default class Toast {
 		}
 
 		const positionClass = toastElement.dataset.position;
-		const isLeft = positionClass && positionClass.includes("l");
+		const isLeft = positionClass?.includes("l");
 		const closingClass = isLeft
 			? "toast--closing-left"
 			: "toast--closing-right";
