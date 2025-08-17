@@ -4,33 +4,41 @@ export default class Accordion {
 
 	constructor() {
 		if (Accordion.instance) {
-			return Accordion.instance;
+			// Prevent multiple instances, but do not return a value
+			return;
 		}
 		Accordion.instance = this;
 		this.accordions = [];
 		this.init();
 	}
 
+	static getInstance() {
+		if (!Accordion.instance) {
+			new Accordion();
+		}
+		return Accordion.instance;
+	}
+
 	init() {
-		const accordions = document.querySelectorAll('.accordion');
+		const accordions = document.querySelectorAll(".accordion");
 		Accordion.accordions = [];
 		accordions.forEach((el) => {
 			const acc = {
 				el,
-				summary: el.querySelector('.accordion__title'),
-				content: el.querySelector('.accordion__content'),
+				summary: el.querySelector(".accordion__title"),
+				content: el.querySelector(".accordion__content"),
 				animation: null,
 				isClosing: false,
-				isExpanding: false
+				isExpanding: false,
 			};
-			acc.summary.addEventListener('click', (e) => this.onClick(e, acc));
+			acc.summary.addEventListener("click", (e) => this.onClick(e, acc));
 			Accordion.accordions.push(acc);
 		});
 	}
 
 	onClick(e, acc) {
 		e.preventDefault();
-		acc.el.style.overflow = 'hidden';
+		acc.el.style.overflow = "hidden";
 		if (acc.isClosing || !acc.el.open) {
 			this.open(acc);
 		} else if (acc.isExpanding || acc.el.open) {
@@ -47,24 +55,27 @@ export default class Accordion {
 			acc.animation.cancel();
 		}
 
-		acc.animation = acc.el.animate({
-			height: [startHeight, endHeight]
-		}, {
-			duration: 400,
-			easing: 'ease-out'
-		});
+		acc.animation = acc.el.animate(
+			{
+				height: [startHeight, endHeight],
+			},
+			{
+				duration: 400,
+				easing: "ease-out",
+			},
+		);
 
 		acc.animation.onfinish = () => this.onAnimationFinish(acc, false);
-		acc.animation.oncancel = () => acc.isClosing = false;
+		acc.animation.oncancel = () => (acc.isClosing = false);
 	}
 
 	open(acc) {
-		const groupName = acc.el.getAttribute('name');
+		const groupName = acc.el.getAttribute("name");
 		if (groupName) {
-			Accordion.accordions.forEach(other => {
+			Accordion.accordions.forEach((other) => {
 				if (
 					other !== acc &&
-					other.el.getAttribute('name') === groupName &&
+					other.el.getAttribute("name") === groupName &&
 					other.el.open
 				) {
 					this.shrink(other);
@@ -85,14 +96,17 @@ export default class Accordion {
 			acc.animation.cancel();
 		}
 
-		acc.animation = acc.el.animate({
-			height: [startHeight, endHeight]
-		}, {
-			duration: 400,
-			easing: 'ease-out'
-		});
+		acc.animation = acc.el.animate(
+			{
+				height: [startHeight, endHeight],
+			},
+			{
+				duration: 400,
+				easing: "ease-out",
+			},
+		);
 		acc.animation.onfinish = () => this.onAnimationFinish(acc, true);
-		acc.animation.oncancel = () => acc.isExpanding = false;
+		acc.animation.oncancel = () => (acc.isExpanding = false);
 	}
 
 	onAnimationFinish(acc, open) {
@@ -100,6 +114,6 @@ export default class Accordion {
 		acc.animation = null;
 		acc.isClosing = false;
 		acc.isExpanding = false;
-		acc.el.style.height = acc.el.style.overflow = '';
+		acc.el.style.height = acc.el.style.overflow = "";
 	}
 }
