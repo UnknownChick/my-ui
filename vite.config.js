@@ -1,4 +1,3 @@
-import { purgeCSSPlugin } from "@fullhuman/postcss-purgecss";
 import autoprefixer from "autoprefixer";
 import browserslist from "browserslist";
 import { browserslistToTargets } from "lightningcss";
