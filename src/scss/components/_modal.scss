@@ -9,7 +9,7 @@ $modal: (
   background-color: map.get(c.$semantic, 'white'),
   border-radius: map.get(var.$global, border-radius),
   box-shadow: map.get(var.$global, box-shadow),
-  close-background-color: map.get(c.$semantic, greyscale),
+  close-background-color: map.get(c.$semantic, grayscale),
   close-border-radius: 50%,
   close-color: map.get(c.$semantic, 'white'),
   close-size: 1.5rem,
@@ -53,7 +53,7 @@ $modal: (
 
     &__title {
       padding: map.get($modal, padding);
-      border-bottom: 1px solid map.get(c.$semantic, greyscale);
+      border-bottom: 1px solid map.get(c.$semantic, grayscale);
     }
 
     &__content {

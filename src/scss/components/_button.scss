@@ -40,28 +40,28 @@ $btn: (
   ),
   colors: (
     primary: (
-      default: map.get(c.$primary, 500),
-      hover: map.get(c.$primary, 700)
+      default: map.get(c.$primary-map, 500),
+      hover: map.get(c.$primary-map, 700)
     ),
     secondary: (
-      default: map.get(c.$secondary, 500),
-      hover: map.get(c.$secondary, 700)
+      default: map.get(c.$secondary-map, 500),
+      hover: map.get(c.$secondary-map, 700)
     ),
     success: (
-      default: map.get(c.$success, 500),
-      hover: map.get(c.$success, 700)
+      default: map.get(c.$success-map, 500),
+      hover: map.get(c.$success-map, 700)
     ),
     danger: (
-      default: map.get(c.$danger, 500),
-      hover: map.get(c.$danger, 700)
+      default: map.get(c.$danger-map, 500),
+      hover: map.get(c.$danger-map, 700)
     ),
     warning: (
-      default: map.get(c.$warning, 500),
-      hover: map.get(c.$warning, 700)
+      default: map.get(c.$warning-map, 500),
+      hover: map.get(c.$warning-map, 700)
     ),
     info: (
-      default: map.get(c.$info, 500),
-      hover: map.get(c.$info, 700)
+      default: map.get(c.$info-map, 500),
+      hover: map.get(c.$info-map, 700)
     )
   )
 ) !default;
@@ -180,7 +180,7 @@ $btn: (
     transition: color map.get(var.$global, animation-duration) ease-in-out;
 
     &:hover {
-      color: map.get(c.$primary, 500);
+      color: map.get(c.$primary-map, 500);
     }
   }
 }

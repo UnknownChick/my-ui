@@ -1,21 +1,18 @@
 export default class Tooltip {
 	constructor(selector, options = {}) {
 		this.selector = selector;
-		this.validPositions = [
-			'top',
-			'right',
-			'bottom',
-			'left',
-		];
+		this.validPositions = ["top", "right", "bottom", "left"];
 		this.options = {
-			message: 'Message par defaut',
-			position: 'top',
-			...options
-		}
+			message: "Message par defaut",
+			position: "top",
+			...options,
+		};
 
 		if (!this.validPositions.includes(this.options.position)) {
-			console.warn(`La position "${this.options.position}" n'est pas valide. Utilisation de "top".`);
-			this.options.position = 'top';
+			console.warn(
+				`La position "${this.options.position}" n'est pas valide. Utilisation de "top".`,
+			);
+			this.options.position = "top";
 		}
 
 		this.init();
@@ -29,20 +26,17 @@ export default class Tooltip {
 			return;
 		}
 
-		trigger.addEventListener('mouseover', () => {
+		trigger.addEventListener("mouseover", () => {
 			this.show();
 		});
 
-		trigger.addEventListener('mouseout', () => {
+		trigger.addEventListener("mouseout", () => {
 			this.hide();
 		});
 	}
 
-	show(
-		message = this.options.message,
-		position = this.options.position
-	) {
-		const tooltip = document.createElement('div');
+	show(message = this.options.message, position = this.options.position) {
+		const tooltip = document.createElement("div");
 		tooltip.className = `tooltip tooltip--${position}`;
 		tooltip.innerHTML = message;
 
@@ -61,21 +55,33 @@ export default class Tooltip {
 		const scrollY = window.scrollY;
 
 		switch (position) {
-			case 'top':
-				left = scrollX + triggerRect.left + (triggerRect.width - tooltipRect.width) / 2;
+			case "top":
+				left =
+					scrollX +
+					triggerRect.left +
+					(triggerRect.width - tooltipRect.width) / 2;
 				top = scrollY + triggerRect.top - tooltipRect.height - 10;
 				break;
-			case 'right':
+			case "right":
 				left = scrollX + triggerRect.right + 10;
-				top = scrollY + triggerRect.top + (triggerRect.height - tooltipRect.height) / 2;
+				top =
+					scrollY +
+					triggerRect.top +
+					(triggerRect.height - tooltipRect.height) / 2;
 				break;
-			case 'bottom':
-				left = scrollX + triggerRect.left + (triggerRect.width - tooltipRect.width) / 2;
+			case "bottom":
+				left =
+					scrollX +
+					triggerRect.left +
+					(triggerRect.width - tooltipRect.width) / 2;
 				top = scrollY + triggerRect.bottom + 10;
 				break;
-			case 'left':
+			case "left":
 				left = scrollX + triggerRect.left - tooltipRect.width - 10;
-				top = scrollY + triggerRect.top + (triggerRect.height - tooltipRect.height) / 2;
+				top =
+					scrollY +
+					triggerRect.top +
+					(triggerRect.height - tooltipRect.height) / 2;
 				break;
 		}
 
@@ -84,7 +90,7 @@ export default class Tooltip {
 	}
 
 	hide() {
-		const tooltip = document.querySelector('.tooltip');
+		const tooltip = document.querySelector(".tooltip");
 
 		if (tooltip) {
 			tooltip.remove();
