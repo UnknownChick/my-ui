@@ -1,7 +1,7 @@
 import {
-	createIcons,
 	ChevronLeft,
 	ChevronRight,
+	createIcons,
 	Ellipsis,
 	Search,
 	Smile,

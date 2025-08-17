@@ -1,9 +1,9 @@
-import { defineConfig } from "vite";
-import autoprefixer from "autoprefixer";
-import { browserslistToTargets } from "lightningcss";
-import browserslist from "browserslist";
 import { purgeCSSPlugin } from "@fullhuman/postcss-purgecss";
-import path from "path";
+import autoprefixer from "autoprefixer";
+import browserslist from "browserslist";
+import { browserslistToTargets } from "lightningcss";
+import path from "node:path";
+import { defineConfig } from "vite";
 import { sidevuiThemePlugin } from "./vite-plugin-sidevui.js";
 
 export default defineConfig({
