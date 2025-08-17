@@ -87,7 +87,7 @@ export default class Tabs {
 	_initSingleTabGroup(groupData) {
 		groupData.nav.addEventListener("click", (e) => {
 			const button = e.target.closest(".tabs__nav__button");
-			if (button && button.id) {
+			if (button?.id) {
 				this.activateTab(button, groupData, true, false);
 			}
 		});
@@ -139,7 +139,9 @@ export default class Tabs {
 	_handleHash(setFocusOnActivation) {
 		const hash = window.location.hash.substring(1);
 
-		this.tabGroups.forEach((group) => (group.activatedByCurrentHash = false));
+		this.tabGroups.forEach((group) => {
+			group.activatedByCurrentHash = false;
+		});
 
 		if (hash) {
 			for (const groupData of this.tabGroups) {
