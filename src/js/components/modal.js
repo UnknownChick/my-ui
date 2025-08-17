@@ -26,11 +26,11 @@ export default class Modal {
 			modal.addEventListener("click", (e) => this.openModal(e));
 		});
 
-		this.modalsClose.forEach(modal => {
+		this.modalsClose.forEach((modal) => {
 			modal.addEventListener("click", (e) => this.closeModal(e));
 		});
 
-		this.modalCloseButtons.forEach(button => {
+		this.modalCloseButtons.forEach((button) => {
 			button.addEventListener("click", (e) => this.closeParentModal(e));
 		});
 	}
