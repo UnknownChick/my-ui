@@ -42,7 +42,6 @@ export default defineConfig({
 			input: {
 				js: "./src/js/index.js",
 				style: "./src/scss/index.scss",
-				theme: "./src/theme.css",
 			},
 			output: {
 				dir: path.resolve(__dirname, "dist"),
