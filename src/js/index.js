@@ -16,7 +16,35 @@ document.addEventListener("DOMContentLoaded", () => {
 	});
 
 	new Dropdown();
-	new Modal();
+
+	// Modal 1 - Animation scale
+	new Modal('#modal', {
+		animation: 'scale',
+		closeOnBackdropClick: true,
+		closeOnEscape: true,
+		autoCloseOnFooterClick: true,
+		onOpen: () => {
+			console.log('Modal 1 ouverte (scale animation)');
+		},
+		onClose: () => {
+			console.log('Modal 1 fermée');
+		}
+	});
+
+	// Modal 2 - Animation fade avec validation
+	new Modal('#modal2', {
+		animation: 'fade',
+		closeOnBackdropClick: false,
+		closeOnEscape: true,
+		autoCloseOnFooterClick: true,
+		onOpen: () => {
+			console.log('Modal 2 ouverte (fade animation)');
+		},
+		onClose: () => {
+			console.log('Modal 2 fermée');
+		}
+	});
+
 	new Tabs("#myTabs", {
 		saveSelection: false,
 		animation: 'fade'

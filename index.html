@@ -5,7 +5,6 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
         <link rel="stylesheet" href="src/scss/index.scss">
-        <link rel="stylesheet" href="src/theme.css">
 
         <title>Sidev UI</title>
     </head>
@@ -729,24 +728,45 @@
 
                 <article>
                     <h2 class="mb-1">Modal</h2>
-                    <div>
+                    <div class="flex-column gap-1">
+                        <!-- Modal simple avec auto-close -->
                         <dialog class="modal row-lg" id="modal">
                             <button class="modal__close">
                                 <i data-lucide="x"></i>
                             </button>
                             <div class="modal__title">
-                                <p>Titre de la modal</p>
+                                <p>Modal avec auto-close</p>
                             </div>
                             <div class="modal__content">
-                                <p>Contenu de la modal</p>
+                                <p>Les boutons du footer ferment automatiquement la modal !</p>
                             </div>
                             <div class="modal__footer">
-                                <button class="btn btn--danger" data-modal-close="modal">Fermer</button>
+                                <button class="btn btn--danger">Annuler</button>
                                 <button class="btn btn--success">Valider</button>
                             </div>
                         </dialog>
 
-                        <button class="btn btn--primary" data-modal-target="modal">Open modal</button>
+                        <!-- Modal avec bouton qui ne ferme pas -->
+                        <dialog class="modal row-lg" id="modal2">
+                            <button class="modal__close">
+                                <i data-lucide="x"></i>
+                            </button>
+                            <div class="modal__title">
+                                <p>Modal avec validation</p>
+                            </div>
+                            <div class="modal__content">
+                                <p>Le bouton "Valider" ne ferme pas automatiquement (data-modal-prevent-close)</p>
+                            </div>
+                            <div class="modal__footer">
+                                <button class="btn btn--secondary">Annuler</button>
+                                <button class="btn btn--primary" data-modal-prevent-close>Valider et traiter</button>
+                            </div>
+                        </dialog>
+
+                        <div class="flex gap-1">
+                            <button class="btn btn--primary" data-modal-target="modal">Ouvrir modal simple</button>
+                            <button class="btn btn--secondary" data-modal-target="modal2">Ouvrir modal avec validation</button>
+                        </div>
                     </div>
                 </article>
 
