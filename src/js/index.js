@@ -19,6 +19,7 @@ document.addEventListener("DOMContentLoaded", () => {
 	new Modal();
 	new Tabs("#myTabs", {
 		saveSelection: false,
+		animation: 'fade'
 	});
 
 	new Toast("#myToastFromTopRight", {
