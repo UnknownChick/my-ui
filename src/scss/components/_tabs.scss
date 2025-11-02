@@ -4,17 +4,19 @@
 $_cn: tabs;
 
 $tabs: (
-  button-active-border-color: map.get(c.$palette, primary),
-  button-active-color: map.get(c.$palette, primary),
+  animation-duration: 300ms,
+  animation-timing: ease-in-out,
+  button-active-border-color: c.$primary,
+  button-active-color: c.$primary,
   button-border-bottom-width: 2px,
   button-border-color: transparent,
-  button-hover-color: map.get(c.$semantic, 'secondary'),
+  button-hover-color: c.$secondary,
   button-padding: 0.75rem 1rem,
-  nav-border-bottom: 1px solid map.get(c.$semantic, 'grey', 'light'),
+  nav-border-bottom: 1px solid c.$grayscale-300,
   padding: 1rem
 ) !default;
 
-@layer sidevui.components {
+@layer components {
   .#{$_cn} {
     &__nav {
       display: flex;
@@ -28,6 +30,7 @@ $tabs: (
         border-bottom: map.get($tabs, button-border-bottom-width) solid map.get($tabs, button-border-color);
         margin-bottom: -1px;
         font-weight: 600;
+        transition: color 150ms ease-in-out, border-color 150ms ease-in-out;
 
         &:hover {
           color: map.get($tabs, button-hover-color);
@@ -41,8 +44,40 @@ $tabs: (
       }
     }
 
+    &__content {
+      position: relative;
+    }
+
     &__panel {
       padding: map.get($tabs, padding);
+
+      &--fade-in {
+        animation: tabs-fade-in map.get($tabs, animation-duration) map.get($tabs, animation-timing);
+      }
+
+      &--slide-in {
+        animation: tabs-slide-in map.get($tabs, animation-duration) map.get($tabs, animation-timing);
+      }
+    }
+  }
+
+  @keyframes tabs-fade-in {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+
+  @keyframes tabs-slide-in {
+    from {
+      opacity: 0;
+      transform: translateX(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0);
     }
   }
 }
