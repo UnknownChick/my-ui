@@ -3,10 +3,8 @@ import browserslist from "browserslist";
 import { browserslistToTargets } from "lightningcss";
 import path from "node:path";
 import { defineConfig } from "vite";
-import { sidevuiThemePlugin } from "./vite-plugin-sidevui.js";
 
 export default defineConfig({
-	plugins: [sidevuiThemePlugin()],
 	css: {
 		preprocessorOptions: {
 			scss: {
@@ -44,7 +42,6 @@ export default defineConfig({
 			input: {
 				js: "./src/js/index.js",
 				style: "./src/scss/index.scss",
-				theme: "./src/theme.css",
 			},
 			output: {
 				dir: path.resolve(__dirname, "dist"),
