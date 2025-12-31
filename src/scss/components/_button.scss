@@ -1,16 +1,16 @@
 @use 'sass:color';
 @use 'sass:map';
 @use '../abstracts/colors' as c;
-@use '../abstracts/variables' as var;
+@use '../abstracts/variables' as v;
 
 $_cn: btn;
 
 $btn: (
   config: (
-    border-radius: map.get(var.$global, border-radius),
+    border-radius: v.$border-radius,
     border-width: 2px,
     font-weight: 400,
-    transition: all map.get(var.$global, animation-duration) ease-in-out
+    transition: all v.$animation-duration ease-in-out
   ),
   sizes: (
     xs: (
@@ -22,11 +22,11 @@ $btn: (
       font-size: 0.875rem
     ),
     md: (
-      padding: 0.75rem 1rem,
+      padding: 0.5rem 1.5rem,
       font-size: 1rem
     ),
     lg: (
-      padding: 0.75rem 1.5rem,
+      padding: 0.75rem 1.75rem,
       font-size: 1.125rem
     ),
     xl: (
@@ -40,40 +40,56 @@ $btn: (
   ),
   colors: (
     primary: (
-      default: map.get(c.$primary-map, 500),
-      hover: map.get(c.$primary-map, 700)
+      default: c.$primary-500,
+      hover: c.$primary-700,
+      text: c.$white
     ),
     secondary: (
-      default: map.get(c.$secondary-map, 500),
-      hover: map.get(c.$secondary-map, 700)
+      default: c.$secondary-500,
+      hover: c.$secondary-700,
+      text: c.$white
     ),
     success: (
-      default: map.get(c.$success-map, 500),
-      hover: map.get(c.$success-map, 700)
+      default: c.$success-500,
+      hover: c.$success-700,
+      text: c.$white
     ),
     danger: (
-      default: map.get(c.$danger-map, 500),
-      hover: map.get(c.$danger-map, 700)
+      default: c.$danger-500,
+      hover: c.$danger-700,
+      text: c.$white
     ),
     warning: (
-      default: map.get(c.$warning-map, 500),
-      hover: map.get(c.$warning-map, 700)
+      default: c.$warning-500,
+      hover: c.$warning-700,
+      text: c.$white
     ),
     info: (
-      default: map.get(c.$info-map, 500),
-      hover: map.get(c.$info-map, 700)
-    )
+      default: c.$info-500,
+      hover: c.$info-700,
+      text: c.$white
+    ),
+    white: (
+      default: c.$white,
+      hover: c.$grayscale-200,
+      text: c.$black
+    ),
+    black: (
+      default: c.$black,
+      hover: c.$grayscale-800,
+      text: c.$white
+    ),
   )
 ) !default;
 
-@mixin button-solid($color, $hover-color) {
-  background-color: $color;
-  border-color: $color;
-  color: map.get(c.$semantic, 'white');
+@mixin button-solid($main-color, $secondary-color, $text-color) {
+  background-color: $main-color;
+  border-color: $main-color;
+  color: $text-color;
 
   &:not(:disabled):is(:hover, :active, :focus) {
-    background-color: $hover-color;
-    border-color: $hover-color;
+    background-color: $secondary-color;
+    border-color: $secondary-color;
   }
 }
 
@@ -84,7 +100,7 @@ $btn: (
 
   &:not(:disabled):is(:hover, :active, :focus) {
     background-color: $color;
-    color: map.get(c.$semantic, 'white');
+    color: c.$white;
   }
 }
 
@@ -100,11 +116,10 @@ $btn: (
   }
 }
 
-@layer sidevui.components {
+@layer components {
   .#{$_cn} {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
+    position: relative;
+    display: block;
     width: fit-content;
     border-radius: map.get($btn, config, border-radius);
     font-weight: map.get($btn, config, font-weight);
@@ -116,6 +131,17 @@ $btn: (
     transition: map.get($btn, config, transition);
     border-width: map.get($btn, config, border-width);
     border-style: solid;
+    text-transform: uppercase;
+
+    &__label {
+      display: inline-block;
+      line-height: 1;
+    }
+
+    &:focus-visible {
+      outline: 2px solid c.$primary-500;
+      outline-offset: 2px;
+    }
 
     @each $size, $values in map.get($btn, sizes) {
       &--#{$size} {
@@ -125,14 +151,19 @@ $btn: (
     }
 
     @each $color-name, $color-values in map.get($btn, colors) {
-      &--#{$color-name} {
+      &--#{"" + $color-name} {
         @include button-solid(
           map.get($color-values, default),
-          map.get($color-values, hover)
+          map.get($color-values, hover),
+          map.get($color-values, text)
         );
+
+        @if map.has-key($color-values, border-color) {
+          border-color: map.get($color-values, border-color);
+        }
       }
 
-      &--#{$color-name}-outline {
+      &--#{"" + $color-name}-outline {
         @include button-outline(map.get($color-values, default));
       }
     }
@@ -155,6 +186,7 @@ $btn: (
 
     &--fluid {
       width: 100%;
+      text-align: center;
     }
 
     &--center {
@@ -162,12 +194,118 @@ $btn: (
     }
 
     &--icon {
-      gap: 0.5rem;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    &--loading {
+      position: relative;
+      pointer-events: none;
+
+      .btn__label,
+      .btn__icon {
+        opacity: 0;
+        visibility: hidden;
+      }
+    }
+
+    &__spinner {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      &::after {
+        content: '';
+        width: 1.25em;
+        height: 1.25em;
+        border: 2px solid currentColor;
+        border-right-color: transparent;
+        border-radius: 50%;
+        animation: btn-spin 0.75s linear infinite;
+      }
+    }
+
+    &__icon {
+      display: inline-flex;
+      align-items: center;
+      flex-shrink: 0;
+
+      &--left {
+        margin-right: 0.5em;
+      }
+
+      &--right {
+        margin-left: 0.5em;
+      }
+
+      svg {
+        width: 1em;
+        height: 1em;
+        fill: currentColor;
+      }
     }
 
     &:disabled {
       opacity: 0.65;
       cursor: not-allowed;
+      pointer-events: none;
+    }
+  }
+
+  .#{$_cn}-group {
+    display: inline-flex;
+    flex-wrap: wrap;
+    gap: 0;
+
+    > .#{$_cn} {
+      border-radius: 0;
+
+      &:first-child {
+        border-top-left-radius: map.get($btn, config, border-radius);
+        border-bottom-left-radius: map.get($btn, config, border-radius);
+      }
+
+      &:last-child {
+        border-top-right-radius: map.get($btn, config, border-radius);
+        border-bottom-right-radius: map.get($btn, config, border-radius);
+      }
+
+      &:not(:last-child) {
+        border-right-width: 0;
+      }
+
+      &:hover,
+      &:focus {
+        z-index: 1;
+      }
+    }
+
+    &--vertical {
+      flex-direction: column;
+
+      > .#{$_cn} {
+        width: 100%;
+
+        &:first-child {
+          border-radius: 0;
+          border-top-left-radius: map.get($btn, config, border-radius);
+          border-top-right-radius: map.get($btn, config, border-radius);
+        }
+
+        &:last-child {
+          border-radius: 0;
+          border-bottom-left-radius: map.get($btn, config, border-radius);
+          border-bottom-right-radius: map.get($btn, config, border-radius);
+        }
+
+        &:not(:last-child) {
+          border-right-width: map.get($btn, config, border-width);
+          border-bottom-width: 0;
+        }
+      }
     }
   }
 
@@ -177,10 +315,17 @@ $btn: (
     border: none;
     padding: 0;
     cursor: pointer;
-    transition: color map.get(var.$global, animation-duration) ease-in-out;
+    text-decoration: underline;
+    text-underline-offset: 2px;
 
     &:hover {
-      color: map.get(c.$primary-map, 500);
+      text-decoration: none;
     }
+  }
+}
+
+@keyframes btn-spin {
+  to {
+    transform: rotate(360deg);
   }
 }
