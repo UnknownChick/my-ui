@@ -1,10 +1,6 @@
 @use 'sass:map';
 @use 'functions' as func;
 
-.test {
-  color: var(--colors-primary);
-}
-
 /* --- Accents colors start --- */
 $accents: (
   'red': (
