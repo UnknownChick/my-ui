@@ -14,12 +14,12 @@
 	"devDependencies": {
 		"@biomejs/biome": "2.2.0",
 		"@fullhuman/postcss-purgecss": "^7.0.2",
-		"autoprefixer": "^10.4.23",
+		"autoprefixer": "^10.4.27",
 		"browserslist": "^4.28.1",
-		"lightningcss": "^1.30.2",
-		"postcss": "^8.5.6",
-		"sass": "^1.97.1",
-		"vite": "^7.3.0"
+		"lightningcss": "^1.31.1",
+		"postcss": "^8.5.8",
+		"sass": "^1.97.3",
+		"vite": "^7.3.1"
 	},
 	"dependencies": {
 		"lucide": "^0.536.0"
