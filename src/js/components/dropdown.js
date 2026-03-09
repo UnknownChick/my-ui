@@ -1,67 +1,54 @@
-export default class Dropdown {
-	constructor() {
-		this.dropdownGroups = [];
+import Component from '../Component';
 
-		const dropdownElements = document.querySelectorAll(".dropdown");
-		if (dropdownElements.length === 0) {
-			console.warn("No dropdown elements found.");
-			return;
-		}
+export default class Dropdown extends Component {
+  static defaults = {};
 
-		dropdownElements.forEach((dropdownElement) => {
-			const button = dropdownElement.querySelector(".dropdown__toggle");
-			const content = dropdownElement.querySelector(".dropdown__content");
+  init() {
+    this._toggle = this.$('.dropdown__toggle');
+    this._content = this.$('.dropdown__content');
+    this._isOpen = false;
 
-			if (!button || !content) {
-				console.warn(
-					"Dropdown component is missing essential.dropdown__toggle or.dropdown__content elements.",
-					dropdownElement,
-				);
-				return;
-			}
+    if (!this._toggle || !this._content) {
+      console.warn('[Dropdown] Missing .dropdown__toggle or .dropdown__content:', this.el);
+      return;
+    }
 
-			const dropdownGroup = {
-				button,
-				content,
-				isOpen: false,
-			};
+    this.on('click', this._toggle, () => this.toggle());
 
-			this.dropdownGroups.push(dropdownGroup);
+    this._outsideHandler = (e) => {
+      if (!this.el.contains(e.target)) this.close();
+    };
+    document.addEventListener('click', this._outsideHandler);
+  }
 
-			button.addEventListener("click", () => {
-				this.toggleDropdown(dropdownGroup);
-			});
+  toggle() {
+    this._isOpen ? this.close() : this.open();
+  }
 
-			document.addEventListener("click", (event) => {
-				if (!dropdownElement.contains(event.target)) {
-					this.closeDropdown(dropdownGroup);
-				}
-			});
-		});
-	}
+  open() {
+    this._isOpen = true;
+    this.addClass('dropdown--open');
+    this.emit('dropdown:open');
+  }
 
-	toggleDropdown(dropdownGroup) {
-		if (dropdownGroup.isOpen) {
-			this.closeDropdown(dropdownGroup);
-		} else {
-			this.openDropdown(dropdownGroup);
-		}
-	}
+  close() {
+    this._isOpen = false;
+    this.removeClass('dropdown--open');
+    this.emit('dropdown:close');
+  }
 
-	openDropdown(dropdownGroup) {
-		this.dropdownGroups.forEach((group) => {
-			if (group !== dropdownGroup && group.isOpen) {
-				this.closeDropdown(group);
-			}
-		});
-		dropdownGroup.isOpen = true;
-		dropdownGroup.button.closest(".dropdown").classList.add("dropdown--open");
-	}
+  destroy() {
+    document.removeEventListener('click', this._outsideHandler);
+    super.destroy();
+  }
 
-	closeDropdown(dropdownGroup) {
-		dropdownGroup.isOpen = false;
-		dropdownGroup.button
-			.closest(".dropdown")
-			.classList.remove("dropdown--open");
-	}
+  /**
+   * Auto-init all .dropdown elements on the page.
+   * @returns {Dropdown[]}
+   */
+  static autoInit() {
+    return Array.from(document.querySelectorAll('.dropdown')).map(
+      el => new Dropdown(el)
+    );
+  }
 }

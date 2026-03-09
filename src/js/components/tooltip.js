@@ -1,99 +1,86 @@
-export default class Tooltip {
-	constructor(selector, options = {}) {
-		this.selector = selector;
-		this.validPositions = ["top", "right", "bottom", "left"];
-		this.options = {
-			message: "Message par defaut",
-			position: "top",
-			...options,
-		};
+import Component from '../Component';
 
-		if (!this.validPositions.includes(this.options.position)) {
-			console.warn(
-				`La position "${this.options.position}" n'est pas valide. Utilisation de "top".`,
-			);
-			this.options.position = "top";
-		}
+export default class Tooltip extends Component {
+  static defaults = {
+    message: '',
+    position: 'top',
+  };
 
-		this.init();
-	}
+  static VALID_POSITIONS = ['top', 'right', 'bottom', 'left'];
 
-	init() {
-		const trigger = document.querySelector(this.selector);
+  init() {
+    if (!Tooltip.VALID_POSITIONS.includes(this.options.position)) {
+      console.warn(`[Tooltip] Invalid position "${this.options.position}", using "top".`);
+      this.options.position = 'top';
+    }
 
-		if (!trigger) {
-			console.warn(`Le trigger ${this.selector} n'existe pas`);
-			return;
-		}
+    this._tooltipEl = null;
 
-		trigger.addEventListener("mouseover", () => {
-			this.show();
-		});
+    this._showHandler = () => this.show();
+    this._hideHandler = () => this.hide();
 
-		trigger.addEventListener("mouseout", () => {
-			this.hide();
-		});
-	}
+    this.on('mouseenter', this._showHandler);
+    this.on('mouseleave', this._hideHandler);
+    this.on('focus', this._showHandler);
+    this.on('blur', this._hideHandler);
+  }
 
-	show(message = this.options.message, position = this.options.position) {
-		const tooltip = document.createElement("div");
-		tooltip.className = `tooltip tooltip--${position}`;
-		tooltip.innerHTML = message;
+  show() {
+    this.hide();
 
-		// Tooltip insertion
-		document.body.appendChild(tooltip);
+    const { message, position } = this.options;
+    const tooltip = document.createElement('div');
+    tooltip.className = `tooltip tooltip--${position}`;
+    tooltip.textContent = message;
+    tooltip.setAttribute('role', 'tooltip');
 
-		// Tooltip position
-		const trigger = document.querySelector(this.selector);
-		const triggerRect = trigger.getBoundingClientRect();
-		const tooltipRect = tooltip.getBoundingClientRect();
+    document.body.appendChild(tooltip);
+    this._tooltipEl = tooltip;
 
-		let left = 0;
-		let top = 0;
-		// Ajout de la prise en compte du scroll
-		const scrollX = window.scrollX;
-		const scrollY = window.scrollY;
+    const triggerRect = this.el.getBoundingClientRect();
+    const tooltipRect = tooltip.getBoundingClientRect();
+    const gap = 10;
+    const scrollX = window.scrollX;
+    const scrollY = window.scrollY;
 
-		switch (position) {
-			case "top":
-				left =
-					scrollX +
-					triggerRect.left +
-					(triggerRect.width - tooltipRect.width) / 2;
-				top = scrollY + triggerRect.top - tooltipRect.height - 10;
-				break;
-			case "right":
-				left = scrollX + triggerRect.right + 10;
-				top =
-					scrollY +
-					triggerRect.top +
-					(triggerRect.height - tooltipRect.height) / 2;
-				break;
-			case "bottom":
-				left =
-					scrollX +
-					triggerRect.left +
-					(triggerRect.width - tooltipRect.width) / 2;
-				top = scrollY + triggerRect.bottom + 10;
-				break;
-			case "left":
-				left = scrollX + triggerRect.left - tooltipRect.width - 10;
-				top =
-					scrollY +
-					triggerRect.top +
-					(triggerRect.height - tooltipRect.height) / 2;
-				break;
-		}
+    let left = 0;
+    let top = 0;
 
-		tooltip.style.left = `${left}px`;
-		tooltip.style.top = `${top}px`;
-	}
+    switch (position) {
+      case 'top':
+        left = scrollX + triggerRect.left + (triggerRect.width - tooltipRect.width) / 2;
+        top = scrollY + triggerRect.top - tooltipRect.height - gap;
+        break;
+      case 'right':
+        left = scrollX + triggerRect.right + gap;
+        top = scrollY + triggerRect.top + (triggerRect.height - tooltipRect.height) / 2;
+        break;
+      case 'bottom':
+        left = scrollX + triggerRect.left + (triggerRect.width - tooltipRect.width) / 2;
+        top = scrollY + triggerRect.bottom + gap;
+        break;
+      case 'left':
+        left = scrollX + triggerRect.left - tooltipRect.width - gap;
+        top = scrollY + triggerRect.top + (triggerRect.height - tooltipRect.height) / 2;
+        break;
+    }
 
-	hide() {
-		const tooltip = document.querySelector(".tooltip");
+    tooltip.style.left = `${left}px`;
+    tooltip.style.top = `${top}px`;
 
-		if (tooltip) {
-			tooltip.remove();
-		}
-	}
+    this.emit('tooltip:show');
+  }
+
+  hide() {
+    if (this._tooltipEl) {
+      this._tooltipEl.remove();
+      this._tooltipEl = null;
+      this.emit('tooltip:hide');
+    }
+  }
+
+  destroy() {
+    this.hide();
+    super.destroy();
+  }
 }
