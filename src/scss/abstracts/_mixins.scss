@@ -1,42 +1,129 @@
 @use 'sass:map';
+@use 'sass:list';
+@use '../config/config-default' as cfg;
+@use './functions' as f;
 
-@mixin generate-color-classes($name, $palette) {
-  @each $weight, $color in $palette {
-    .text-#{$name}-#{$weight} {
-      color: $color !important;
+// ── Responsive breakpoints ───────────────────────────
+// Usage :
+//   @include bp(md) { font-size: 1.25rem; }
+//   @include bp-down(sm) { display: none; }
+@mixin bp($bp) {
+  $val: map.get(cfg.$breakpoints, $bp);
+  @if $val {
+    @media (min-width: f.em(f.strip-unit($val))) { @content; }
+  } @else {
+    @warn 'Breakpoint `#{$bp}` inexistant.';
+  }
+}
+
+@mixin bp-down($bp) {
+  $val: map.get(cfg.$breakpoints, $bp);
+  @if $val {
+    @media (max-width: calc(#{f.em(f.strip-unit($val))} - 0.02em)) { @content; }
+  } @else {
+    @warn 'Breakpoint `#{$bp}` inexistant.';
+  }
+}
+
+@mixin bp-between($min, $max) {
+  @include bp($min) {
+    @include bp-down($max) { @content; }
+  }
+}
+
+// ── Visually hidden (accessible) ─────────────────────
+@mixin visually-hidden {
+  position: absolute;
+  width:  1px; height: 1px;
+  padding: 0; margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+// ── Focus ring accessible ────────────────────────────
+@mixin focus-ring($color: var(--color-primary), $offset: 3px) {
+  &:focus-visible {
+    outline: 2px solid $color;
+    outline-offset: $offset;
+  }
+}
+
+// ── Truncate text ────────────────────────────────────
+@mixin truncate($lines: 1) {
+  @if $lines == 1 {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  } @else {
+    display: -webkit-box;
+    -webkit-line-clamp: $lines;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+}
+
+// ── Flex center ──────────────────────────────────────
+@mixin flex-center($direction: row) {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: $direction;
+}
+
+// ── Overlay absolu ───────────────────────────────────
+@mixin absolute-fill($z: auto) {
+  position: absolute;
+  inset: 0;
+  z-index: $z;
+}
+
+// ── Smooth transition ────────────────────────────────
+@mixin transition($props...) {
+  @if cfg.$enable-transitions {
+    $transitions: ();
+    @each $p in $props {
+      $transitions: list.append($transitions, $p cfg.$transition, comma);
     }
-    .bc-#{$name}-#{$weight} {
-      background-color: $color;
+    transition: $transitions;
+  }
+}
+
+// ── Shadow conditionnelle ────────────────────────────
+@mixin shadow($size: md) {
+  @if cfg.$enable-shadows {
+    @if      $size == sm  { box-shadow: cfg.$shadow-sm; }
+    @else if $size == md  { box-shadow: cfg.$shadow; }
+    @else if $size == lg  { box-shadow: cfg.$shadow-lg; }
+  }
+}
+
+// ── Génère des classes responsives ───────────────────
+@mixin responsive-variants {
+  @content;
+  @if cfg.$enable-responsive {
+    @each $bp, $val in cfg.$breakpoints {
+      @include bp($bp) {
+        .#{$bp}\: {
+          @content;
+        }
+      }
     }
   }
 }
 
-/*--- Absolute posision ---*/
-@mixin absolute-horizontal-center {
-  position: absolute;
-  left: 0;
-  right: 0;
-  margin-left: auto;
-  margin-right: auto;
+// ── Scrollbar custom ─────────────────────────────────
+@mixin custom-scrollbar($size: 6px, $color: var(--color-border)) {
+  &::-webkit-scrollbar       { width: $size; height: $size; }
+  &::-webkit-scrollbar-track { background: transparent; }
+  &::-webkit-scrollbar-thumb {
+    background: $color;
+    border-radius: calc(#{$size} / 2);
+  }
 }
 
-@mixin absolute-vertical-center {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  margin-top: auto;
-  margin-bottom: auto;
-}
-
-@mixin absolute-center {
-  position: absolute;
-  inset: 0;
-  margin: auto;
-}
-/*--- Absolute position end ---*/
-
-
-/*--- Background ---*/
+// ── Background image ─────────────────────────────────
 @mixin bg-image($image) {
   background-image: url($image);
   background-repeat: no-repeat;
@@ -44,15 +131,7 @@
   background-size: cover;
 }
 
-@mixin bg-image-center {
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: cover;
-}
-/*--- Background end ---*/
-
-
-/* --- Images --- */
+// ── Image cover center ───────────────────────────────
 @mixin image-cover-center {
   display: block;
   width: 100%;
@@ -60,137 +139,8 @@
   object-fit: cover;
   object-position: center;
 }
-/* --- Images end --- */
 
-
-/*--- Flexbox ---*/
-@mixin flex-row {
-  display: flex;
-  flex-direction: row;
-}
-
-@mixin flex-column {
-  display: flex;
-  flex-direction: column;
-}
-
-@mixin flex-wrap {
-  display: flex;
-  flex-wrap: wrap;
-}
-
-// Row alignments
-@mixin flex-row-center {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-}
-
-@mixin flex-row-center-center {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-}
-
-@mixin flex-row-space-between {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-}
-
-@mixin flex-row-space-around {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-around;
-}
-
-@mixin flex-row-end {
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-end;
-}
-
-@mixin flex-row-center-start {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: flex-start;
-}
-
-@mixin flex-row-center-end {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: flex-end;
-}
-
-@mixin flex-row-align-start {
-  display: flex;
-  flex-direction: row;
-  align-items: flex-start;
-}
-
-@mixin flex-row-align-center {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-}
-
-@mixin flex-row-align-end {
-  display: flex;
-  flex-direction: row;
-  align-items: flex-end;
-}
-
-// Column alignments
-@mixin flex-column-center {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-}
-
-@mixin flex-column-center-center {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-}
-
-@mixin flex-column-start {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-}
-
-@mixin flex-column-end {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-}
-
-@mixin flex-column-space-between {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-}
-
-@mixin flex-column-space-around {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-around;
-}
-
-@mixin flex-column-center-end {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: flex-end;
-}
-/*--- Flexbox end ---*/
-
-
-/*--- Utilities ---*/
+// ── Backdrop ─────────────────────────────────────────
 @mixin backdrop($z-index, $bg, $opacity: 0.25) {
   &::before {
     content: '';
@@ -205,4 +155,15 @@
     z-index: $z-index;
   }
 }
-/*--- Utilities end ---*/
+
+// ── Generate color classes ───────────────────────────
+@mixin generate-color-classes($name, $palette) {
+  @each $weight, $color in $palette {
+    .text-#{$name}-#{$weight} {
+      color: $color !important;
+    }
+    .bc-#{$name}-#{$weight} {
+      background-color: $color;
+    }
+  }
+}

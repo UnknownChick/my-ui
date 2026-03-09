@@ -1,45 +1,37 @@
 @use 'sass:map';
+@use '../config/config-default' as cfg;
 @use '../abstracts/colors' as c;
-@use '../abstracts/variables' as var;
-
-$_cn: loader;
 
 $loader: (
   animation-duration: 1.5s,
   border-size: 3px,
-  color: map.get(c.$palette, primary),
   size: 2rem,
 ) !default;
 
 @layer sidevui.components {
-  .#{$_cn} {
+  .loader {
     width: map.get($loader, size);
     height: map.get($loader, size);
-    border: map.get($loader, border-size) solid map.get($loader, color);
+    border: map.get($loader, border-size) solid var(--color-primary);
     border-bottom-color: transparent !important;
     border-radius: 100%;
     display: block;
-    animation: rotation map.get($loader, animation-duration) linear infinite;
+    animation: loader-rotation map.get($loader, animation-duration) linear infinite;
 
-    @each $color-name, $color-value in c.$semantic {
+    &--success { border-color: var(--color-success); }
+    &--danger  { border-color: var(--color-danger); }
+    &--warning { border-color: var(--color-warning); }
+    &--info    { border-color: var(--color-info); }
+
+    @each $color-name, $color-values in cfg.$accents {
       &--#{$color-name} {
-        border: map.get($loader, border-size) solid $color-value;
+        border-color: map.get($color-values, high);
       }
     }
+  }
 
-    @each $color-name, $color-value in c.$palette {
-      &--#{$color-name} {
-        border: map.get($loader, border-size) solid $color-value;
-      }
-    }
-
-    @keyframes rotation {
-      0% {
-        transform: rotate(0deg);
-      }
-      100% {
-        transform: rotate(360deg);
-      }
-    }
+  @keyframes loader-rotation {
+    0%   { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
   }
 }

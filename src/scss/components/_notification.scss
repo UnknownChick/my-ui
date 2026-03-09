@@ -1,73 +1,49 @@
 @use 'sass:map';
-@use '../abstracts/colors' as c;
-@use '../abstracts/variables' as var;
-
-$_cn: notification;
+@use '../config/config-default' as cfg;
 
 $notification: (
-  config: (
-    border-radius: map.get(var.$global, border-radius),
-    border-size: 0.25rem,
-    padding: 0.75rem 1rem,
-  ),
   sizes: (
-    xs: (
-      padding: 0.5rem 0.75rem,
-      font-size: 0.75rem
-    ),
-    sm: (
-      padding: 0.75rem 1rem,
-      font-size: 0.875rem
-    ),
-    md: (
-      padding: 0.825rem 1.25rem,
-      font-size: 1rem
-    ),
-    lg: (
-      padding: 1.25rem 1.5rem,
-      font-size: 1.25rem
-    ),
-    xl: (
-      padding: 1.5rem 1.75rem,
-      font-size: 1.5rem
-    )
+    xs: (padding: 0.5rem 0.75rem, font-size: cfg.$font-size-xs),
+    sm: (padding: 0.75rem 1rem, font-size: cfg.$font-size-sm),
+    md: (padding: 0.825rem 1.25rem, font-size: cfg.$font-size-md),
+    lg: (padding: 1.25rem 1.5rem, font-size: cfg.$font-size-lg),
+    xl: (padding: 1.5rem 1.75rem, font-size: cfg.$font-size-xl),
   )
 ) !default;
 
 @mixin notification-variant($background, $border, $color) {
   background-color: $background;
-  border-left: map.get($notification, config, border-size) solid $border;
+  border-left: 0.25rem solid $border;
   color: $color;
-  font-size: map.get($notification, sizes, md, font-size);
 }
 
 @layer sidevui.components {
-  .#{$_cn} {
+  .notification {
     display: block;
-    padding: map.get($notification, config, padding);
-    border-radius: map.get($notification, config, border-radius);
+    padding: 0.825rem 1.25rem;
+    border-radius: var(--radius);
 
-    @each $size, $values in map.get($notification, 'sizes') {
+    @each $size, $values in map.get($notification, sizes) {
       &--#{$size} {
-        padding: map.get($values, 'padding');
-        font-size: map.get($values, 'font-size');
+        padding: map.get($values, padding);
+        font-size: map.get($values, font-size);
       }
     }
 
-    @each $color-name, $color-values in c.$accents {
+    @each $color-name, $color-values in cfg.$accents {
       &--soft-#{$color-name} {
         @include notification-variant(
-          map.get($color-values, 'soft'),
-          map.get($color-values, 'high'),
-          map.get($color-values, 'high')
+          map.get($color-values, soft),
+          map.get($color-values, high),
+          map.get($color-values, high)
         );
       }
 
       &--high-#{$color-name} {
         @include notification-variant(
-          map.get($color-values, 'high'),
-          map.get($color-values, 'soft'),
-          map.get($color-values, 'soft')
+          map.get($color-values, high),
+          map.get($color-values, soft),
+          map.get($color-values, soft)
         );
       }
     }

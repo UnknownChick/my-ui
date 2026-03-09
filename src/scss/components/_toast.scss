@@ -1,58 +1,42 @@
 @use 'sass:map';
-@use '../abstracts/colors' as c;
-@use '../abstracts/variables' as var;
+@use '../config/config-default' as cfg;
+@use '../abstracts/mixins' as m;
 
 $_cn: toast;
 
 $toast: (
-  border: 1px solid map.get(c.$semantic, grayscale),
-  border-radius: map.get(var.$global, border-radius),
-  box-shadow: map.get(var.$global, box-shadow),
   max-width: 400px,
   padding: 1.5rem,
-  progress-color: map.get(c.$palette, primary),
   progress-height: 0.25rem,
   transition-duration: 0.3s,
   positions: (
-    tl: (
-      top: 2rem,
-      left: 2rem,
-    ),
-    tr: (
-      top: 2rem,
-      right: 2rem,
-    ),
-    bl: (
-      bottom: 2rem,
-      left: 2rem,
-    ),
-    br: (
-      bottom: 2rem,
-      right: 2rem,
-    ),
+    tl: (top: 2rem, left: 2rem),
+    tr: (top: 2rem, right: 2rem),
+    bl: (bottom: 2rem, left: 2rem),
+    br: (bottom: 2rem, right: 2rem),
   )
 ) !default;
 
 @keyframes toast-progress-decrease {
   from { width: 100%; }
-  to { width: 0%; }
+  to   { width: 0%; }
 }
 
 @layer sidevui.components {
-  .#{$_cn} {
+  .toast {
     display: block;
     position: fixed;
-    background-color: white;
-    border: map.get($toast, border);
-    border-radius: map.get($toast, border-radius);
+    background-color: var(--color-bg);
+    border: cfg.$border-width solid var(--color-border);
+    border-radius: var(--radius);
     max-width: map.get($toast, max-width);
-    box-shadow: map.get($toast, box-shadow);
+    @include m.shadow(md);
     overflow: hidden;
     opacity: 0;
     visibility: hidden;
     transition: transform map.get($toast, transition-duration) ease-in-out,
-          opacity map.get($toast, transition-duration) ease-in-out,
-          visibility map.get($toast, transition-duration) ease-in-out;
+               opacity map.get($toast, transition-duration) ease-in-out,
+               visibility map.get($toast, transition-duration) ease-in-out;
 
     @each $pos, $val in map.get($toast, positions) {
       &--#{$pos} {
@@ -75,7 +59,7 @@ $toast: (
       left: 0;
       height: map.get($toast, progress-height);
       width: 100%;
-      background-color: map.get($toast, progress-color);
+      background-color: var(--color-primary);
       animation: none;
     }
 
@@ -88,7 +72,7 @@ $toast: (
       opacity: 1;
       visibility: visible;
 
-      .#{$_cn}__progress {
+      .toast__progress {
         animation-name: toast-progress-decrease;
         animation-timing-function: linear;
         animation-fill-mode: forwards;

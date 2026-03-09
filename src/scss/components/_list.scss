@@ -1,21 +1,17 @@
 @use 'sass:map';
-@use '../abstracts/colors' as c;
-
-$_cn: list;
+@use '../config/config-default' as cfg;
 
 $list: (
-  border: 1px solid map.get(c.$grayscale-map, 200),
   padding: 1rem
 ) !default;
 
 @layer sidevui.components {
-  .#{$_cn} {
-
+  .list {
     &__item {
       padding: map.get($list, padding) 0;
 
       &:not(:last-child) {
-        border-bottom: map.get($list, border);
+        border-bottom: cfg.$border-width solid var(--color-border);
       }
     }
   }

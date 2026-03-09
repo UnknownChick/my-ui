@@ -1,95 +1,39 @@
-@use 'sass:color';
 @use 'sass:map';
+@use '../config/config-default' as cfg;
 @use '../abstracts/colors' as c;
-@use '../abstracts/variables' as v;
+@use '../abstracts/mixins' as m;
 
-$_cn: btn;
+$_border-width: 2px;
 
 $btn: (
-  config: (
-    border-radius: v.$border-radius,
-    border-width: 2px,
-    font-weight: 400,
-    transition: all v.$animation-duration ease-in-out
-  ),
   sizes: (
-    xs: (
-      padding: 0.5rem 0.75rem,
-      font-size: 0.75rem
-    ),
-    sm: (
-      padding: 0.5rem 1rem,
-      font-size: 0.875rem
-    ),
-    md: (
-      padding: 0.5rem 1.5rem,
-      font-size: 1rem
-    ),
-    lg: (
-      padding: 0.75rem 1.75rem,
-      font-size: 1.125rem
-    ),
-    xl: (
-      padding: 0.75rem 2rem,
-      font-size: 1.25rem
-    ),
-    xxl: (
-      padding: 0.75rem 2.5rem,
-      font-size: 1.375rem
-    )
+    xs:  (padding: 0.5rem 0.75rem, font-size: cfg.$font-size-xs),
+    sm:  (padding: 0.5rem 1rem,    font-size: cfg.$font-size-sm),
+    md:  (padding: 0.5rem 1.5rem,  font-size: cfg.$font-size-md),
+    lg:  (padding: 0.75rem 1.75rem, font-size: cfg.$font-size-lg),
+    xl:  (padding: 0.75rem 2rem,   font-size: cfg.$font-size-xl),
+    xxl: (padding: 0.75rem 2.5rem, font-size: cfg.$font-size-2xl),
   ),
   colors: (
-    primary: (
-      default: c.$primary-500,
-      hover: c.$primary-700,
-      text: c.$white
-    ),
-    secondary: (
-      default: c.$secondary-500,
-      hover: c.$secondary-700,
-      text: c.$white
-    ),
-    success: (
-      default: c.$success-500,
-      hover: c.$success-700,
-      text: c.$white
-    ),
-    danger: (
-      default: c.$danger-500,
-      hover: c.$danger-700,
-      text: c.$white
-    ),
-    warning: (
-      default: c.$warning-500,
-      hover: c.$warning-700,
-      text: c.$white
-    ),
-    info: (
-      default: c.$info-500,
-      hover: c.$info-700,
-      text: c.$white
-    ),
-    white: (
-      default: c.$white,
-      hover: c.$grayscale-200,
-      text: c.$black
-    ),
-    black: (
-      default: c.$black,
-      hover: c.$grayscale-800,
-      text: c.$white
-    ),
+    primary:   (default: cfg.$color-primary,   hover: map.get(c.$primary-map, 700),   text: cfg.$color-white),
+    secondary: (default: cfg.$color-secondary,  hover: map.get(c.$secondary-map, 700), text: cfg.$color-white),
+    success:   (default: cfg.$color-success,    hover: map.get(c.$success-map, 700),   text: cfg.$color-white),
+    danger:    (default: cfg.$color-danger,     hover: map.get(c.$danger-map, 700),    text: cfg.$color-white),
+    warning:   (default: cfg.$color-warning,    hover: map.get(c.$warning-map, 700),   text: cfg.$color-white),
+    info:      (default: cfg.$color-info,       hover: map.get(c.$info-map, 700),      text: cfg.$color-white),
+    white:     (default: cfg.$color-white,       hover: map.get(c.$grayscale-map, 200), text: cfg.$color-black),
+    black:     (default: cfg.$color-black,       hover: map.get(c.$grayscale-map, 800), text: cfg.$color-white),
   )
 ) !default;
 
-@mixin button-solid($main-color, $secondary-color, $text-color) {
-  background-color: $main-color;
-  border-color: $main-color;
-  color: $text-color;
+@mixin button-solid($main, $hover, $text) {
+  background-color: $main;
+  border-color: $main;
+  color: $text;
 
   &:not(:disabled):is(:hover, :active, :focus) {
-    background-color: $secondary-color;
-    border-color: $secondary-color;
+    background-color: $hover;
+    border-color: $hover;
   }
 }
 
@@ -100,36 +44,36 @@ $btn: (
 
   &:not(:disabled):is(:hover, :active, :focus) {
     background-color: $color;
-    color: c.$white;
+    color: cfg.$color-white;
   }
 }
 
-@mixin button-accent($bc-color, $color) {
-  background-color: $bc-color;
-  border-color: $bc-color;
-  color: $color;
+@mixin button-accent($bg, $fg) {
+  background-color: $bg;
+  border-color: $bg;
+  color: $fg;
 
   &:not(:disabled):is(:hover, :active, :focus) {
-    background-color: $color;
-    border-color: $color;
-    color: $bc-color;
+    background-color: $fg;
+    border-color: $fg;
+    color: $bg;
   }
 }
 
-@layer components {
-  .#{$_cn} {
+@layer sidevui.components {
+  .btn {
     position: relative;
     display: block;
     width: fit-content;
-    border-radius: map.get($btn, config, border-radius);
-    font-weight: map.get($btn, config, font-weight);
+    border-radius: var(--radius);
+    font-weight: cfg.$font-weight-normal;
     padding: map.get($btn, sizes, md, padding);
     font-size: map.get($btn, sizes, md, font-size);
     line-height: 1;
     cursor: pointer;
     outline: none;
-    transition: map.get($btn, config, transition);
-    border-width: map.get($btn, config, border-width);
+    @include m.transition(all);
+    border-width: $_border-width;
     border-style: solid;
     text-transform: uppercase;
 
@@ -139,8 +83,7 @@ $btn: (
     }
 
     &:focus-visible {
-      outline: 2px solid c.$primary-500;
-      outline-offset: 2px;
+      @include m.focus-ring;
     }
 
     @each $size, $values in map.get($btn, sizes) {
@@ -157,10 +100,6 @@ $btn: (
           map.get($color-values, hover),
           map.get($color-values, text)
         );
-
-        @if map.has-key($color-values, border-color) {
-          border-color: map.get($color-values, border-color);
-        }
       }
 
       &--#{"" + $color-name}-outline {
@@ -168,7 +107,7 @@ $btn: (
       }
     }
 
-    @each $color-name, $color-values in c.$accents {
+    @each $color-name, $color-values in cfg.$accents {
       &--soft-#{$color-name} {
         @include button-accent(
           map.get($color-values, soft),
@@ -233,13 +172,8 @@ $btn: (
       align-items: center;
       flex-shrink: 0;
 
-      &--left {
-        margin-right: 0.5em;
-      }
-
-      &--right {
-        margin-left: 0.5em;
-      }
+      &--left  { margin-right: 0.5em; }
+      &--right { margin-left: 0.5em; }
 
       svg {
         width: 1em;
@@ -255,61 +189,55 @@ $btn: (
     }
   }
 
-  .#{$_cn}-group {
+  .btn-group {
     display: inline-flex;
     flex-wrap: wrap;
     gap: 0;
 
-    > .#{$_cn} {
+    > .btn {
       border-radius: 0;
 
       &:first-child {
-        border-top-left-radius: map.get($btn, config, border-radius);
-        border-bottom-left-radius: map.get($btn, config, border-radius);
+        border-top-left-radius: var(--radius);
+        border-bottom-left-radius: var(--radius);
       }
 
       &:last-child {
-        border-top-right-radius: map.get($btn, config, border-radius);
-        border-bottom-right-radius: map.get($btn, config, border-radius);
+        border-top-right-radius: var(--radius);
+        border-bottom-right-radius: var(--radius);
       }
 
-      &:not(:last-child) {
-        border-right-width: 0;
-      }
-
-      &:hover,
-      &:focus {
-        z-index: 1;
-      }
+      &:not(:last-child) { border-right-width: 0; }
+      &:hover, &:focus    { z-index: 1; }
     }
 
     &--vertical {
       flex-direction: column;
 
-      > .#{$_cn} {
+      > .btn {
         width: 100%;
 
         &:first-child {
           border-radius: 0;
-          border-top-left-radius: map.get($btn, config, border-radius);
-          border-top-right-radius: map.get($btn, config, border-radius);
+          border-top-left-radius: var(--radius);
+          border-top-right-radius: var(--radius);
         }
 
         &:last-child {
           border-radius: 0;
-          border-bottom-left-radius: map.get($btn, config, border-radius);
-          border-bottom-right-radius: map.get($btn, config, border-radius);
+          border-bottom-left-radius: var(--radius);
+          border-bottom-right-radius: var(--radius);
         }
 
         &:not(:last-child) {
-          border-right-width: map.get($btn, config, border-width);
+          border-right-width: $_border-width;
           border-bottom-width: 0;
         }
       }
     }
   }
 
-  .#{$_cn}--link {
+  .btn--link {
     appearance: none;
     background-color: transparent;
     border: none;
@@ -318,14 +246,10 @@ $btn: (
     text-decoration: underline;
     text-underline-offset: 2px;
 
-    &:hover {
-      text-decoration: none;
-    }
+    &:hover { text-decoration: none; }
   }
 }
 
 @keyframes btn-spin {
-  to {
-    transform: rotate(360deg);
-  }
+  to { transform: rotate(360deg); }
 }

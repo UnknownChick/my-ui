@@ -1,55 +1,76 @@
 @use 'sass:map';
-@use '../abstracts/colors' as c;
-@use '../abstracts/variables' as v;
+@use '../config/config-default' as cfg;
+@use '../abstracts/mixins' as m;
 
 @layer sidevui.utilities {
-  @each $fs-class, $font-size in v.$fs {
-    .fs-#{$fs-class} {
-      font-size: #{$font-size};
+  // Fluid font sizes
+  @each $name, $value in cfg.$font-sizes-fluid {
+    .fs-#{$name} {
+      font-size: $value;
     }
   }
 
-  @each $title, $font-size in v.$fs-title {
-    #{$title} {
-      font-size: #{$font-size};
-    }
-  }
-
-  @each $colot-text, $color in c.$semantic {
-    .#{$colot-text}-text {
-      color: map.get(c.$semantic, $colot-text);
-    }
-  }
-
-  @each $font-name, $font-family in v.$font {
-    .#{$font-name}-font {
-      font-family: #{$font-family};
-    }
-  }
-
+  // Font weights
   @for $i from 1 through 9 {
-    .fw-#{$i}00 {
-      font-weight: #{$i}00;
+    .fw-#{$i * 100} {
+      font-weight: #{$i * 100};
     }
   }
 
-  .bold-text {
-    font-weight: 700;
+  // Text styles
+  .font-bold   { font-weight: var(--font-weight-bold); }
+  .font-normal { font-weight: var(--font-weight-normal); }
+  .italic      { font-style: italic; }
+  .uppercase   { text-transform: uppercase; }
+  .lowercase   { text-transform: lowercase; }
+  .capitalize  { text-transform: capitalize; }
+  .normal-case { text-transform: none; }
+
+  // Text alignment
+  .text-left   { text-align: left; }
+  .text-center { text-align: center; }
+  .text-right  { text-align: right; }
+
+  // Text decoration
+  .underline    { text-decoration: underline; }
+  .no-underline { text-decoration: none; }
+  .line-through { text-decoration: line-through; }
+
+  // Truncation
+  .truncate {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
 
-  .italic-text {
-    font-style: italic;
+  .line-clamp-2 {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
   }
 
-  .uppercase-text {
-    text-transform: uppercase;
+  .line-clamp-3 {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
   }
 
-  .lowercase-text {
-    text-transform: lowercase;
-  }
+  // Whitespace
+  .whitespace-nowrap { white-space: nowrap; }
+  .whitespace-normal { white-space: normal; }
+  .break-words  { overflow-wrap: break-word; }
+  .break-all    { word-break: break-all; }
 
-  .capitalize-text {
-    text-transform: capitalize;
+  // Responsive text alignment
+  @if cfg.$enable-responsive {
+    @each $bp, $_ in cfg.$breakpoints {
+      @include m.bp($bp) {
+        .#{$bp}\:text-left   { text-align: left; }
+        .#{$bp}\:text-center { text-align: center; }
+        .#{$bp}\:text-right  { text-align: right; }
+      }
+    }
   }
 }

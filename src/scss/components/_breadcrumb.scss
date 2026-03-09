@@ -1,18 +1,16 @@
 @use 'sass:map';
-@use '../abstracts/colors' as c;
-@use '../abstracts/variables' as var;
+@use '../config/config-default' as cfg;
+@use '../abstracts/mixins' as m;
 
 $_cn: breadcrumb;
 
 $breadcrumb: (
-  border-radius: 0.25rem,
-  color: map.get(c.$palette, primary),
   padding: 0.25rem,
   separator: '/',
 ) !default;
 
 @layer sidevui.components {
-  .#{$_cn} {
+  .breadcrumb {
     ul {
       list-style: none;
       display: inline-flex;
@@ -24,23 +22,21 @@ $breadcrumb: (
           padding: map.get($breadcrumb, padding);
         }
 
-        &:not(:last-child) {
-          a {
-            opacity: 0.75;
-          }
+        &:not(:last-child) a {
+          opacity: 0.75;
         }
 
         a {
-          color: map.get($breadcrumb, color);
+          color: var(--color-primary);
           text-decoration: none;
           line-height: 1;
           padding: map.get($breadcrumb, padding);
-          border-radius: map.get($breadcrumb, border-radius);
+          border-radius: var(--radius-sm);
           display: inline-block;
-          transition: background-color 0.2s ease-in-out;
+          @include m.transition(background-color);
 
           &:hover {
-            background-color: #d5d5d5;
+            background-color: var(--color-surface);
           }
         }
       }

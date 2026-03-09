@@ -1,33 +1,27 @@
 @use 'sass:map';
-@use '../abstracts/colors' as c;
+@use '../config/config-default' as cfg;
 @use '../abstracts/mixins' as m;
-@use '../abstracts/variables' as var;
 
-$_cn: tooltip;
+$_bg: cfg.$color-primary;
 
 $tooltip: (
-  background-color: map.get(c.$palette, primary),
-  border-radius: 0.25rem,
-  box-shadow: map.get(var.$global, box-shadow),
-  color: map.get(c.$semantic, 'white'),
-  cursor: help,
   max-width: 200px,
   padding: 0.5rem,
 ) !default;
 
 @layer sidevui.components {
-  .#{$_cn} {
-    background-color: map.get($tooltip, background-color);
+  .tooltip {
+    background-color: $_bg;
     position: absolute;
     padding: map.get($tooltip, padding);
-    border-radius: map.get($tooltip, border-radius);
+    border-radius: cfg.$border-radius-sm;
     width: max-content;
-    color: map.get($tooltip, color);
+    color: cfg.$color-white;
     z-index: 1050;
-    box-shadow: map.get($tooltip, box-shadow);
+    @include m.shadow(sm);
     transform: none;
     max-width: map.get($tooltip, max-width);
-    transition: opacity map.get(var.$global, animation-duration) ease-in-out, visibility map.get(var.$global, animation-duration) ease-in-out;
+    @include m.transition(opacity, visibility);
     pointer-events: none;
 
     &::before {
@@ -37,40 +31,24 @@ $tooltip: (
       border-style: solid;
     }
 
-    &--top {
-      &::before {
-        top: 100%;
-        left: 50%;
-        transform: translateX(-50%);
-        border-color: map.get($tooltip, background-color) transparent transparent transparent;
-      }
+    &--top::before {
+      top: 100%; left: 50%; transform: translateX(-50%);
+      border-color: $_bg transparent transparent transparent;
     }
 
-    &--bottom {
-      &::before {
-        bottom: 100%;
-        left: 50%;
-        transform: translateX(-50%);
-        border-color: transparent transparent map.get($tooltip, background-color) transparent;
-      }
+    &--bottom::before {
+      bottom: 100%; left: 50%; transform: translateX(-50%);
+      border-color: transparent transparent $_bg transparent;
     }
 
-    &--left {
-      &::before {
-        top: 50%;
-        left: 100%;
-        transform: translateY(-50%);
-        border-color: transparent transparent transparent map.get($tooltip, background-color);
-      }
+    &--left::before {
+      top: 50%; left: 100%; transform: translateY(-50%);
+      border-color: transparent transparent transparent $_bg;
     }
 
-    &--right {
-      &::before {
-        top: 50%;
-        right: 100%;
-        transform: translateY(-50%);
-        border-color: transparent map.get($tooltip, background-color) transparent transparent;
-      }
+    &--right::before {
+      top: 50%; right: 100%; transform: translateY(-50%);
+      border-color: transparent $_bg transparent transparent;
     }
   }
 }

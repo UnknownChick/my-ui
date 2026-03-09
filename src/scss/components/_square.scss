@@ -1,43 +1,22 @@
 @use 'sass:map';
-@use '../abstracts/colors' as c;
-@use '../abstracts/variables' as var;
-
-$_cn: square;
+@use '../config/config-default' as cfg;
 
 $square: (
-  config: (
-    border-radius: map.get(var.$global, border-radius),
-  ),
   sizes: (
-    xs: (
-      height: 1rem,
-      width: 1.5rem,
-    ),
-    sm: (
-      height: 1.25rem,
-      width: 1.75rem,
-    ),
-    md: (
-      height: 1.5rem,
-      width: 2rem,
-    ),
-    lg: (
-      height: 1.75rem,
-      width: 2.26rem,
-    ),
-    xl: (
-      height: 2rem,
-      width: 2.5rem,
-    ),
+    xs: (height: 1rem, width: 1.5rem),
+    sm: (height: 1.25rem, width: 1.75rem),
+    md: (height: 1.5rem, width: 2rem),
+    lg: (height: 1.75rem, width: 2.26rem),
+    xl: (height: 2rem, width: 2.5rem),
   ),
 ) !default;
 
 @layer sidevui.components {
-  .#{$_cn} {
+  .square {
     display: block;
-    border-radius: map.get($square, config, border-radius);
-    width: map.get($square, sizes, md, width);
-    height: map.get($square, sizes, md, height);
+    border-radius: var(--radius);
+    width: 2rem;
+    height: 1.5rem;
 
     @each $size, $values in map.get($square, sizes) {
       &--#{$size} {
@@ -46,14 +25,9 @@ $square: (
       }
     }
 
-    @each $color-name, $color-values in c.$accents {
-      &--soft-#{$color-name} {
-        background-color: map.get($color-values, soft);
-      }
-
-      &--high-#{$color-name} {
-        background-color: map.get($color-values, high);
-      }
+    @each $color-name, $color-values in cfg.$accents {
+      &--soft-#{$color-name} { background-color: map.get($color-values, soft); }
+      &--high-#{$color-name} { background-color: map.get($color-values, high); }
     }
   }
 }

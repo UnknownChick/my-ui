@@ -1,0 +1,77 @@
+@use 'sass:map';
+@use '../config/config-default' as cfg;
+@use '../abstracts/mixins' as m;
+
+$drawer: (
+  width: 320px,
+  duration: 0.3s,
+  z-index: 1000,
+  backdrop-color: rgba(0 0 0 / 50%),
+) !default;
+
+@layer sidevui.components {
+  .drawer {
+    position: fixed;
+    top: 0;
+    height: 100dvh;
+    width: map.get($drawer, width);
+    background-color: var(--color-bg);
+    @include m.shadow(lg);
+    z-index: map.get($drawer, z-index);
+    overflow-y: auto;
+    @include m.transition(transform);
+    transition-duration: map.get($drawer, duration);
+
+    &--left {
+      left: 0;
+      transform: translateX(-100%);
+    }
+
+    &--right {
+      right: 0;
+      transform: translateX(100%);
+    }
+
+    &--open {
+      transform: translateX(0);
+    }
+
+    &__header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1rem;
+      border-bottom: cfg.$border-width solid var(--color-border);
+    }
+
+    &__close {
+      cursor: pointer;
+      background: none;
+      border: none;
+      color: var(--color-text);
+      @include m.transition(opacity);
+
+      &:hover { opacity: 0.7; }
+    }
+
+    &__body {
+      padding: 1rem;
+    }
+
+    &__backdrop {
+      position: fixed;
+      inset: 0;
+      background-color: map.get($drawer, backdrop-color);
+      z-index: map.get($drawer, z-index) - 1;
+      opacity: 0;
+      visibility: hidden;
+      @include m.transition(opacity, visibility);
+      transition-duration: map.get($drawer, duration);
+
+      &--visible {
+        opacity: 1;
+        visibility: visible;
+      }
+    }
+  }
+}

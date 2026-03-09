@@ -1,30 +1,17 @@
 @use 'sass:map';
-@use '../abstracts/colors' as c;
-@use '../abstracts/mixins' as mix;
-@use '../abstracts/variables' as var;
-
-$_cn: pagination;
+@use '../config/config-default' as cfg;
+@use '../abstracts/mixins' as m;
 
 $pagination: (
-  animation-duration: 0.15s,
-  border-colors-iddle: #dee2e6,
-  border-radius: map.get(var.$global, border-radius),
-  border-size: 1px,
-  color-active: map.get(c.$palette, primary),
-  color-default: map.get(c.$semantic, grayscale),
-  color-hover: map.get(c.$palette, primary),
-  color-iddle: #6c757d,
-  color-iddle-hover: #e9ecef,
-  font-size: 1rem,
   gap: 0.25rem,
   padding: 0 0.5rem,
   size: 2.5rem,
-  size-icon: 1rem
+  size-icon: 1rem,
 ) !default;
 
 @layer sidevui.components {
-  .#{$_cn} {
-    font-size: map.get($pagination, font-size);
+  .pagination {
+    font-size: cfg.$font-size-md;
 
     &__list {
       display: flex;
@@ -38,46 +25,42 @@ $pagination: (
       height: map.get($pagination, size);
       padding: map.get($pagination, padding);
       text-decoration: none;
-      color: map.get($pagination, color-active);
-      background-color: map.get(c.$semantic, 'white');
-      border: map.get($pagination, border-size) solid map.get($pagination, border-colors-iddle);
-      border-radius: map.get($pagination, border-radius);
+      color: var(--color-primary);
+      background-color: var(--color-white);
+      border: cfg.$border-width solid var(--color-border);
+      border-radius: var(--radius);
       line-height: 1;
-      transition: background-color map.get($pagination, animation-duration) ease-in-out, color map.get($pagination, animation-duration) ease-in-out, border-color 0.15s ease-in-out;
-      @include mix.flex-column-center-center;
+      @include m.transition(background-color, color, border-color);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
 
       &:hover {
-        background-color: map.get($pagination, color-iddle-hover);
-        border-color: map.get($pagination, border-colors-iddle);
-        color: map.get($pagination, color-hover);
+        background-color: var(--color-surface);
+        color: var(--color-primary);
       }
     }
 
     &__ellipsis {
       border: none;
       background-color: transparent;
-      color: map.get($pagination, color-iddle);
-      padding: map.get($pagination, padding);
+      color: var(--color-text-muted);
     }
 
     &__item {
-      &--active {
-        .pagination__link {
-          color: map.get(c.$semantic, 'white');
-          background-color: map.get($pagination, color-active);
-          border-color: map.get($pagination, color-active);
-          pointer-events: none;
-        }
+      &--active .pagination__link {
+        color: var(--color-white);
+        background-color: var(--color-primary);
+        border-color: var(--color-primary);
+        pointer-events: none;
       }
 
-      &--disabled {
-        .pagination__link {
-          color: map.get($pagination, color-iddle);
-          pointer-events: none;
-          cursor: default;
-          background-color: map.get(c.$semantic, 'white');
-          border-color: map.get($pagination, border-colors-iddle);
-        }
+      &--disabled .pagination__link {
+        color: var(--color-text-muted);
+        pointer-events: none;
+        cursor: default;
+        background-color: var(--color-white);
+        border-color: var(--color-border);
       }
     }
 
