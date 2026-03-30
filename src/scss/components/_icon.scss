@@ -1,27 +1,22 @@
 @use 'sass:map';
-
-$_cn: icon;
+@use '../abstracts/component-api' as api;
 
 $icon: (
-  xxs: 1rem,
-  xs: 2rem,
-  sm: 3rem,
-  md: 4rem,
-  lg: 5rem,
-  xl: 6rem,
-  xxl: 7rem,
-  fluid: 100%
+  sizes: (
+    xxs:   (height: 1rem,  width: 1rem),
+    xs:    (height: 2rem,  width: 2rem),
+    sm:    (height: 3rem,  width: 3rem),
+    md:    (height: 4rem,  width: 4rem),
+    lg:    (height: 5rem,  width: 5rem),
+    xl:    (height: 6rem,  width: 6rem),
+    xxl:   (height: 7rem,  width: 7rem),
+    fluid: (height: 100%,  width: 100%),
+  )
 ) !default;
 
 @layer sidevui.components {
-  .#{$_cn} {
+  .icon {
     display: block;
-
-    @each $size, $value in $icon {
-      &--#{$size} {
-        height: $value;
-        width: $value;
-      }
-    }
+    @include api.make-size-variants(map.get($icon, sizes));
   }
 }

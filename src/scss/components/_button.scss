@@ -2,6 +2,7 @@
 @use '../config/config-default' as cfg;
 @use '../abstracts/colors' as c;
 @use '../abstracts/mixins' as m;
+@use '../abstracts/component-api' as api;
 
 $_border-width: 2px;
 
@@ -86,12 +87,7 @@ $btn: (
       @include m.focus-ring;
     }
 
-    @each $size, $values in map.get($btn, sizes) {
-      &--#{$size} {
-        padding: map.get($values, padding);
-        font-size: map.get($values, font-size);
-      }
-    }
+    @include api.make-size-variants(map.get($btn, sizes));
 
     @each $color-name, $color-values in map.get($btn, colors) {
       &--#{"" + $color-name} {

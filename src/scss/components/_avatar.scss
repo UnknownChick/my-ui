@@ -1,29 +1,15 @@
 @use 'sass:map';
 @use '../config/config-default' as cfg;
 @use '../abstracts/mixins' as m;
+@use '../abstracts/component-api' as api;
 
 $avatar: (
   sizes: (
-    xs: (
-      size: 2rem,
-      font-size: cfg.$font-size-sm
-    ),
-    sm: (
-      size: 2.5rem,
-      font-size: cfg.$font-size-md
-    ),
-    md: (
-      size: 3rem,
-      font-size: cfg.$font-size-lg
-    ),
-    lg: (
-     size: 3.5rem,
-      font-size: cfg.$font-size-xl
-    ),
-    xl: (
-      size: 4rem,
-      font-size: cfg.$font-size-2xl
-    ),
+    xs: (width: 2rem,   height: 2rem,   font-size: cfg.$font-size-sm),
+    sm: (width: 2.5rem, height: 2.5rem, font-size: cfg.$font-size-md),
+    md: (width: 3rem,   height: 3rem,   font-size: cfg.$font-size-lg),
+    lg: (width: 3.5rem, height: 3.5rem, font-size: cfg.$font-size-xl),
+    xl: (width: 4rem,   height: 4rem,   font-size: cfg.$font-size-2xl),
   )
 ) !default;
 
@@ -48,12 +34,6 @@ $avatar: (
       object-fit: cover;
     }
 
-    @each $size, $values in map.get($avatar, sizes) {
-      &--#{$size} {
-        width: map.get($values, size);
-        height: map.get($values, size);
-        font-size: map.get($values, font-size);
-      }
-    }
+    @include api.make-size-variants(map.get($avatar, sizes));
   }
 }

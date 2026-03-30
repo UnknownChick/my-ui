@@ -1,11 +1,9 @@
 @charset "utf-8";
+
+@use 'layers';
 @use 'base';
-@use 'components';
 @use 'layouts';
+@use 'components';
 @use 'themes';
 @use 'utilities';
 // @use 'vendor';
-
-@layer sidevui {
-  @layer reset, tokens, base, components, utilities;
-}

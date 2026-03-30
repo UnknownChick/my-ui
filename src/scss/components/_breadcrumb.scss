@@ -2,43 +2,46 @@
 @use '../config/config-default' as cfg;
 @use '../abstracts/mixins' as m;
 
-$_cn: breadcrumb;
-
 $breadcrumb: (
   padding: 0.25rem,
   separator: '/',
 ) !default;
 
 @layer sidevui.components {
-  .breadcrumb {
+  @scope (.breadcrumb) {
+    :scope {
+      display: block;
+    }
+
     ul {
       list-style: none;
       display: inline-flex;
+    }
 
-      li {
-        height: max-content;
-        &:not(:last-child)::after {
-          content: map.get($breadcrumb, separator);
-          padding: map.get($breadcrumb, padding);
-        }
+    li {
+      height: max-content;
 
-        &:not(:last-child) a {
-          opacity: 0.75;
-        }
+      &:not(:last-child)::after {
+        content: map.get($breadcrumb, separator);
+        padding: map.get($breadcrumb, padding);
+      }
 
-        a {
-          color: var(--color-primary);
-          text-decoration: none;
-          line-height: 1;
-          padding: map.get($breadcrumb, padding);
-          border-radius: var(--radius-sm);
-          display: inline-block;
-          @include m.transition(background-color);
+      &:not(:last-child) a {
+        opacity: 0.75;
+      }
+    }
 
-          &:hover {
-            background-color: var(--color-surface);
-          }
-        }
+    a {
+      color: var(--color-primary);
+      text-decoration: none;
+      line-height: 1;
+      padding: map.get($breadcrumb, padding);
+      border-radius: var(--radius-sm);
+      display: inline-block;
+      @include m.transition(background-color);
+
+      &:hover {
+        background-color: var(--color-surface);
       }
     }
   }

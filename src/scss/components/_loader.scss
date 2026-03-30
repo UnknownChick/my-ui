@@ -1,6 +1,6 @@
 @use 'sass:map';
 @use '../config/config-default' as cfg;
-@use '../abstracts/colors' as c;
+@use '../abstracts/component-api' as api;
 
 $loader: (
   animation-duration: 1.5s,
@@ -18,16 +18,8 @@ $loader: (
     display: block;
     animation: loader-rotation map.get($loader, animation-duration) linear infinite;
 
-    &--success { border-color: var(--color-success); }
-    &--danger  { border-color: var(--color-danger); }
-    &--warning { border-color: var(--color-warning); }
-    &--info    { border-color: var(--color-info); }
-
-    @each $color-name, $color-values in cfg.$accents {
-      &--#{$color-name} {
-        border-color: map.get($color-values, high);
-      }
-    }
+    @include api.make-semantic-variants(border-color);
+    @include api.make-accent-prop-variants(border-color);
   }
 
   @keyframes loader-rotation {

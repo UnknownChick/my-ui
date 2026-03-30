@@ -1,28 +1,14 @@
 @use 'sass:map';
 @use '../config/config-default' as cfg;
+@use '../abstracts/component-api' as api;
 
 $alert: (
   sizes: (
-    xs: (
-      padding: 0.5rem 0.75rem,
-      font-size: cfg.$font-size-xs
-    ),
-    sm: (
-      padding: 0.75rem 1rem,
-      font-size: cfg.$font-size-sm
-    ),
-    md: (
-      padding: 0.825rem 1.25rem,
-      font-size: cfg.$font-size-md
-    ),
-    lg: (
-      padding: 1.25rem 1.5rem,
-      font-size: cfg.$font-size-lg
-    ),
-    xl: (
-      padding: 1.5rem 1.75rem,
-      font-size: cfg.$font-size-xl
-    ),
+    xs: (padding: 0.5rem 0.75rem,  font-size: cfg.$font-size-xs),
+    sm: (padding: 0.75rem 1rem,    font-size: cfg.$font-size-sm),
+    md: (padding: 0.825rem 1.25rem, font-size: cfg.$font-size-md),
+    lg: (padding: 1.25rem 1.5rem,  font-size: cfg.$font-size-lg),
+    xl: (padding: 1.5rem 1.75rem,  font-size: cfg.$font-size-xl),
   )
 ) !default;
 
@@ -46,29 +32,7 @@ $alert: (
     font-size: map.get($alert, sizes, md, font-size);
     width: 100%;
 
-    @each $size, $values in map.get($alert, sizes) {
-      &--#{$size} {
-        padding: map.get($values, padding);
-        font-size: map.get($values, font-size);
-      }
-    }
-
-    @each $color-name, $color-values in cfg.$accents {
-      &--soft-#{$color-name} {
-        @include alert-variant(
-          map.get($color-values, soft),
-          map.get($color-values, high),
-          map.get($color-values, high)
-        );
-      }
-
-      &--high-#{$color-name} {
-        @include alert-variant(
-          map.get($color-values, high),
-          map.get($color-values, high),
-          map.get($color-values, soft)
-        );
-      }
-    }
+    @include api.make-size-variants(map.get($alert, sizes));
+    @include api.make-accent-variants;
   }
 }

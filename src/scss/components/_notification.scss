@@ -1,21 +1,27 @@
 @use 'sass:map';
 @use '../config/config-default' as cfg;
+@use '../abstracts/component-api' as api;
+
+// ── Configuration ────────────────────────────────────
 
 $notification: (
   sizes: (
-    xs: (padding: 0.5rem 0.75rem, font-size: cfg.$font-size-xs),
-    sm: (padding: 0.75rem 1rem, font-size: cfg.$font-size-sm),
+    xs: (padding: 0.5rem 0.75rem,  font-size: cfg.$font-size-xs),
+    sm: (padding: 0.75rem 1rem,    font-size: cfg.$font-size-sm),
     md: (padding: 0.825rem 1.25rem, font-size: cfg.$font-size-md),
-    lg: (padding: 1.25rem 1.5rem, font-size: cfg.$font-size-lg),
-    xl: (padding: 1.5rem 1.75rem, font-size: cfg.$font-size-xl),
+    lg: (padding: 1.25rem 1.5rem,  font-size: cfg.$font-size-lg),
+    xl: (padding: 1.5rem 1.75rem,  font-size: cfg.$font-size-xl),
   )
 ) !default;
 
+// ── Component Mixin (Public API) ─────────────────────
 @mixin notification-variant($background, $border, $color) {
   background-color: $background;
   border-left: 0.25rem solid $border;
   color: $color;
 }
+
+// ── Styles ───────────────────────────────────────────
 
 @layer sidevui.components {
   .notification {
@@ -23,13 +29,10 @@ $notification: (
     padding: 0.825rem 1.25rem;
     border-radius: var(--radius);
 
-    @each $size, $values in map.get($notification, sizes) {
-      &--#{$size} {
-        padding: map.get($values, padding);
-        font-size: map.get($values, font-size);
-      }
-    }
+    // Size variants
+    @include api.make-size-variants(map.get($notification, sizes));
 
+    // Accent variants (custom: left border instead of full border)
     @each $color-name, $color-values in cfg.$accents {
       &--soft-#{$color-name} {
         @include notification-variant(

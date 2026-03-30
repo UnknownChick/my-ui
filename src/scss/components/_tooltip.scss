@@ -2,21 +2,32 @@
 @use '../config/config-default' as cfg;
 @use '../abstracts/mixins' as m;
 
-$_bg: cfg.$color-primary;
-
 $tooltip: (
+  background: cfg.$color-primary,
+  color: cfg.$color-white,
   max-width: 200px,
   padding: 0.5rem,
 ) !default;
 
+@mixin tooltip-variant($bg, $color: cfg.$color-white) {
+  background-color: $bg;
+  color: $color;
+
+  &.tooltip--top::before    { border-color: $bg transparent transparent transparent; }
+  &.tooltip--bottom::before { border-color: transparent transparent $bg transparent; }
+  &.tooltip--left::before   { border-color: transparent transparent transparent $bg; }
+  &.tooltip--right::before  { border-color: transparent $bg transparent transparent; }
+}
+
 @layer sidevui.components {
   .tooltip {
+    $_bg: map.get($tooltip, background);
     background-color: $_bg;
     position: absolute;
     padding: map.get($tooltip, padding);
     border-radius: cfg.$border-radius-sm;
     width: max-content;
-    color: cfg.$color-white;
+    color: map.get($tooltip, color);
     z-index: 1050;
     @include m.shadow(sm);
     transform: none;

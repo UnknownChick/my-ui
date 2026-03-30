@@ -1,5 +1,6 @@
 @use 'sass:map';
 @use '../config/config-default' as cfg;
+@use '../abstracts/component-api' as api;
 
 $square: (
   sizes: (
@@ -18,16 +19,10 @@ $square: (
     width: 2rem;
     height: 1.5rem;
 
-    @each $size, $values in map.get($square, sizes) {
-      &--#{$size} {
-        width: map.get($values, width);
-        height: map.get($values, height);
-      }
-    }
+    // Size variants
+    @include api.make-size-variants(map.get($square, sizes));
 
-    @each $color-name, $color-values in cfg.$accents {
-      &--soft-#{$color-name} { background-color: map.get($color-values, soft); }
-      &--high-#{$color-name} { background-color: map.get($color-values, high); }
-    }
+    // Accent variants (bg only)
+    @include api.make-accent-bg-variants;
   }
 }

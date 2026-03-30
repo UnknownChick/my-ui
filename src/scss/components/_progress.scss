@@ -1,16 +1,21 @@
 @use 'sass:map';
 @use '../config/config-default' as cfg;
 
+// ── Configuration ────────────────────────────────────
+
 $progress: (
   height: 1rem,
 ) !default;
 
+// ── Component Mixin (Public API) ─────────────────────
 @mixin progress-variant($value-bg, $track-bg: var(--color-surface)) {
   background-color: $track-bg;
   &::-webkit-progress-bar   { background-color: $track-bg; }
   &::-webkit-progress-value { background-color: $value-bg; }
   &::-moz-progress-bar      { background-color: $value-bg; }
 }
+
+// ── Styles ───────────────────────────────────────────
 
 @layer sidevui.components {
   progress {
@@ -22,6 +27,7 @@ $progress: (
     background-color: var(--color-surface);
 
     &.progress {
+      // Semantic color variants
       &--primary   { @include progress-variant(var(--color-primary)); }
       &--secondary { @include progress-variant(var(--color-secondary)); }
       &--success   { @include progress-variant(var(--color-success)); }
@@ -29,6 +35,7 @@ $progress: (
       &--warning   { @include progress-variant(var(--color-warning)); }
       &--info      { @include progress-variant(var(--color-info)); }
 
+      // Accent variants
       @each $color-name, $color-values in cfg.$accents {
         &--#{$color-name} {
           @include progress-variant(

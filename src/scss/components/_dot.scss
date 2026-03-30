@@ -1,5 +1,6 @@
 @use 'sass:map';
 @use '../config/config-default' as cfg;
+@use '../abstracts/component-api' as api;
 
 $dot: (
   sizes: (
@@ -32,15 +33,7 @@ $dot: (
       &--#{$size} { width: $val; height: $val; }
     }
 
-    &--success { background-color: var(--color-success); }
-    &--danger  { background-color: var(--color-danger); }
-    &--warning { background-color: var(--color-warning); }
-    &--info    { background-color: var(--color-info); }
-    &--secondary { background-color: var(--color-secondary); }
-
-    @each $color-name, $color-values in cfg.$accents {
-      &--soft-#{$color-name} { background-color: map.get($color-values, soft); }
-      &--high-#{$color-name} { background-color: map.get($color-values, high); }
-    }
+    @include api.make-semantic-variants(background-color);
+    @include api.make-accent-bg-variants;
   }
 }
