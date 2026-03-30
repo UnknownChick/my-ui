@@ -25,7 +25,7 @@ export default class Tabs extends Component {
   static SELECTORS = {
     nav: '.tabs__nav',
     content: '.tabs__content',
-    button: '.tabs__nav__button',
+    button: '.tabs__button',
     panel: '.tabs__panel',
   };
 
