@@ -1,0 +1,19 @@
+@use 'sass:map';
+@use '../config/config-default' as cfg;
+@use './functions' as f;
+
+// Map des couleurs sémantiques à exposer en custom props
+$semantic-colors: (
+  'primary':    cfg.$color-primary,
+  'primary-dark': cfg.$color-primary-dark,
+  'secondary':  cfg.$color-secondary,
+  'success':    cfg.$color-success,
+  'warning':    cfg.$color-warning,
+  'danger':     cfg.$color-danger,
+  'info':       cfg.$color-info,
+  'bg':         cfg.$color-bg,
+  'surface':    cfg.$color-surface,
+  'text':       cfg.$color-text,
+  'text-muted': cfg.$color-text-muted,
+  'border':     cfg.$color-border,
+);

@@ -1,0 +1,96 @@
+@use 'sass:map';
+@use '../config/config-default' as cfg;
+@use '../abstracts/tokens' as t;
+@use '../abstracts/functions' as f;
+@use '../abstracts/colors' as c;
+
+@layer sidevui.tokens {
+  :root {
+    // ── Colors ────────────────────────────────────────
+    @each $name, $value in t.$semantic-colors {
+      --color-#{$name}: #{$value};
+    }
+
+    --color-white: #{cfg.$color-white};
+    --color-black: #{cfg.$color-black};
+
+    // ── Color shade scales (100-900) ──────────────────
+    @each $name, $palette in c.$color-maps {
+      @each $weight, $color in $palette {
+        --color-#{$name}-#{$weight}: #{$color};
+      }
+    }
+
+    // ── Accent colors ─────────────────────────────────
+    @each $name, $shades in cfg.$accents {
+      @each $variant, $color in $shades {
+        --accent-#{$name}-#{$variant}: #{$color};
+      }
+    }
+
+    // ── Typography ────────────────────────────────────
+    --font-sans: #{cfg.$font-sans};
+    --font-mono: #{cfg.$font-mono};
+    --font-size-xs:  #{cfg.$font-size-xs};
+    --font-size-sm:  #{cfg.$font-size-sm};
+    --font-size-md:  #{cfg.$font-size-md};
+    --font-size-lg:  #{cfg.$font-size-lg};
+    --font-size-xl:  #{cfg.$font-size-xl};
+    --font-size-2xl: #{cfg.$font-size-2xl};
+    --font-size-3xl: #{cfg.$font-size-3xl};
+    --line-height:       #{cfg.$line-height};
+    --line-height-title: #{cfg.$line-height-title};
+    --font-weight-normal: #{cfg.$font-weight-normal};
+    --font-weight-bold:   #{cfg.$font-weight-bold};
+
+    // ── Fluid font sizes ──────────────────────────────
+    @each $name, $value in cfg.$font-sizes-fluid {
+      --fs-fluid-#{$name}: #{$value};
+    }
+
+    // ── Title sizes ───────────────────────────────────
+    @each $name, $value in cfg.$title-sizes {
+      --fs-title-#{$name}: #{$value};
+    }
+
+    // ── Spacing ───────────────────────────────────────
+    @each $name, $value in cfg.$spacing-scale {
+      --spacing-#{$name}: #{$value};
+    }
+
+    // ── Effects ───────────────────────────────────────
+    --radius-sm:  #{cfg.$border-radius-sm};
+    --radius:     #{cfg.$border-radius};
+    --radius-lg:  #{cfg.$border-radius-lg};
+    --radius-xl:  #{cfg.$border-radius-xl};
+    --border-width: #{cfg.$border-width};
+    --transition: #{cfg.$transition};
+
+    @if cfg.$enable-shadows {
+      --shadow-sm: #{cfg.$shadow-sm};
+      --shadow:    #{cfg.$shadow};
+      --shadow-lg: #{cfg.$shadow-lg};
+    }
+  }
+
+  // ── Dark mode ─────────────────────────────────────
+  @if cfg.$enable-dark-mode {
+    [data-theme='dark'] {
+      --color-bg:         #111827;
+      --color-surface:    #1f2937;
+      --color-text:       #f9fafb;
+      --color-text-muted: #9ca3af;
+      --color-border:     #374151;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root:not([data-theme]) {
+        --color-bg:         #111827;
+        --color-surface:    #1f2937;
+        --color-text:       #0d0d0d;
+        --color-text-muted: #9ca3af;
+        --color-border:     #374151;
+      }
+    }
+  }
+}

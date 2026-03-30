@@ -1,32 +1,29 @@
 @use 'sass:map';
-@use '../abstracts/colors' as c;
-@use '../abstracts/variables' as var;
-
-$_cn: dropdown;
+@use '../config/config-default' as cfg;
+@use '../abstracts/mixins' as m;
 
 $dropdown: (
-  border: 1px solid map.get(c.$grayscale-map, 100),
-  border-radius: map.get(var.$global, border-radius),
-  box-shadow: map.get(var.$global, box-shadow),
   margin: 0.5rem,
   transition-duration: 150ms,
   width: 300px,
 ) !default;
 
 @layer sidevui.components {
-  .#{$_cn} {
-    position:relative;
+  .dropdown {
+    position: relative;
 
     &--open {
-      .#{$_cn}__content {
+      .dropdown__content {
         opacity: 1;
         visibility: visible;
         transform: scale(1);
-        transition: opacity map.get($dropdown, transition-duration) ease-out, transform map.get($dropdown, transition-duration) ease-out, visibility 0s linear 0s;
+        transition: opacity map.get($dropdown, transition-duration) ease-out,
+                    transform map.get($dropdown, transition-duration) ease-out,
+                    visibility 0s linear 0s;
         user-select: auto;
       }
 
-      .#{$_cn}__toggle__icon {
+      .dropdown__toggle__icon {
         transform: rotate(180deg);
       }
     }
@@ -35,37 +32,37 @@ $dropdown: (
       cursor: pointer;
 
       &__icon {
-        transition: transform map.get($dropdown, transition-duration) ease-in-out;
+        @include m.transition(transform);
       }
     }
 
     &__content {
       position: absolute;
-      border: map.get($dropdown, border);
-      border-radius: map.get($dropdown, border-radius);
+      border: cfg.$border-width solid var(--color-border);
+      border-radius: var(--radius);
       overflow: hidden;
       z-index: 10;
       opacity: 0;
       visibility: hidden;
       transform: scale(0.95);
       transform-origin: top center;
-      transition: opacity map.get($dropdown, transition-duration) ease-out, transform map.get($dropdown, transition-duration) ease-out, visibility 0s linear map.get($dropdown, transition-duration);
+      transition: opacity map.get($dropdown, transition-duration) ease-out,
+                  transform map.get($dropdown, transition-duration) ease-out,
+                  visibility 0s linear map.get($dropdown, transition-duration);
       max-width: map.get($dropdown, width);
       width: max-content;
-      background-color: white;
-      box-shadow: map.get($dropdown, box-shadow);
+      background-color: var(--color-bg);
+      @include m.shadow(md);
       user-select: none;
 
-      & > *:not(.#{$_cn}__divider) {
+      & > *:not(.dropdown__divider) {
         display: block;
         padding: 0.5rem 1rem;
         text-decoration: none;
-        color: map.get(c.$semantic, text);
+        color: var(--color-text);
 
-        &:is(a) {
-          &:hover {
-            background-color: map.get(c.$grayscale-map, 200);
-          }
+        &:is(a):hover {
+          background-color: var(--color-surface);
         }
       }
     }
@@ -74,47 +71,31 @@ $dropdown: (
       height: 2px;
       width: 100%;
       margin-block: 0.25rem;
-      background-color: map.get(c.$grayscale-map, 100);
+      background-color: var(--color-border);
     }
 
-    // Position top-left
-    &--tl {
-      .#{$_cn}__content {
-        bottom: 100%;
-        left: 0;
-        margin-bottom: map.get($dropdown, margin);
-        transform-origin: bottom left;
-      }
+    &--tl .dropdown__content {
+      bottom: 100%; left: 0;
+      margin-bottom: map.get($dropdown, margin);
+      transform-origin: bottom left;
     }
 
-    // Position top-right
-    &--tr {
-      .#{$_cn}__content {
-        bottom: 100%;
-        right: 0;
-        margin-bottom: map.get($dropdown, margin);
-        transform-origin: bottom right;
-      }
+    &--tr .dropdown__content {
+      bottom: 100%; right: 0;
+      margin-bottom: map.get($dropdown, margin);
+      transform-origin: bottom right;
     }
 
-    // Position Bottom-Left
-    &--bl {
-      .#{$_cn}__content {
-        top: 100%;
-        left: 0;
-        margin-top: map.get($dropdown, margin);
-        transform-origin: top left;
-      }
+    &--bl .dropdown__content {
+      top: 100%; left: 0;
+      margin-top: map.get($dropdown, margin);
+      transform-origin: top left;
     }
 
-    // Position Bottom-Right
-    &--br {
-      .#{$_cn}__content {
-        top: 100%;
-        right: 0;
-        margin-top: map.get($dropdown, margin);
-        transform-origin: top right;
-      }
+    &--br .dropdown__content {
+      top: 100%; right: 0;
+      margin-top: map.get($dropdown, margin);
+      transform-origin: top right;
     }
   }
 }

@@ -1,109 +1,20 @@
-import Accordion from "./components/accordion";
-import Drawer from "./components/drawer";
-import Dropdown from "./components/dropdown";
-import Modal from "./components/modal";
-import Pagination from "./components/pagination";
-import Tabs from "./components/tabs";
-import Toast from "./components/toast";
-import Tooltip from "./components/tooltip";
-import "./features/icons";
+import Accordion from './components/accordion';
+import Drawer from './components/drawer';
+import Dropdown from './components/dropdown';
+import Modal from './components/modal';
+import Pagination from './components/pagination';
+import Tabs from './components/tabs';
+import Toast from './components/toast';
+import Tooltip from './components/tooltip';
+import './features/icons';
 
-document.addEventListener("DOMContentLoaded", () => {
-	new Accordion();
+// Export all components for external use
+export { Accordion, Drawer, Dropdown, Modal, Pagination, Tabs, Toast, Tooltip };
 
-	new Drawer("#myDrawerleft", {
-		position: "left",
-	});
-
-	new Dropdown();
-
-	// Modal 1 - Animation scale
-	new Modal('#modal', {
-		animation: 'scale',
-		closeOnBackdropClick: true,
-		closeOnEscape: true,
-		autoCloseOnFooterClick: true,
-		onOpen: () => {
-			console.log('Modal 1 ouverte (scale animation)');
-		},
-		onClose: () => {
-			console.log('Modal 1 fermée');
-		}
-	});
-
-	// Modal 2 - Animation fade avec validation
-	new Modal('#modal2', {
-		animation: 'fade',
-		closeOnBackdropClick: false,
-		closeOnEscape: true,
-		autoCloseOnFooterClick: true,
-		onOpen: () => {
-			console.log('Modal 2 ouverte (fade animation)');
-		},
-		onClose: () => {
-			console.log('Modal 2 fermée');
-		}
-	});
-
-	new Tabs("#myTabs", {
-		saveSelection: false,
-		animation: 'fade'
-	});
-
-	new Toast("#myToastFromTopRight", {
-		title: "Top right toast !",
-		message:
-			"<p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Eligendi, repellat!<p>",
-		position: "top right",
-		showProgress: true,
-	});
-
-	new Toast("#myToastFromBottomRight", {
-		title: "Bottom right toast !",
-		message:
-			"<p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Eligendi, repellat!<p>",
-		position: "bottom right",
-		showProgress: true,
-	});
-
-	new Toast("#myToastFromBottomLeft", {
-		title: "Bottom left toast !",
-		message:
-			"<p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Eligendi, repellat!<p>",
-		position: "bottom left",
-		showProgress: true,
-	});
-
-	new Toast("#myToastFromTopLeft", {
-		title: "Top left toast !",
-		message:
-			"<p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Eligendi, repellat!<p>",
-		position: "top left",
-		showProgress: true,
-	});
-
-	new Tooltip("#myTooltipFromTop", {
-		message:
-			"Lorem ipsum, dolor sit amet consectetur adipisicing elit. Eligendi, repellat!",
-		position: "top",
-	});
-
-	new Tooltip("#myTooltipFromRight", {
-		message:
-			"Lorem ipsum, dolor sit amet consectetur adipisicing elit. Eligendi, repellat!",
-		position: "right",
-	});
-
-	new Tooltip("#myTooltipFromBottom", {
-		message:
-			"Lorem ipsum, dolor sit amet consectetur adipisicing elit. Eligendi, repellat!",
-		position: "bottom",
-	});
-
-	new Tooltip("#myTooltipFromLeft", {
-		message:
-			"Lorem ipsum, dolor sit amet consectetur adipisicing elit. Eligendi, repellat!",
-		position: "left",
-	});
-	Pagination.initialize();
+// Auto-init on DOMContentLoaded
+document.addEventListener('DOMContentLoaded', () => {
+  Accordion.autoInit('.accordion');
+  Dropdown.autoInit('.dropdown');
+  Pagination.autoInit('.pagination');
+  Tooltip.autoInit('[data-tooltip]');
 });

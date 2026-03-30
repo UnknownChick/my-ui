@@ -1,427 +1,211 @@
+import Component from '../Component';
+
 /**
- * Modal Component - Accessible and flexible modal management
+ * Modal Component — uses the native <dialog> element.
  *
  * @example
- * new Modal('#myModal', {
- *   animation: 'fade',
+ * const modal = new Modal('#myModal', {
+ *   animation: 'scale',
  *   closeOnBackdropClick: true,
- *   closeOnEscape: true,
- *   lockScroll: true,
- *   onOpen: (element) => console.log('Modal opened'),
- *   onClose: (element) => console.log('Modal closed')
+ *   onOpen: (el) => console.log('opened'),
  * });
  */
-export default class Modal {
-	/**
-	 * Default component options
-	 */
-	static DEFAULT_OPTIONS = {
-		animation: 'fade',           // Animation type: 'fade', 'scale', 'slide-up', 'slide-down', or null
-		animationDuration: 300,      // Animation duration in ms
-		closeOnBackdropClick: true,  // Close modal when clicking backdrop
-		closeOnEscape: true,         // Close modal on ESC key
-		lockScroll: true,            // Lock body scroll when modal is open
-		trapFocus: true,             // Trap focus within modal
-		restoreFocus: true,          // Restore focus to trigger element on close
-		autoFocus: true,             // Auto focus first focusable element
-		autoCloseOnFooterClick: true, // Auto close when clicking buttons in footer
-		onOpen: null,                // Callback: (element) => {}
-		onClose: null,               // Callback: (element) => {}
-		onBeforeOpen: null,          // Callback: (element) => {} (can return false to cancel)
-		onBeforeClose: null          // Callback: (element) => {} (can return false to cancel)
-	};
+export default class Modal extends Component {
+  static defaults = {
+    animation: 'fade',
+    animationDuration: 300,
+    closeOnBackdropClick: true,
+    closeOnEscape: true,
+    lockScroll: true,
+    trapFocus: true,
+    restoreFocus: true,
+    autoFocus: true,
+    autoCloseOnFooterClick: true,
+    onOpen: null,
+    onClose: null,
+    onBeforeOpen: null,
+    onBeforeClose: null,
+  };
 
-	/**
-	 * CSS selectors for elements
-	 */
-	static SELECTORS = {
-		close: '[data-modal-close]',
-		closeButton: '.modal__close'
-	};
+  static activeModals = [];
 
-	/**
-	 * Track all active modals globally
-	 */
-	static activeModals = [];
+  init() {
+    this._isOpen = false;
+    this._triggerElement = null;
 
-	constructor(selector, options = {}) {
-		this.options = { ...Modal.DEFAULT_OPTIONS, ...options };
-		this.element = this._getElement(selector);
+    this._setupTriggers();
+    this._setupCloseButtons();
+    this._setupModalEvents();
+    this._setupKeyboard();
+  }
 
-		if (!this.element) {
-			console.warn('[Modal] Element not found for selector:', selector);
-			return;
-		}
+  // ── Setup ────────────────────────────────────────────
 
-		this.id = this.element.id;
-		this.isOpen = false;
-		this.triggerElement = null;
-		this.focusableElements = [];
-		this.firstFocusable = null;
-		this.lastFocusable = null;
+  _setupTriggers() {
+    if (!this.el.id) return;
+    document.querySelectorAll(`[data-modal-target="${this.el.id}"]`).forEach(trigger => {
+      trigger.addEventListener('click', (e) => {
+        e.preventDefault();
+        this.open(e.currentTarget);
+      });
+    });
+  }
 
-		this._init();
-	}
+  _setupCloseButtons() {
+    // Generic .modal__close within this modal
+    const closeBtn = this.$('.modal__close');
+    if (closeBtn) {
+      this.on('click', closeBtn, (e) => { e.preventDefault(); this.close(); });
+    }
+    // data-modal-close buttons
+    this.$$(`[data-modal-close="${this.el.id}"]`).forEach(btn => {
+      this.on('click', btn, (e) => { e.preventDefault(); this.close(); });
+    });
+  }
 
-	/**
-	 * Get element from selector
-	 */
-	_getElement(selector) {
-		if (typeof selector === 'string') {
-			return document.querySelector(selector);
-		}
-		if (selector instanceof Element) {
-			return selector;
-		}
-		return null;
-	}
+  _setupModalEvents() {
+    // Backdrop click
+    if (this.options.closeOnBackdropClick) {
+      this.on('click', (e) => { if (e.target === this.el) this.close(); });
+    }
 
-	/**
-	 * Initialize the modal
-	 */
-	_init() {
-		if (!this.id) {
-			console.warn('[Modal] Modal must have an ID:', this.element);
-			return;
-		}
+    // Native cancel event
+    this.on('cancel', (e) => {
+      if (!this.options.closeOnEscape) e.preventDefault();
+      else this.close();
+    });
 
-		// Set up triggers (buttons with data-modal-target matching this modal's ID)
-		this._setupTriggers();
+    // Footer auto-close
+    if (this.options.autoCloseOnFooterClick) {
+      const footer = this.$('.modal__footer');
+      if (footer) {
+        this.on('click', footer, (e) => {
+          const button = e.target.closest('button');
+          if (button && !button.hasAttribute('data-modal-prevent-close')) this.close();
+        });
+      }
+    }
 
-		// Set up close buttons
-		this._setupCloseButtons();
+    // Animation end cleanup
+    this.on('animationend', () => {
+      if (!this._isOpen) {
+        this.el.classList.remove(`modal--${this.options.animation}-out`);
+      }
+    });
+  }
 
-		// Set up modal events
-		this._setupModalEvents();
+  _setupKeyboard() {
+    this._keydownHandler = (e) => {
+      if (!this._isOpen || Modal.activeModals.at(-1) !== this) return;
+      if (e.key === 'Escape' && this.options.closeOnEscape) this.close();
+      if (e.key === 'Tab' && this.options.trapFocus) this._handleFocusTrap(e);
+    };
+    document.addEventListener('keydown', this._keydownHandler);
+  }
 
-		// Update focusable elements
-		this._updateFocusableElements();
+  // ── Open / Close ─────────────────────────────────────
 
-		// Set up keyboard listeners
-		this._setupKeyboardListeners();
-	}
+  open(triggerElement = null) {
+    if (this._isOpen) return;
+    if (this.options.onBeforeOpen?.(this.el) === false) return;
 
-	/**
-	 * Set up trigger buttons
-	 */
-	_setupTriggers() {
-		const triggers = document.querySelectorAll(`[data-modal-target="${this.id}"]`);
+    this._triggerElement = triggerElement || document.activeElement;
+    this.el.showModal();
+    this._isOpen = true;
+    Modal.activeModals.push(this);
 
-		triggers.forEach(trigger => {
-			trigger.addEventListener('click', (e) => this._handleTriggerClick(e));
-		});
-	}
+    if (this.options.lockScroll) this._lockScroll();
 
-	/**
-	 * Set up events for the modal
-	 */
-	_setupModalEvents() {
-		// Backdrop click
-		if (this.options.closeOnBackdropClick) {
-			this.element.addEventListener('click', (e) => {
-				if (e.target === this.element) {
-					this.close();
-				}
-			});
-		}
+    if (this.options.animation) {
+      this.el.classList.remove(`modal--${this.options.animation}-out`);
+      this.el.classList.add(`modal--${this.options.animation}-in`);
+    }
 
-		// Dialog cancel event (ESC key on native dialog)
-		this.element.addEventListener('cancel', (e) => {
-			if (!this.options.closeOnEscape) {
-				e.preventDefault();
-			} else {
-				this.close();
-			}
-		});
+    if (this.options.autoFocus) this._focusFirst();
 
-		// Auto close on footer button click
-		if (this.options.autoCloseOnFooterClick) {
-			const footer = this.element.querySelector('.modal__footer');
-			if (footer) {
-				footer.addEventListener('click', (e) => {
-					const button = e.target.closest('button');
-					// Close if it's a button and doesn't have data-modal-prevent-close
-					if (button && !button.hasAttribute('data-modal-prevent-close')) {
-						this.close();
-					}
-				});
-			}
-		}
+    this.options.onOpen?.(this.el);
+    this.emit('modal:open');
+  }
 
-		// Animation end
-		this.element.addEventListener('animationend', () => {
-			if (!this.isOpen) {
-				this.element.classList.remove(`modal--${this.options.animation}-out`);
-			}
-		});
-	}
+  close() {
+    if (!this._isOpen) return;
+    if (this.options.onBeforeClose?.(this.el) === false) return;
 
-	/**
-	 * Set up close buttons
-	 */
-	_setupCloseButtons() {
-		// Close buttons with data-modal-close for this modal
-		const closeButtons = this.element.querySelectorAll(`[data-modal-close="${this.id}"]`);
-		closeButtons.forEach(btn => {
-			btn.addEventListener('click', (e) => {
-				e.preventDefault();
-				this.close();
-			});
-		});
+    if (this.options.animation) {
+      this.el.classList.remove(`modal--${this.options.animation}-in`);
+      this.el.classList.add(`modal--${this.options.animation}-out`);
+      setTimeout(() => this._finalizeClose(), this.options.animationDuration);
+    } else {
+      this._finalizeClose();
+    }
+  }
 
-		// Generic close button (.modal__close) inside this modal
-		const genericCloseBtn = this.element.querySelector(Modal.SELECTORS.closeButton);
-		if (genericCloseBtn) {
-			genericCloseBtn.addEventListener('click', (e) => {
-				e.preventDefault();
-				this.close();
-			});
-		}
-	}
+  _finalizeClose() {
+    this.el.close();
+    this._isOpen = false;
 
-	/**
-	 * Set up keyboard event listeners
-	 */
-	_setupKeyboardListeners() {
-		// ESC key and focus trap
-		this.keydownHandler = (e) => {
-			// Only handle if this modal is the active one
-			if (!this.isOpen || Modal.activeModals[Modal.activeModals.length - 1] !== this) {
-				return;
-			}
+    const idx = Modal.activeModals.indexOf(this);
+    if (idx > -1) Modal.activeModals.splice(idx, 1);
 
-			if (e.key === 'Escape' && this.options.closeOnEscape) {
-				this.close();
-			}
+    if (this.options.lockScroll && Modal.activeModals.length === 0) this._unlockScroll();
+    if (this.options.restoreFocus && this._triggerElement) this._triggerElement.focus();
 
-			// Focus trap
-			if (e.key === 'Tab' && this.options.trapFocus) {
-				this._handleFocusTrap(e);
-			}
-		};
+    this.options.onClose?.(this.el);
+    this.emit('modal:close');
+  }
 
-		document.addEventListener('keydown', this.keydownHandler);
-	}
+  toggle(trigger = null) {
+    this._isOpen ? this.close() : this.open(trigger);
+  }
 
-	/**
-	 * Handle trigger click
-	 */
-	_handleTriggerClick(e) {
-		e.preventDefault();
-		const trigger = e.currentTarget;
-		this.open(trigger);
-	}
+  // ── Scroll Lock ──────────────────────────────────────
 
-	/**
-	 * Open the modal
-	 * @param {HTMLElement} triggerElement - Element that triggered the modal (optional)
-	 */
-	open(triggerElement = null) {
-		if (this.isOpen) {
-			return;
-		}
+  _lockScroll() {
+    if (!document.body.hasAttribute('data-modal-scroll-locked')) {
+      const w = window.innerWidth - document.documentElement.clientWidth;
+      document.body.style.overflow = 'hidden';
+      document.body.style.paddingRight = `${w}px`;
+      document.body.setAttribute('data-modal-scroll-locked', 'true');
+    }
+  }
 
-		// Before open callback
-		if (this.options.onBeforeOpen) {
-			const result = this.options.onBeforeOpen(this.element);
-			if (result === false) {
-				return;
-			}
-		}
+  _unlockScroll() {
+    document.body.style.overflow = '';
+    document.body.style.paddingRight = '';
+    document.body.removeAttribute('data-modal-scroll-locked');
+  }
 
-		// Store trigger element for focus restoration
-		if (triggerElement) {
-			this.triggerElement = triggerElement;
-		} else if (this.options.restoreFocus && document.activeElement) {
-			this.triggerElement = document.activeElement;
-		}
+  // ── Focus ────────────────────────────────────────────
 
-		// Show modal
-		this.element.showModal();
-		this.isOpen = true;
+  _getFocusable() {
+    return this.$$('a[href], button:not(:disabled), textarea:not(:disabled), input:not(:disabled), select:not(:disabled), [tabindex]:not([tabindex="-1"])');
+  }
 
-		// Add to active stack
-		Modal.activeModals.push(this);
+  _focusFirst() {
+    const els = this._getFocusable();
+    if (els.length) setTimeout(() => els[0].focus(), 50);
+  }
 
-		// Lock scroll
-		if (this.options.lockScroll) {
-			this._lockScroll();
-		}
+  _handleFocusTrap(e) {
+    const els = this._getFocusable();
+    if (!els.length) return;
+    const first = els[0];
+    const last = els.at(-1);
 
-		// Apply animation
-		if (this.options.animation) {
-			this.element.classList.remove(`modal--${this.options.animation}-out`);
-			this.element.classList.add(`modal--${this.options.animation}-in`);
-		}
+    if (e.shiftKey && document.activeElement === first) {
+      e.preventDefault();
+      last?.focus();
+    } else if (!e.shiftKey && document.activeElement === last) {
+      e.preventDefault();
+      first?.focus();
+    }
+  }
 
-		// Auto focus
-		if (this.options.autoFocus) {
-			this._focusFirstElement();
-		}
+  // ── Cleanup ──────────────────────────────────────────
 
-		// Callback
-		if (this.options.onOpen) {
-			this.options.onOpen(this.element);
-		}
-	}
-
-	/**
-	 * Close the modal
-	 */
-	close() {
-		if (!this.isOpen) {
-			return;
-		}
-
-		// Before close callback
-		if (this.options.onBeforeClose) {
-			const result = this.options.onBeforeClose(this.element);
-			if (result === false) {
-				return;
-			}
-		}
-
-		// Apply exit animation
-		if (this.options.animation) {
-			this.element.classList.remove(`modal--${this.options.animation}-in`);
-			this.element.classList.add(`modal--${this.options.animation}-out`);
-
-			// Wait for animation to finish
-			setTimeout(() => {
-				this._finalizeClose();
-			}, this.options.animationDuration);
-		} else {
-			this._finalizeClose();
-		}
-	}
-
-	/**
-	 * Finalize modal close
-	 */
-	_finalizeClose() {
-		// Close dialog
-		this.element.close();
-		this.isOpen = false;
-
-		// Remove from active stack
-		const index = Modal.activeModals.indexOf(this);
-		if (index > -1) {
-			Modal.activeModals.splice(index, 1);
-		}
-
-		// Unlock scroll if no modals are open
-		if (this.options.lockScroll && Modal.activeModals.length === 0) {
-			this._unlockScroll();
-		}
-
-		// Restore focus
-		if (this.options.restoreFocus && this.triggerElement) {
-			this.triggerElement.focus();
-		}
-
-		// Callback
-		if (this.options.onClose) {
-			this.options.onClose(this.element);
-		}
-	}
-
-	/**
-	 * Toggle the modal
-	 * @param {HTMLElement} triggerElement - Element that triggered the modal (optional)
-	 */
-	toggle(triggerElement = null) {
-		if (this.isOpen) {
-			this.close();
-		} else {
-			this.open(triggerElement);
-		}
-	}	/**
-	 * Lock body scroll
-	 */
-	_lockScroll() {
-		if (!document.body.hasAttribute('data-modal-scroll-locked')) {
-			const scrollbarWidth = window.innerWidth - document.documentElement.clientWidth;
-			document.body.style.overflow = 'hidden';
-			document.body.style.paddingRight = `${scrollbarWidth}px`;
-			document.body.setAttribute('data-modal-scroll-locked', 'true');
-		}
-	}
-
-	/**
-	 * Unlock body scroll
-	 */
-	_unlockScroll() {
-		document.body.style.overflow = '';
-		document.body.style.paddingRight = '';
-		document.body.removeAttribute('data-modal-scroll-locked');
-	}
-
-	/**
-	 * Update focusable elements in the modal
-	 */
-	_updateFocusableElements() {
-		const focusableSelectors = [
-			'a[href]',
-			'button:not([disabled])',
-			'textarea:not([disabled])',
-			'input:not([disabled])',
-			'select:not([disabled])',
-			'[tabindex]:not([tabindex="-1"])'
-		].join(', ');
-
-		this.focusableElements = Array.from(
-			this.element.querySelectorAll(focusableSelectors)
-		);
-
-		this.firstFocusable = this.focusableElements[0];
-		this.lastFocusable = this.focusableElements[this.focusableElements.length - 1];
-	}
-
-	/**
-	 * Focus first element in modal
-	 */
-	_focusFirstElement() {
-		if (this.firstFocusable) {
-			setTimeout(() => {
-				this.firstFocusable.focus();
-			}, 50);
-		}
-	}
-
-	/**
-	 * Handle focus trap
-	 */
-	_handleFocusTrap(e) {
-		this._updateFocusableElements();
-
-		if (e.shiftKey) {
-			// Shift + Tab
-			if (document.activeElement === this.firstFocusable) {
-				e.preventDefault();
-				this.lastFocusable?.focus();
-			}
-		} else {
-			// Tab
-			if (document.activeElement === this.lastFocusable) {
-				e.preventDefault();
-				this.firstFocusable?.focus();
-			}
-		}
-	}	/**
-	 * Destroy the instance and clean up event listeners
-	 */
-	destroy() {
-		this.close();
-		
-		// Remove keyboard listener
-		if (this.keydownHandler) {
-			document.removeEventListener('keydown', this.keydownHandler);
-		}
-
-		// Remove from active stack
-		const index = Modal.activeModals.indexOf(this);
-		if (index > -1) {
-			Modal.activeModals.splice(index, 1);
-		}
-	}
+  destroy() {
+    this.close();
+    document.removeEventListener('keydown', this._keydownHandler);
+    super.destroy();
+  }
 }

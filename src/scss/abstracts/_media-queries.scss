@@ -1,58 +1,15 @@
-@use 'sass:map';
-@use 'variables' as var;
+// Deprecated: breakpoint mixins are now in _mixins.scss as bp(), bp-down(), bp-between()
+// This file re-exports for backward compatibility.
+@use 'mixins' as m;
 
 @mixin min-device($breakpoint) {
-  @if map.has-key(var.$breakpoints, $breakpoint) {
-    @media screen and (min-width: map.get(var.$breakpoints, $breakpoint)) {
-      @content;
-    }
-  } @else {
-    @warn "Breakpoint '#{$breakpoint}' not found in $breakpoints map. Please check the name.";
-  }
+  @include m.bp($breakpoint) { @content; }
 }
 
 @mixin max-device($breakpoint) {
-	@if map.has-key(var.$breakpoints, $breakpoint) {
-		@media screen and (max-width: (map.get(var.$breakpoints, $breakpoint) - 1)) {
-			@content;
-		}
-	} @else {
-    @warn "Breakpoint '#{$breakpoint}' not found in $breakpoints map. Please check the name.";
-  }
-}
-
-@mixin only-device($breakpoint) {
-	@if map.has-key(var.$breakpoints, $breakpoint) {
-		$breakpoints-length: length(var.$breakpoints);
-		$map-list: map.keys(var.$breakpoints);
-
-		@if index($map-list, $breakpoint) == $breakpoints-length {
-			@include min-device($breakpoint) {
-				@content;
-			}
-		} @else {
-			$next-device-index: index($map-list, $breakpoint) + 1;
-			$next-device-key: nth($map-list, $next-device-index);
-
-			@include min-device($breakpoint) {
-				@include max-device($next-device-key) {
-					@content;
-				}
-			}
-		}
-	} @else {
-		@warn "Breakpoint '#{$breakpoint}' not found in $breakpoints map. Please check the name.";
-	}
+  @include m.bp-down($breakpoint) { @content; }
 }
 
 @mixin between-devices($min-device, $max-device) {
-	@if map.has-key(var.$breakpoints, $min-device) and map.has-key(var.$breakpoints, $max-device) {
-		@include min-device($min-device) {
-			@include max-device($max-device) {
-				@content;
-			}
-		}
-	} @else {
-		@warn "Breakpoints '#{$min-device}' and '#{$max-device}' not found in $breakpoints map. Please check the names.";
-	}
+  @include m.bp-between($min-device, $max-device) { @content; }
 }

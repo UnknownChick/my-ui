@@ -1,30 +1,22 @@
 @use 'sass:map';
-@use '../abstracts/colors' as c;
-
-$_cn: separator;
+@use '../config/config-default' as cfg;
 
 $separator: (
-  color: map.get(c.$palette, primary),
   height: 2px,
 ) !default;
 
 @layer sidevui.components {
-  .#{$_cn} {
+  .separator {
     height: map.get($separator, height);
-    background-color: map.get($separator, color);
+    background-color: var(--color-primary);
     border: none;
     display: block;
 
-    @each $color-name, $color-value in c.$palette {
-      &--#{$color-name} {
-        background-color: $color-value;
-      }
-    }
-
-    @each $color-name, $color-value in c.$semantic {
-      &--#{$color-name} {
-        background-color: $color-value;
-      }
-    }
+    &--secondary { background-color: var(--color-secondary); }
+    &--success   { background-color: var(--color-success); }
+    &--danger    { background-color: var(--color-danger); }
+    &--warning   { background-color: var(--color-warning); }
+    &--info      { background-color: var(--color-info); }
+    &--muted     { background-color: var(--color-border); }
   }
 }

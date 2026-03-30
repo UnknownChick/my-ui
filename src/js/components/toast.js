@@ -1,140 +1,113 @@
-export default class Toast {
-	constructor(selector, options = {}) {
-		this.selector = selector;
-		this.positionMap = {
-			"top left": "tl",
-			"top right": "tr",
-			"bottom left": "bl",
-			"bottom right": "br",
-		};
-		this.options = {
-			duration: 5000,
-			message: "Message par defaut",
-			position: "bottom right",
-			showProgress: true,
-			title: "Titre par defaut",
-			transitionDuration: 300,
-			...options,
-		};
-		this.activeToasts = [];
+import Component from '../Component';
 
-		if (!this.positionMap[this.options.position]) {
-			console.warn(
-				`Toast: Position "${this.options.position}" non valide. Utilisation de la position par défaut 'bottom right'.`,
-			);
-		}
+/**
+ * Toast Component
+ *
+ * The trigger element opens a temporary notification toast.
+ *
+ * @example
+ * new Toast('#btn', {
+ *   title: 'Done!',
+ *   message: '<p>Saved successfully.</p>',
+ *   position: 'top right',
+ *   showProgress: true,
+ * });
+ */
+export default class Toast extends Component {
+  static defaults = {
+    duration: 5000,
+    message: '',
+    position: 'bottom right',
+    showProgress: true,
+    title: '',
+    transitionDuration: 300,
+  };
 
-		this.init();
-	}
+  static POSITION_MAP = {
+    'top left': 'tl',
+    'top right': 'tr',
+    'bottom left': 'bl',
+    'bottom right': 'br',
+  };
 
-	init() {
-		const triggers = document.querySelectorAll(this.selector);
+  init() {
+    this._activeToasts = [];
+    this.on('click', () => this.show());
+  }
 
-		if (!triggers.length) {
-			console.warn(
-				`Toast: Aucun élément trouvé pour le sélecteur "${this.selector}"`,
-			);
-			return;
-		}
+  show(overrides = {}) {
+    const opts = { ...this.options, ...overrides };
+    const posClass = Toast.POSITION_MAP[opts.position] || 'br';
 
-		triggers.forEach((trigger) => {
-			trigger.addEventListener("click", () => {
-				this.show(
-					this.options.message,
-					this.options.position,
-					this.options.showProgress,
-					this.options.title,
-				);
-			});
-		});
-	}
+    const toastEl = document.createElement('div');
+    toastEl.className = `toast toast--${posClass}`;
+    toastEl.setAttribute('role', 'alert');
+    toastEl.setAttribute('aria-live', 'assertive');
+    toastEl.setAttribute('aria-atomic', 'true');
 
-	show(
-		message = this.options.message,
-		position = this.options.position,
-		showProgress = this.options.showProgress,
-		title = this.options.title,
-	) {
-		const positionClass =
-			this.positionMap[position] || this.positionMap["bottom right"];
+    if (opts.showProgress) {
+      const bar = document.createElement('div');
+      bar.className = 'toast__progress';
+      bar.style.animationDuration = `${opts.duration / 1000}s`;
+      toastEl.appendChild(bar);
+    }
 
-		const toastElement = document.createElement("div");
-		toastElement.className = `toast toast--${positionClass}`;
-		toastElement.setAttribute("role", "alert");
-		toastElement.setAttribute("aria-live", "assertive");
-		toastElement.setAttribute("aria-atomic", "true");
+    const content = document.createElement('div');
+    content.className = 'toast__content';
 
-		let progressBar;
-		if (showProgress) {
-			progressBar = document.createElement("div");
-			progressBar.className = "toast__progress";
-			progressBar.style.animationDuration = `${this.options.duration / 1000}s`;
-			toastElement.appendChild(progressBar);
-		}
+    if (opts.title) {
+      const titleEl = document.createElement('b');
+      titleEl.textContent = opts.title;
+      content.appendChild(titleEl);
+    }
 
-		const content = document.createElement("div");
-		content.className = "toast__content";
-		content.innerHTML = message;
+    const msgEl = document.createElement('div');
+    msgEl.innerHTML = opts.message;
+    content.appendChild(msgEl);
 
-		if (title) {
-			const titleElement = document.createElement("b");
-			titleElement.innerHTML = title;
-			content.prepend(titleElement);
-		}
+    toastEl.appendChild(content);
+    document.body.appendChild(toastEl);
+    this._activeToasts.push(toastEl);
 
-		toastElement.appendChild(content);
+    // Force reflow then show
+    void toastEl.offsetHeight;
+    toastEl.classList.add('toast--active');
 
-		document.body.appendChild(toastElement);
-		this.activeToasts.push(toastElement);
+    const timeoutId = setTimeout(() => this._close(toastEl), opts.duration);
+    toastEl.dataset.timeoutId = timeoutId;
+    toastEl.dataset.position = posClass;
 
-		toastElement.offsetHeight;
+    this.emit('toast:show', { element: toastEl });
+  }
 
-		toastElement.classList.add("toast--active");
+  _close(toastEl) {
+    if (!toastEl || !document.body.contains(toastEl)) return;
 
-		const timeoutId = setTimeout(() => {
-			this.close(toastElement);
-		}, this.options.duration);
+    clearTimeout(Number(toastEl.dataset.timeoutId));
 
-		toastElement.dataset.timeoutId = timeoutId;
-		toastElement.dataset.position = positionClass;
-	}
+    const isLeft = toastEl.dataset.position?.includes('l');
+    const closingClass = isLeft ? 'toast--closing-left' : 'toast--closing-right';
 
-	close(toastElement) {
-		if (!toastElement || !document.body.contains(toastElement)) return;
+    toastEl.classList.remove('toast--active');
+    toastEl.classList.add(closingClass);
 
-		const timeoutId = toastElement.dataset.timeoutId;
-		if (timeoutId) {
-			clearTimeout(timeoutId);
-		}
+    const remove = () => {
+      toastEl.remove();
+      this._activeToasts = this._activeToasts.filter(t => t !== toastEl);
+    };
 
-		const positionClass = toastElement.dataset.position;
-		const isLeft = positionClass?.includes("l");
-		const closingClass = isLeft
-			? "toast--closing-left"
-			: "toast--closing-right";
+    toastEl.addEventListener('transitionend', remove, { once: true });
 
-		toastElement.classList.remove("toast--active");
-		toastElement.classList.add(closingClass);
+    // Fallback removal
+    setTimeout(() => {
+      if (document.body.contains(toastEl)) remove();
+    }, this.options.transitionDuration + 50);
 
-		toastElement.addEventListener(
-			"transitionend",
-			() => {
-				if (document.body.contains(toastElement)) {
-					document.body.removeChild(toastElement);
-				}
-				this.activeToasts = this.activeToasts.filter((t) => t !== toastElement);
-			},
-			{ once: true },
-		);
+    this.emit('toast:close', { element: toastEl });
+  }
 
-		setTimeout(() => {
-			if (document.body.contains(toastElement)) {
-				console.warn(
-					"Toast: transitionend event did not fire, removing element via fallback timeout.",
-				);
-				document.body.removeChild(toastElement);
-				this.activeToasts = this.activeToasts.filter((t) => t !== toastElement);
-			}
-		}, this.options.transitionDuration + 50);
-	}
+  destroy() {
+    this._activeToasts.forEach(t => this._close(t));
+    super.destroy();
+  }
 }

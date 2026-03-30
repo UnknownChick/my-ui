@@ -1,6 +1,6 @@
 @use 'sass:map';
-
-$_cn: accordion;
+@use '../config/config-default' as cfg;
+@use '../abstracts/mixins' as m;
 
 $accordion: (
   icon-size: 0.5rem,
@@ -9,8 +9,8 @@ $accordion: (
 ) !default;
 
 @layer sidevui.components {
-  .#{$_cn} {
-    border-bottom: 1px solid #e0e0e6;
+  .accordion {
+    border-bottom: cfg.$border-width solid var(--color-border);
 
     &__title {
       list-style: none;
@@ -29,22 +29,21 @@ $accordion: (
         height: map.get($accordion, icon-size);
         margin-left: 0.5rem;
         margin-right: 0.5rem;
-        border-right: 2px solid #888;
-        border-bottom: 2px solid #888;
+        border-right: 2px solid var(--color-text-muted);
+        border-bottom: 2px solid var(--color-text-muted);
         transform: rotate(45deg);
-        transition: transform 0.3s;
+        @include m.transition(transform);
       }
     }
 
     &[open] &__title {
       &::after {
-        transform: rotate(135deg);
+        transform: rotate(225deg);
       }
     }
 
     &__content {
       padding-bottom: map.get($accordion, padding);
-      background: #fff;
     }
   }
 }

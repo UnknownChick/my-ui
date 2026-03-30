@@ -1,123 +1,104 @@
-export default class Accordion {
-	static instance = null;
-	static accordions = [];
+import Component from '../Component';
 
-	constructor() {
-		if (Accordion.instance) {
-			// Prevent multiple instances, but do not return a value
-			return;
-		}
-		Accordion.instance = this;
-		this.accordions = [];
-		this.init();
-	}
+/**
+ * Accordion Component
+ *
+ * Uses the native <details> element with smooth open/close animations.
+ * Supports grouped accordions (via [name] attribute) so only one opens at a time.
+ *
+ * @example
+ * Accordion.autoInit('.accordion');
+ */
+export default class Accordion extends Component {
+  static defaults = {
+    duration: 400,
+    easing: 'ease-out',
+  };
 
-	static getInstance() {
-		if (!Accordion.instance) {
-			new Accordion();
-		}
-		return Accordion.instance;
-	}
+  init() {
+    this._summary = this.$('.accordion__title');
+    this._content = this.$('.accordion__content');
+    this._animation = null;
+    this._isClosing = false;
+    this._isExpanding = false;
 
-	init() {
-		const accordions = document.querySelectorAll(".accordion");
-		Accordion.accordions = [];
-		accordions.forEach((el) => {
-			const acc = {
-				el,
-				summary: el.querySelector(".accordion__title"),
-				content: el.querySelector(".accordion__content"),
-				animation: null,
-				isClosing: false,
-				isExpanding: false,
-			};
-			acc.summary.addEventListener("click", (e) => this.onClick(e, acc));
-			Accordion.accordions.push(acc);
-		});
-	}
+    if (this._summary) {
+      this.on('click', this._summary, (e) => this._onClick(e));
+    }
+  }
 
-	onClick(e, acc) {
-		e.preventDefault();
-		acc.el.style.overflow = "hidden";
-		if (acc.isClosing || !acc.el.open) {
-			this.open(acc);
-		} else if (acc.isExpanding || acc.el.open) {
-			this.shrink(acc);
-		}
-	}
+  _onClick(e) {
+    e.preventDefault();
+    this.el.style.overflow = 'hidden';
 
-	shrink(acc) {
-		acc.isClosing = true;
-		const startHeight = `${acc.el.offsetHeight}px`;
-		const endHeight = `${acc.summary.offsetHeight}px`;
+    if (this._isClosing || !this.el.open) {
+      this.open();
+    } else if (this._isExpanding || this.el.open) {
+      this.close();
+    }
+  }
 
-		if (acc.animation) {
-			acc.animation.cancel();
-		}
+  close() {
+    this._isClosing = true;
+    const startHeight = `${this.el.offsetHeight}px`;
+    const endHeight = `${this._summary.offsetHeight}px`;
 
-		acc.animation = acc.el.animate(
-			{
-				height: [startHeight, endHeight],
-			},
-			{
-				duration: 400,
-				easing: "ease-out",
-			},
-		);
+    this._animation?.cancel();
 
-		acc.animation.onfinish = () => this.onAnimationFinish(acc, false);
-		acc.animation.oncancel = () => {
-			acc.isClosing = false;
-		};
-	}
+    this._animation = this.el.animate(
+      { height: [startHeight, endHeight] },
+      { duration: this.options.duration, easing: this.options.easing }
+    );
+    this._animation.onfinish = () => this._onFinish(false);
+    this._animation.oncancel = () => { this._isClosing = false; };
 
-	open(acc) {
-		const groupName = acc.el.getAttribute("name");
-		if (groupName) {
-			Accordion.accordions.forEach((other) => {
-				if (
-					other !== acc &&
-					other.el.getAttribute("name") === groupName &&
-					other.el.open
-				) {
-					this.shrink(other);
-				}
-			});
-		}
-		acc.el.style.height = `${acc.el.offsetHeight}px`;
-		acc.el.open = true;
-		window.requestAnimationFrame(() => this.expand(acc));
-	}
+    this.emit('accordion:close');
+  }
 
-	expand(acc) {
-		acc.isExpanding = true;
-		const startHeight = `${acc.el.offsetHeight}px`;
-		const endHeight = `${acc.summary.offsetHeight + acc.content.offsetHeight}px`;
+  open() {
+    // Close siblings in the same group
+    const groupName = this.el.getAttribute('name');
+    if (groupName) {
+      document.querySelectorAll(`details.accordion[name="${groupName}"]`).forEach(el => {
+        if (el !== this.el && el.open) {
+          Accordion.getInstance(el)?.close();
+        }
+      });
+    }
 
-		if (acc.animation) {
-			acc.animation.cancel();
-		}
+    this.el.style.height = `${this.el.offsetHeight}px`;
+    this.el.open = true;
+    requestAnimationFrame(() => this._expand());
 
-		acc.animation = acc.el.animate(
-			{
-				height: [startHeight, endHeight],
-			},
-			{
-				duration: 400,
-				easing: "ease-out",
-			},
-		);
-		acc.animation.onfinish = () => this.onAnimationFinish(acc, true);
-		acc.animation.oncancel = () => {
-			acc.isExpanding = false;
-		};
-	}
+    this.emit('accordion:open');
+  }
 
-	onAnimationFinish(acc, open) {
-		acc.el.open = open;
-		acc.animation = null;
-		acc.isClosing = false;
-		acc.isExpanding = false;
-		acc.el.style.height = acc.el.style.overflow = "";
-	}
+  _expand() {
+    this._isExpanding = true;
+    const startHeight = `${this.el.offsetHeight}px`;
+    const endHeight = `${this._summary.offsetHeight + this._content.offsetHeight}px`;
+
+    this._animation?.cancel();
+
+    this._animation = this.el.animate(
+      { height: [startHeight, endHeight] },
+      { duration: this.options.duration, easing: this.options.easing }
+    );
+    this._animation.onfinish = () => this._onFinish(true);
+    this._animation.oncancel = () => { this._isExpanding = false; };
+  }
+
+  _onFinish(open) {
+    this.el.open = open;
+    this._animation = null;
+    this._isClosing = false;
+    this._isExpanding = false;
+    this.el.style.height = '';
+    this.el.style.overflow = '';
+  }
+
+  destroy() {
+    this._animation?.cancel();
+    super.destroy();
+  }
 }

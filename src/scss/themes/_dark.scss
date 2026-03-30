@@ -1,0 +1,47 @@
+@use '../config/config-default' as cfg;
+
+@layer sidevui.components {
+  @if cfg.$enable-dark-mode {
+    [data-theme='dark'] {
+      .card {
+        background-color: var(--color-surface);
+        border: cfg.$border-width solid var(--color-border);
+        box-shadow: none;
+      }
+
+      input:not(:is([type="hidden"], [type="checkbox"], [type="radio"], [type="range"])),
+      textarea,
+      select {
+        background-color: var(--color-bg);
+        border-color: var(--color-border);
+        color: var(--color-text);
+      }
+
+      .modal {
+        background-color: var(--color-surface);
+        box-shadow: 0 12px 32px rgba(0, 0, 0, 0.4);
+      }
+
+      .drawer {
+        background-color: var(--color-surface);
+        box-shadow: 0 12px 32px rgba(0, 0, 0, 0.4);
+      }
+
+      .dropdown__content {
+        background-color: var(--color-surface);
+      }
+
+      .toast {
+        background-color: var(--color-surface);
+      }
+
+      table {
+        border-color: var(--color-border);
+      }
+
+      .pagination__link {
+        background-color: var(--color-surface);
+      }
+    }
+  }
+}

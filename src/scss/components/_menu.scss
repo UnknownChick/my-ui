@@ -1,118 +1,95 @@
-@use '../abstracts/colors' as *;
-@use '../abstracts/mixins' as *;
+@use 'sass:map';
+@use '../config/config-default' as cfg;
+@use '../abstracts/mixins' as m;
 
-.menu {
-	position: relative;
-	background: $primary-color;
-	transition: width 300ms ease-in-out;
-	display: flex;
-	flex-direction: column;
-	justify-content: space-between;
-	gap: 2rem;
+$menu: (
+  width-open: 250px,
+  width-closed: 84px,
+  toggle-size: 2rem,
+) !default;
 
-	&__logo {
-		margin: 2rem 0 3rem;
-		padding: 0 2rem;
-		height: 40px;
-		display: flex;
-		gap: 1rem;
-	}
+@layer sidevui.components {
+  .menu {
+    position: relative;
+    background: var(--color-primary);
+    @include m.transition(width);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 2rem;
 
-	&__list {
-		list-style: none;
-		white-space: nowrap;
-		li {
-			a {
-				display: flex;
-				color: $white-color;
-				padding: 1rem 2rem;
+    &__logo {
+      margin: 2rem 0 3rem;
+      padding: 0 2rem;
+      height: 40px;
+      display: flex;
+      gap: 1rem;
+    }
 
-				transition: background-color 200ms ease-in-out;
+    &__list {
+      list-style: none;
+      white-space: nowrap;
 
-				&:hover {
-					background-color: $secondary-color;
-				}
+      li a {
+        display: flex;
+        color: var(--color-white);
+        padding: 1rem 2rem;
+        @include m.transition(background-color);
 
-				svg {
-					min-width: 1.25rem;
-				}
-			}
-		}
-	}
+        &:hover {
+          background-color: var(--color-secondary);
+        }
 
-	&__toggle {
-		position: absolute;
-		@include absolute-vertical-center;
-		right: -1rem;
-		background-color: $white-color;
-		width: 2rem;
-		height: 2rem;
-		border-radius: 100%;
-		@include df-center;
-		cursor: pointer;
-		opacity: 0;
-		transition: transform 300ms ease-in-out, opacity 300ms ease-in-out;
+        svg { min-width: 1.25rem; }
+      }
 
-		&__border {
-			position: absolute;
-			width: 1.25rem;
-			height: 1.25rem;
-			border-radius: 100%;
-			border: 1.5px solid $primary-color;
-		}
+      &__text {
+        display: block;
+      }
+    }
 
-		svg {
-			stroke: $primary-color;
-		}
-	}
+    &__toggle {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      right: -1rem;
+      background-color: var(--color-white);
+      width: map.get($menu, toggle-size);
+      height: map.get($menu, toggle-size);
+      border-radius: 50%;
+      @include m.flex-center;
+      cursor: pointer;
+      opacity: 0;
+      @include m.transition(transform, opacity);
 
-	&:hover {
-		.menu__toggle {
-			opacity: 1;
-		}
-	}
+      &__border {
+        position: absolute;
+        width: 1.25rem;
+        height: 1.25rem;
+        border-radius: 50%;
+        border: 1.5px solid var(--color-primary);
+      }
 
-	&-open {
-		width: 250px;
+      svg { stroke: var(--color-primary); }
+    }
 
-		.menu__list {
-			li {
-				a {
-					gap: 0.5rem;
-				}
-			}
+    &:hover .menu__toggle { opacity: 1; }
 
-			&__text {
-				display: block;
-			}
-		}
+    &--open {
+      width: map.get($menu, width-open);
 
-		.menu__logo > img:last-child {
-			display: block;
-		}
-	}
+      .menu__list li a { gap: 0.5rem; }
+      .menu__list__text { display: block; }
+      .menu__logo > img:last-child { display: block; }
+    }
 
-	&-close {
-		width: 84px;
+    &--closed {
+      width: map.get($menu, width-closed);
 
-		.menu__list {
-			li {
-				a {
-					gap: 0;
-				}
-			}
-
-			&__text {
-				display: none;
-			}
-		}
-
-		.menu__logo > img:last-child {
-			display: none;
-		}
-
-		.menu__toggle {
-			transform: rotate(180deg);
-		}
-	}
+      .menu__list li a { gap: 0; }
+      .menu__list__text { display: none; }
+      .menu__logo > img:last-child { display: none; }
+      .menu__toggle { transform: translateY(-50%) rotate(180deg); }
+    }
+  }
 }

@@ -1,32 +1,28 @@
-@use 'sass:map';
-@use '../abstracts/colors' as c;
-
-$border: (
-  range: 8,
-);
+@use '../config/config-default' as cfg;
 
 @layer sidevui.utilities {
-  @for $i from 1 through map.get($border, range) {
-    @each $color-name, $color-value in c.$palette {
-      .border-#{$color-name}-#{$i} {
-        border: #{$i}px solid $color-value;
-      }
+  // Border width
+  .border     { border: cfg.$border-width solid var(--color-border); }
+  .border-t   { border-top: cfg.$border-width solid var(--color-border); }
+  .border-r   { border-right: cfg.$border-width solid var(--color-border); }
+  .border-b   { border-bottom: cfg.$border-width solid var(--color-border); }
+  .border-l   { border-left: cfg.$border-width solid var(--color-border); }
+  .border-0   { border: 0; }
 
-      .border-top-#{$color-name}-#{$i} {
-        border-top: #{$i}px solid $color-value;
-      }
+  // Border radius
+  .rounded-none { border-radius: 0; }
+  .rounded-sm   { border-radius: var(--radius-sm); }
+  .rounded      { border-radius: var(--radius); }
+  .rounded-lg   { border-radius: var(--radius-lg); }
+  .rounded-xl   { border-radius: var(--radius-xl); }
+  .rounded-full { border-radius: 100%; }
 
-      .border-right-#{$color-name}-#{$i} {
-        border-right: #{$i}px solid $color-value;
-      }
-
-      .border-bottom-#{$color-name}-#{$i} {
-        border-bottom: #{$i}px solid $color-value;
-      }
-
-      .border-left-#{$color-name}-#{$i} {
-        border-left: #{$i}px solid $color-value;
-      }
-    }
-  }
+  // Border colors
+  .border-primary   { border-color: var(--color-primary); }
+  .border-secondary { border-color: var(--color-secondary); }
+  .border-success   { border-color: var(--color-success); }
+  .border-danger    { border-color: var(--color-danger); }
+  .border-warning   { border-color: var(--color-warning); }
+  .border-info      { border-color: var(--color-info); }
+  .border-transparent { border-color: transparent; }
 }

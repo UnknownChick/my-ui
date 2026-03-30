@@ -1,6 +1,56 @@
+@use 'sass:math';
+@use 'sass:string';
 @use 'sass:color';
-@use 'sass:map';
+@use 'sass:list';
 
+// ── px → rem ─────────────────────────────────────────
+// Usage : font-size: rem(18);  → 1.125rem
+@function rem($px, $base: 16) {
+  @if math.is-unitless($px) {
+    @return math.div($px, $base) * 1rem;
+  }
+  @return math.div(math.div($px, $px * 0 + 1px), $base) * 1rem;
+}
+
+// ── rem → em (pour les media queries) ────────────────
+// Usage : @media (min-width: em(768)) { ... }
+@function em($px, $base: 16) {
+  @return math.div($px, $base) * 1em;
+}
+
+// ── Hex → RGB string (pour custom props + rgba()) ────
+// Usage : --color-primary-rgb: #{hex-to-rgb(#7c6aff)};
+@function hex-to-rgb($color) {
+  @return '#{color.red($color)}, #{color.green($color)}, #{color.blue($color)}';
+}
+
+// ── Couleur avec opacité via custom prop ─────────────
+// Usage : background: color-alpha(--color-primary, 0.15);
+@function color-alpha($prop, $alpha) {
+  @return rgba(var(#{$prop}-rgb), #{$alpha});
+}
+
+// ── Tint (mélange avec blanc) ─────────────────────────
+@function tint($color, $weight: 10%) {
+  @return color.mix(white, $color, $weight);
+}
+
+// ── Shade (mélange avec noir) ─────────────────────────
+@function shade($color, $weight: 10%) {
+  @return color.mix(black, $color, $weight);
+}
+
+// ── Contraste automatique (blanc ou noir) ─────────────
+@function contrast-color($bg, $light: white, $dark: #111) {
+  $luminance: (
+    color.red($bg) * 0.299 +
+    color.green($bg) * 0.587 +
+    color.blue($bg) * 0.114
+  );
+  @return if(math.div($luminance, 255) > 0.5, $dark, $light);
+}
+
+// ── Génère une palette 100-900 ───────────────────────
 @function generate-color-map($base-color) {
   @return (
     100: color.scale($base-color, $lightness: 80%),
@@ -13,4 +63,12 @@
     800: color.scale($base-color, $lightness: -60%),
     900: color.scale($base-color, $lightness: -80%)
   );
+}
+
+// ── Strips l'unité d'une valeur ───────────────────────
+@function strip-unit($value) {
+  @if math.is-unitless($value) {
+    @return $value;
+  }
+  @return math.div($value, ($value * 0 + 1));
 }

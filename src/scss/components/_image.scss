@@ -1,20 +1,13 @@
-@use 'sass:map';
-@use '../abstracts/variables' as var;
-
-$_cn: img;
-
-$img: (
-  border-radius: map.get(var.$global, border-radius),
-) !default;
+@use '../config/config-default' as cfg;
 
 @layer sidevui.components {
-  img.#{$_cn} {
+  img.img {
     &--fluid {
       width: 100%;
     }
 
     &--rounded {
-      border-radius: map.get($img, border-radius);
+      border-radius: var(--radius);
     }
 
     &--circle {

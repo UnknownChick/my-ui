@@ -1,40 +1,28 @@
 @use 'sass:map';
-@use '../abstracts/colors' as c;
-@use '../abstracts/variables' as var;
-
-$_cn: modal;
+@use '../config/config-default' as cfg;
+@use '../abstracts/mixins' as m;
 
 $modal: (
-  backdrop-color: rgba(0,0,0,0.5),
-  background-color: map.get(c.$semantic, 'white'),
-  border-radius: map.get(var.$global, border-radius),
-  box-shadow: map.get(var.$global, box-shadow),
-  close-background-color: map.get(c.$semantic, grayscale),
-  close-border-radius: 50%,
-  close-color: map.get(c.$semantic, 'white'),
+  backdrop-color: rgba(0 0 0 / 50%),
   close-size: 1.5rem,
-  color: map.get(c.$semantic, text),
   padding: 1rem,
 ) !default;
 
 @layer sidevui.components {
-  .#{$_cn} {
-    background-color: map.get($modal, background-color);
-    box-shadow: map.get($modal, box-shadow);
-    border-radius: map.get($modal, border-radius);
+  .modal {
+    background-color: var(--color-bg);
+    border-radius: var(--radius);
+    @include m.shadow(lg);
     margin: auto;
     width: 100%;
     overflow: visible;
-
-    p, ul, ol, a {
-      color: map.get($modal, color);
-    }
+    color: var(--color-text);
 
     &__close {
       position: absolute;
-      background-color: map.get($modal, close-background-color);
-      color: map.get($modal, close-color);
-      border-radius: map.get($modal, close-border-radius);
+      background-color: var(--color-text-muted);
+      color: var(--color-white);
+      border-radius: 50%;
       width: map.get($modal, close-size);
       height: map.get($modal, close-size);
       top: map.get($modal, padding);
@@ -44,16 +32,14 @@ $modal: (
       justify-content: center;
       align-items: center;
       cursor: pointer;
-      transition: transform map.get(var.$global, animation-duration) ease-in-out;
+      @include m.transition(transform);
 
-      &:hover {
-        transform: scale(1.1);
-      }
+      &:hover { transform: scale(1.1); }
     }
 
     &__title {
       padding: map.get($modal, padding);
-      border-bottom: 1px solid map.get(c.$semantic, grayscale);
+      border-bottom: cfg.$border-width solid var(--color-border);
     }
 
     &__content {
@@ -67,52 +53,19 @@ $modal: (
       gap: 1rem;
     }
 
-    &--fade {
-      &-in {
-        animation: modalFadeIn 0.3s ease-out forwards;
-      }
+    &--fade-in  { animation: modalFadeIn 0.3s ease-out forwards; }
+    &--fade-out { animation: modalFadeOut 0.3s ease-out forwards; }
 
-      &-out {
-        animation: modalFadeOut 0.3s ease-out forwards;
-      }
-    }
+    &--scale-in  { animation: modalScaleIn 0.3s cubic-bezier(0.34, 1.56, 0.64, 1) forwards; }
+    &--scale-out { animation: modalScaleOut 0.3s ease-out forwards; }
 
-    &--scale {
-      &-in {
-        animation: modalScaleIn 0.3s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
-      }
-
-      &-out {
-        animation: modalScaleOut 0.3s ease-out forwards;
-      }
-    }
-
-    &--slide {
-      &-up {
-        &-in {
-          animation: modalSlideUpIn 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-        }
-
-        &-out {
-          animation: modalSlideUpOut 0.3s ease-out forwards;
-        }
-      }
-
-      &-down {
-        &-in {
-          animation: modalSlideDownIn 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-        }
-
-        &-out {
-          animation: modalSlideDownOut 0.3s ease-out forwards;
-        }
-      }
-    }
+    &--slide-up-in    { animation: modalSlideUpIn 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+    &--slide-up-out   { animation: modalSlideUpOut 0.3s ease-out forwards; }
+    &--slide-down-in  { animation: modalSlideDownIn 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+    &--slide-down-out { animation: modalSlideDownOut 0.3s ease-out forwards; }
   }
 
-  dialog.preview {
-    padding: 0;
-  }
+  dialog.preview { padding: 0; }
 
   ::backdrop {
     background-color: map.get($modal, backdrop-color);
@@ -123,96 +76,13 @@ $modal: (
     animation: backdropFadeIn 0.3s ease-out forwards;
   }
 
-  @keyframes modalFadeIn {
-    from {
-      opacity: 0;
-    }
-    to {
-      opacity: 1;
-    }
-  }
-
-  @keyframes modalFadeOut {
-    from {
-      opacity: 1;
-    }
-    to {
-      opacity: 0;
-    }
-  }
-
-  @keyframes modalScaleIn {
-    from {
-      opacity: 0;
-      transform: scale(0.7);
-    }
-    to {
-      opacity: 1;
-      transform: scale(1);
-    }
-  }
-
-  @keyframes modalScaleOut {
-    from {
-      opacity: 1;
-      transform: scale(1);
-    }
-    to {
-      opacity: 0;
-      transform: scale(0.7);
-    }
-  }
-
-  @keyframes modalSlideUpIn {
-    from {
-      opacity: 0;
-      transform: translateY(100px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
-
-  @keyframes modalSlideUpOut {
-    from {
-      opacity: 1;
-      transform: translateY(0);
-    }
-    to {
-      opacity: 0;
-      transform: translateY(-100px);
-    }
-  }
-
-  @keyframes modalSlideDownIn {
-    from {
-      opacity: 0;
-      transform: translateY(-100px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
-
-  @keyframes modalSlideDownOut {
-    from {
-      opacity: 1;
-      transform: translateY(0);
-    }
-    to {
-      opacity: 0;
-      transform: translateY(100px);
-    }
-  }
-
-  @keyframes backdropFadeIn {
-    from {
-      opacity: 0;
-    }
-    to {
-      opacity: 1;
-    }
-  }
+  @keyframes modalFadeIn    { from { opacity: 0; } to { opacity: 1; } }
+  @keyframes modalFadeOut   { from { opacity: 1; } to { opacity: 0; } }
+  @keyframes modalScaleIn   { from { opacity: 0; transform: scale(0.7); } to { opacity: 1; transform: scale(1); } }
+  @keyframes modalScaleOut  { from { opacity: 1; transform: scale(1); } to { opacity: 0; transform: scale(0.7); } }
+  @keyframes modalSlideUpIn    { from { opacity: 0; transform: translateY(100px); } to { opacity: 1; transform: translateY(0); } }
+  @keyframes modalSlideUpOut   { from { opacity: 1; transform: translateY(0); } to { opacity: 0; transform: translateY(-100px); } }
+  @keyframes modalSlideDownIn  { from { opacity: 0; transform: translateY(-100px); } to { opacity: 1; transform: translateY(0); } }
+  @keyframes modalSlideDownOut { from { opacity: 1; transform: translateY(0); } to { opacity: 0; transform: translateY(100px); } }
+  @keyframes backdropFadeIn    { from { opacity: 0; } to { opacity: 1; } }
 }

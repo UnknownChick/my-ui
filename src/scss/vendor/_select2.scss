@@ -39,20 +39,24 @@
 
   .select2-selection--multiple {
     @include f.input-core-styles;
+    padding-bottom: 0.125rem !important;
+    min-height: 38px;
 
     .select2-selection__choice {
-      margin: 0 0.25rem 0.25rem 0;
+      margin: 0 calc(0.25rem - 2px) calc(0.25rem - 2px) 0;
       border-radius: calc(map.get(f.$form, border-radius) / 2);
       border: map.get(f.$form, border);
-      background-color: map.get(c.$primary-map, 300);
+      background-color: c.$primary-500;
       padding: 0 0 0 1.75rem;
-      color: map.get(c.$white-map, 500);
+      color: c.$white;
     }
 
     .select2-selection__choice__remove {
       border-right: map.get(f.$form, border);
       padding: 0 0.5rem;
-      color: map.get(c.$white-map, 500);
+      color: c.$white;
+      border-radius: 0;
+      transition: background-color map.get(var.$global, animation-duration) ease-in-out;
     }
 
     .select2-selection__clear {
@@ -66,12 +70,12 @@
   }
 
   .select2-results__option--highlighted.select2-results__option--selectable {
-    background-color: map.get(c.$primary-map, 500);
+    background-color: c.$primary-500;
   }
 
   .select2-results__option--selected {
-    background-color: map.get(c.$primary-map, 300);
-    color: map.get(c.$white-map, 500);
+    background-color: c.$primary-300;
+    color: c.$white;
   }
 
   .select2-search--dropdown {
