@@ -1,20 +1,35 @@
-import Accordion from './components/accordion';
-import Drawer from './components/drawer';
-import Dropdown from './components/dropdown';
-import Modal from './components/modal';
-import Pagination from './components/pagination';
-import Tabs from './components/tabs';
-import Toast from './components/toast';
-import Tooltip from './components/tooltip';
-import './features/icons';
+import Accordion from "./components/accordion.js";
+import Drawer from "./components/drawer.js";
+import Dropdown from "./components/dropdown.js";
+import Modal from "./components/modal.js";
+import Pagination from "./components/pagination.js";
+import Tabs from "./components/tabs.js";
+import Toast from "./components/toast.js";
+import Tooltip from "./components/tooltip.js";
+import "./features/icons.js";
+import { ThemeToggle } from "./features/theme-toggle.js";
 
 // Export all components for external use
-export { Accordion, Drawer, Dropdown, Modal, Pagination, Tabs, Toast, Tooltip };
+export {
+	Accordion,
+	Drawer,
+	Dropdown,
+	Modal,
+	Pagination,
+	Tabs,
+	ThemeToggle,
+	Toast,
+	Tooltip,
+};
 
 // Auto-init on DOMContentLoaded
-document.addEventListener('DOMContentLoaded', () => {
-  Accordion.autoInit('.accordion');
-  Dropdown.autoInit('.dropdown');
-  Pagination.autoInit('.pagination');
-  Tooltip.autoInit('[data-tooltip]');
+document.addEventListener("DOMContentLoaded", () => {
+	Accordion.autoInit(".accordion");
+	Drawer.autoInit(".drawer");
+	Dropdown.autoInit(".dropdown");
+	Modal.autoInit("dialog.modal");
+	Pagination.autoInit(".pagination");
+	Tabs.autoInit(".tabs");
+	Toast.autoInit("[data-toast-trigger]");
+	Tooltip.autoInit("[data-tooltip]");
 });

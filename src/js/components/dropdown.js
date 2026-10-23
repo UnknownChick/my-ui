@@ -1,54 +1,47 @@
-import Component from '../Component';
+import Component from "../Component.js";
 
 export default class Dropdown extends Component {
-  static defaults = {};
+	static defaults = {};
 
-  init() {
-    this._toggle = this.$('.dropdown__toggle');
-    this._content = this.$('.dropdown__content');
-    this._isOpen = false;
+	init() {
+		this._toggle = this.$(".dropdown__toggle");
+		this._content = this.$(".dropdown__content");
+		this._isOpen = false;
 
-    if (!this._toggle || !this._content) {
-      console.warn('[Dropdown] Missing .dropdown__toggle or .dropdown__content:', this.el);
-      return;
-    }
+		if (!this._toggle || !this._content) {
+			console.warn(
+				"[Dropdown] Missing .dropdown__toggle or .dropdown__content:",
+				this.el,
+			);
+			return;
+		}
 
-    this.on('click', this._toggle, () => this.toggle());
+		this.on("click", this._toggle, () => this.toggle());
 
-    this._outsideHandler = (e) => {
-      if (!this.el.contains(e.target)) this.close();
-    };
-    document.addEventListener('click', this._outsideHandler);
-  }
+		this._outsideHandler = (e) => {
+			if (!this.el.contains(e.target)) this.close();
+		};
+		document.addEventListener("click", this._outsideHandler);
+	}
 
-  toggle() {
-    this._isOpen ? this.close() : this.open();
-  }
+	toggle() {
+		this._isOpen ? this.close() : this.open();
+	}
 
-  open() {
-    this._isOpen = true;
-    this.addClass('dropdown--open');
-    this.emit('dropdown:open');
-  }
+	open() {
+		this._isOpen = true;
+		this.addClass("dropdown--open");
+		this.emit("dropdown:open");
+	}
 
-  close() {
-    this._isOpen = false;
-    this.removeClass('dropdown--open');
-    this.emit('dropdown:close');
-  }
+	close() {
+		this._isOpen = false;
+		this.removeClass("dropdown--open");
+		this.emit("dropdown:close");
+	}
 
-  destroy() {
-    document.removeEventListener('click', this._outsideHandler);
-    super.destroy();
-  }
-
-  /**
-   * Auto-init all .dropdown elements on the page.
-   * @returns {Dropdown[]}
-   */
-  static autoInit() {
-    return Array.from(document.querySelectorAll('.dropdown')).map(
-      el => new Dropdown(el)
-    );
-  }
+	destroy() {
+		document.removeEventListener("click", this._outsideHandler);
+		super.destroy();
+	}
 }

@@ -1,7 +1,7 @@
 /**
  * Component Base Class
  *
- * Abstract base for all Sidev UI interactive components.
+ * Abstract base for all My UI interactive components.
  * Handles element selection, option merging, event management, state tracking, and lifecycle hooks.
  *
  * @example
@@ -23,19 +23,20 @@ export default class Component {
 	 * @param {Object} options - Instance options (merged with defaults)
 	 */
 	constructor(selector, options = {}) {
-		this.el = typeof selector === 'string'
-		? document.querySelector(selector)
-		: selector;
+		this.el =
+			typeof selector === "string"
+				? document.querySelector(selector)
+				: selector;
 
 		if (!this.el) {
-		console.warn(`[${this.constructor.name}] Element not found:`, selector);
-		return;
+			console.warn(`[${this.constructor.name}] Element not found:`, selector);
+			return;
 		}
 
 		this.options = {
-		...this.constructor.defaults,
-		...this._parseDataAttrs(),
-		...options,
+			...this.constructor.defaults,
+			...this._parseDataAttrs(),
+			...options,
 		};
 
 		this._listeners = [];
@@ -96,15 +97,15 @@ export default class Component {
 	 */
 	on(event, target, handler, opts) {
 		let el;
-		if (typeof target === 'string') {
-		el = this.el.querySelector(target);
-		} else if (typeof target === 'function') {
-		// on(event, handler) shorthand — attach to this.el
-		opts = handler;
-		handler = target;
-		el = this.el;
+		if (typeof target === "string") {
+			el = this.el.querySelector(target);
+		} else if (typeof target === "function") {
+			// on(event, handler) shorthand — attach to this.el
+			opts = handler;
+			handler = target;
+			el = this.el;
 		} else {
-		el = target;
+			el = target;
 		}
 
 		if (!el) return;
@@ -118,15 +119,15 @@ export default class Component {
 	 * Call with no args to remove all, or pass event/target to filter.
 	 */
 	off(event, target) {
-		this._listeners = this._listeners.filter(l => {
-		const matchEvent = !event || l.event === event;
-		const matchTarget = !target || l.el === target;
+		this._listeners = this._listeners.filter((l) => {
+			const matchEvent = !event || l.event === event;
+			const matchTarget = !target || l.el === target;
 
-		if (matchEvent && matchTarget) {
-			l.el.removeEventListener(l.event, l.handler, l.opts);
-			return false;
-		}
-		return true;
+			if (matchEvent && matchTarget) {
+				l.el.removeEventListener(l.event, l.handler, l.opts);
+				return false;
+			}
+			return true;
 		});
 	}
 
@@ -136,9 +137,7 @@ export default class Component {
 	 * @param {*} detail - Event detail data
 	 */
 	emit(name, detail = null) {
-		this.el.dispatchEvent(
-		new CustomEvent(name, { bubbles: true, detail })
-		);
+		this.el.dispatchEvent(new CustomEvent(name, { bubbles: true, detail }));
 	}
 
 	// ── State Management ─────────────────────────────────
@@ -150,8 +149,8 @@ export default class Component {
 	setState(newState) {
 		const prev = { ...this._state };
 		Object.assign(this._state, newState);
-		if (typeof this.onStateChange === 'function') {
-		this.onStateChange(this._state, prev);
+		if (typeof this.onStateChange === "function") {
+			this.onStateChange(this._state, prev);
 		}
 	}
 
@@ -173,12 +172,12 @@ export default class Component {
 		const prefix = this.constructor.name.toLowerCase();
 
 		for (const [key, value] of Object.entries(this.el.dataset)) {
-		// Only parse attributes matching the component prefix
-		if (key.startsWith(prefix)) {
-			const optionKey = key.slice(prefix.length);
-			const camelKey = optionKey.charAt(0).toLowerCase() + optionKey.slice(1);
-			data[camelKey] = this._castValue(value);
-		}
+			// Only parse attributes matching the component prefix
+			if (key.startsWith(prefix)) {
+				const optionKey = key.slice(prefix.length);
+				const camelKey = optionKey.charAt(0).toLowerCase() + optionKey.slice(1);
+				data[camelKey] = this._castValue(value);
+			}
 		}
 
 		return data;
@@ -188,10 +187,10 @@ export default class Component {
 	 * Cast string values to appropriate types
 	 */
 	_castValue(value) {
-		if (value === 'true') return true;
-		if (value === 'false') return false;
-		if (value === 'null') return null;
-		if (value !== '' && !Number.isNaN(Number(value))) return Number(value);
+		if (value === "true") return true;
+		if (value === "false") return false;
+		if (value === "null") return null;
+		if (value !== "" && !Number.isNaN(Number(value))) return Number(value);
 		return value;
 	}
 
@@ -203,7 +202,8 @@ export default class Component {
 	 * @returns {Component|undefined}
 	 */
 	static getInstance(el) {
-		return Component._instances.get(el);
+		// biome-ignore lint/complexity/noThisInStatic: polymorphic — subclasses have their own _instances WeakMap
+		return this._instances.get(el);
 	}
 
 	/**
@@ -214,7 +214,7 @@ export default class Component {
 	 */
 	static autoInit(selector, options = {}) {
 		return Array.from(document.querySelectorAll(selector)).map(
-		el => new Component(el, options)
+			(el) => new this(el, options),
 		);
 	}
 }
