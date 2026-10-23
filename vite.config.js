@@ -4,6 +4,8 @@ import { browserslistToTargets } from "lightningcss";
 import path from "node:path";
 import { defineConfig } from "vite";
 
+const projectRoot = import.meta.dirname;
+
 export default defineConfig({
 	css: {
 		preprocessorOptions: {
@@ -22,10 +24,10 @@ export default defineConfig({
 	},
 	resolve: {
 		alias: {
-			"~": path.resolve(__dirname, "node_modules"),
-			"@img": path.resolve(__dirname, "assets/img"),
-			"@js": path.resolve(__dirname, "src/js"),
-			"@scss": path.resolve(__dirname, "src/scss"),
+			"~": path.resolve(projectRoot, "node_modules"),
+			"@img": path.resolve(projectRoot, "assets/img"),
+			"@js": path.resolve(projectRoot, "src/js"),
+			"@scss": path.resolve(projectRoot, "src/scss"),
 		},
 	},
 	server: {
@@ -41,10 +43,10 @@ export default defineConfig({
 		rollupOptions: {
 			input: {
 				js: "./src/js/index.js",
-				style: "./src/scss/index.scss",
+				style: "./myui.config.scss",
 			},
 			output: {
-				dir: path.resolve(__dirname, "dist"),
+				dir: path.resolve(projectRoot, "dist"),
 				format: "es",
 				entryFileNames: `js/[name].js`,
 				chunkFileNames: `js/[name].js`,

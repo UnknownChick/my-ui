@@ -1,27 +1,48 @@
 {
-	"name": "sidev-ui",
-	"private": true,
+	"name": "myui",
+	"description": "Extensible BEM-based SCSS component library with configurable design tokens and themes.",
 	"version": "0.0.0",
 	"type": "module",
+	"style": "./dist/myui.css",
+	"sass": "./src/scss/index.scss",
+	"files": [
+		"dist/myui.css",
+		"src/scss/abstracts/",
+		"src/scss/base/",
+		"src/scss/components/",
+		"src/scss/config/",
+		"src/scss/layouts/",
+		"src/scss/themes/",
+		"src/scss/utilities/",
+		"src/scss/_layers.scss",
+		"src/scss/index.scss",
+		"readme.md"
+	],
+	"sideEffects": [
+		"**/*.css",
+		"**/*.scss"
+	],
 	"scripts": {
 		"dev": "vite",
-		"build": "vite build",
+		"build": "vite build && sass --no-source-map src/scss/index.scss dist/myui.css",
+		"build:demo": "vite build",
+		"build:scss": "sass --no-source-map src/scss/index.scss dist/myui.css",
+		"prepack": "sass --no-source-map src/scss/index.scss dist/myui.css",
+		"test": "node --test tests/*.test.js",
 		"preview": "vite preview",
 		"lint": "biome check",
 		"lint:fix": "biome check --write",
 		"format": "biome format --write"
 	},
 	"devDependencies": {
-		"@biomejs/biome": "2.2.0",
-		"@fullhuman/postcss-purgecss": "^7.0.2",
-		"autoprefixer": "^10.4.27",
-		"browserslist": "^4.28.1",
-		"lightningcss": "^1.31.1",
-		"postcss": "^8.5.8",
-		"sass": "^1.97.3",
-		"vite": "^7.3.1"
-	},
-	"dependencies": {
-		"lucide": "^0.536.0"
+		"@biomejs/biome": "2.6.2",
+		"@fullhuman/postcss-purgecss": "^8.0.0",
+		"autoprefixer": "^10.6.1",
+		"browserslist": "^4.29.4",
+		"lightningcss": "^1.33.0",
+		"lucide": "^1.61.0",
+		"postcss": "^8.5.31",
+		"sass": "^1.106.1",
+		"vite": "^8.3.5"
 	}
 }
