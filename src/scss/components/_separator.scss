@@ -1,22 +1,50 @@
-@use 'sass:map';
-@use '../config/config-default' as cfg;
+@use "sass:map";
+@use "../abstracts/component-api" as api;
 
 $separator: (
-  height: 2px,
+	height: 2px,
+	sizes: (
+		xs: (
+			height: 1px,
+		),
+		sm: (
+			height: 2px,
+		),
+		md: (
+			height: 3px,
+		),
+		lg: (
+			height: 4px,
+		),
+		xl: (
+			height: 6px,
+		),
+		xxl: (
+			height: 8px,
+		),
+	),
 ) !default;
 
-@layer sidevui.components {
-  .separator {
-    height: map.get($separator, height);
-    background-color: var(--color-primary);
-    border: none;
-    display: block;
+@mixin separator-variant($color) {
+	background-color: $color;
+}
 
-    &--secondary { background-color: var(--color-secondary); }
-    &--success   { background-color: var(--color-success); }
-    &--danger    { background-color: var(--color-danger); }
-    &--warning   { background-color: var(--color-warning); }
-    &--info      { background-color: var(--color-info); }
-    &--muted     { background-color: var(--color-border); }
-  }
+@layer myui.components {
+	.separator {
+		height: map.get($separator, height);
+		background-color: var(--color-primary);
+		border: none;
+		display: block;
+		@include api.make-size-variants(map.get($separator, sizes));
+
+		@each $name in api.$semantic-variant-names {
+			&--#{$name} {
+				@include separator-variant(var(--color-#{$name}));
+			}
+		}
+
+		&--muted {
+			background-color: var(--color-border);
+		}
+	}
 }

@@ -1,39 +1,84 @@
-@use 'sass:map';
-@use '../config/config-default' as cfg;
-@use '../abstracts/component-api' as api;
+@use "sass:map";
+@use "../abstracts/component-api" as api;
 
 $dot: (
-  sizes: (
-    xs: 0.5rem,
-    sm: 0.75rem,
-    md: 1rem,
-    lg: 1.25rem,
-    xl: 1.5rem,
-    xxl: 2rem,
-  )
+	sizes: (
+		xs: (
+			width: 0.5rem,
+			height: 0.5rem,
+		),
+		sm: (
+			width: 0.75rem,
+			height: 0.75rem,
+		),
+		md: (
+			width: 1rem,
+			height: 1rem,
+		),
+		lg: (
+			width: 1.25rem,
+			height: 1.25rem,
+		),
+		xl: (
+			width: 1.5rem,
+			height: 1.5rem,
+		),
+		xxl: (
+			width: 2rem,
+			height: 2rem,
+		),
+	),
 ) !default;
 
-@layer sidevui.components {
-  .dot {
-    display: block;
-    width: 0.75rem;
-    height: 0.75rem;
-    border-radius: 100%;
-    background-color: var(--color-primary);
-    line-height: 1;
-    position: absolute;
-    z-index: 10;
+@mixin dot-variant($color) {
+	background-color: $color;
+}
 
-    &--tl { top: 0; left: 0; }
-    &--tr { top: 0; right: 0; }
-    &--bl { bottom: 0; left: 0; }
-    &--br { bottom: 0; right: 0; }
+@layer myui.components {
+	.dot {
+		display: block;
+		width: 0.75rem;
+		height: 0.75rem;
+		border-radius: 100%;
+		background-color: var(--color-primary);
+		line-height: 1;
+		position: absolute;
+		z-index: 10;
 
-    @each $size, $val in map.get($dot, sizes) {
-      &--#{$size} { width: $val; height: $val; }
-    }
+		&--tl {
+			top: 0;
+			left: 0;
+		}
+		&--tr {
+			top: 0;
+			right: 0;
+		}
+		&--bl {
+			bottom: 0;
+			left: 0;
+		}
+		&--br {
+			bottom: 0;
+			right: 0;
+		}
+		&--off {
+			background-color: var(--color-text-muted);
+		}
+		&--black {
+			background-color: var(--color-black);
+		}
+		&--white {
+			background-color: var(--color-white);
+		}
 
-    @include api.make-semantic-variants(background-color);
-    @include api.make-accent-bg-variants;
-  }
+		@include api.make-size-variants(map.get($dot, sizes));
+
+		@each $name in api.$semantic-variant-names {
+			&--#{$name} {
+				@include dot-variant(var(--color-#{$name}));
+			}
+		}
+
+		@include api.make-accent-bg-variants;
+	}
 }

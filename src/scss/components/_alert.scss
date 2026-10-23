@@ -1,38 +1,68 @@
-@use 'sass:map';
-@use '../config/config-default' as cfg;
-@use '../abstracts/component-api' as api;
+@use "sass:map";
+@use "../config/config-default" as cfg;
+@use "../abstracts/component-api" as api;
 
 $alert: (
-  sizes: (
-    xs: (padding: 0.5rem 0.75rem,  font-size: cfg.$font-size-xs),
-    sm: (padding: 0.75rem 1rem,    font-size: cfg.$font-size-sm),
-    md: (padding: 0.825rem 1.25rem, font-size: cfg.$font-size-md),
-    lg: (padding: 1.25rem 1.5rem,  font-size: cfg.$font-size-lg),
-    xl: (padding: 1.5rem 1.75rem,  font-size: cfg.$font-size-xl),
-  )
+	sizes: (
+		xs: (
+			padding: 0.5rem 0.75rem,
+			font-size: cfg.$font-size-xs,
+		),
+		sm: (
+			padding: 0.75rem 1rem,
+			font-size: cfg.$font-size-sm,
+		),
+		md: (
+			padding: 0.825rem 1.25rem,
+			font-size: cfg.$font-size-md,
+		),
+		lg: (
+			padding: 1.25rem 1.5rem,
+			font-size: cfg.$font-size-lg,
+		),
+		xl: (
+			padding: 1.5rem 1.75rem,
+			font-size: cfg.$font-size-xl,
+		),
+		xxl: (
+			padding: 1.75rem 2rem,
+			font-size: cfg.$font-size-xxl,
+		),
+	),
 ) !default;
 
 @mixin alert-variant($background, $border, $color) {
-  background-color: $background;
-  border: 2px solid $border;
-  color: $color;
+	background-color: $background;
+	border: 2px solid $border;
+	color: $color;
 }
 
-@layer sidevui.components {
-  .alert {
-    display: block;
-    padding: map.get($alert, sizes, md, padding);
-    background-color: transparent;
-    color: inherit;
-    border: solid cfg.$border-width var(--color-border);
-    border-radius: var(--radius);
-    position: relative;
-    line-height: 1;
-    font-weight: 600;
-    font-size: map.get($alert, sizes, md, font-size);
-    width: 100%;
+@layer myui.components {
+	.alert {
+		display: block;
+		padding: map.get($alert, sizes, md, padding);
+		background-color: transparent;
+		color: inherit;
+		border: solid cfg.$border-width var(--color-border);
+		border-radius: var(--radius);
+		position: relative;
+		line-height: 1;
+		font-weight: 600;
+		font-size: map.get($alert, sizes, md, font-size);
+		width: 100%;
 
-    @include api.make-size-variants(map.get($alert, sizes));
-    @include api.make-accent-variants;
-  }
+		@include api.make-size-variants(map.get($alert, sizes));
+
+		@each $name in api.$semantic-variant-names {
+			&--#{$name} {
+				@include alert-variant(
+					var(--color-surface),
+					var(--color-#{$name}),
+					var(--color-text)
+				);
+			}
+		}
+
+		@include api.make-accent-variants;
+	}
 }

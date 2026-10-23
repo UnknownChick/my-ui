@@ -1,169 +1,186 @@
-@use 'sass:map';
-@use 'sass:list';
-@use '../config/config-default' as cfg;
-@use './functions' as f;
+@use "sass:map";
+@use "sass:list";
+@use "../config/config-default" as cfg;
+@use "./functions" as f;
 
-// ── Responsive breakpoints ───────────────────────────
-// Usage :
-//   @include bp(md) { font-size: 1.25rem; }
-//   @include bp-down(sm) { display: none; }
+// Responsive breakpoint helpers.
+// Example:
+// @include bp(md) { font-size: 1.25rem; }
+// @include bp-down(sm) { display: none; }
 @mixin bp($bp) {
-  $val: map.get(cfg.$breakpoints, $bp);
-  @if $val {
-    @media (min-width: f.em(f.strip-unit($val))) { @content; }
-  } @else {
-    @warn 'Breakpoint `#{$bp}` inexistant.';
-  }
+	$val: map.get(cfg.$breakpoints, $bp);
+	@if $val {
+		@media (min-width: f.em(f.strip-unit($val))) {
+			@content;
+		}
+	} @else {
+		@warn "Unknown breakpoint `#{$bp}`.";
+	}
 }
 
 @mixin bp-down($bp) {
-  $val: map.get(cfg.$breakpoints, $bp);
-  @if $val {
-    @media (max-width: calc(#{f.em(f.strip-unit($val))} - 0.02em)) { @content; }
-  } @else {
-    @warn 'Breakpoint `#{$bp}` inexistant.';
-  }
+	$val: map.get(cfg.$breakpoints, $bp);
+	@if $val {
+		@media (max-width: calc(#{f.em(f.strip-unit($val))} - 0.02em)) {
+			@content;
+		}
+	} @else {
+		@warn "Unknown breakpoint `#{$bp}`.";
+	}
 }
 
 @mixin bp-between($min, $max) {
-  @include bp($min) {
-    @include bp-down($max) { @content; }
-  }
+	@include bp($min) {
+		@include bp-down($max) {
+			@content;
+		}
+	}
 }
 
-// ── Visually hidden (accessible) ─────────────────────
+// Visually hide content while keeping it available to screen readers.
 @mixin visually-hidden {
-  position: absolute;
-  width:  1px; height: 1px;
-  padding: 0; margin: -1px;
-  overflow: hidden;
-  clip: rect(0, 0, 0, 0);
-  white-space: nowrap;
-  border: 0;
+	position: absolute;
+	width: 1px;
+	height: 1px;
+	padding: 0;
+	margin: -1px;
+	overflow: hidden;
+	clip: rect(0, 0, 0, 0);
+	white-space: nowrap;
+	border: 0;
 }
 
-// ── Focus ring accessible ────────────────────────────
+// Add a visible keyboard focus ring.
 @mixin focus-ring($color: var(--color-primary), $offset: 3px) {
-  &:focus-visible {
-    outline: 2px solid $color;
-    outline-offset: $offset;
-  }
+	&:focus-visible {
+		outline: 2px solid $color;
+		outline-offset: $offset;
+	}
 }
 
-// ── Truncate text ────────────────────────────────────
+// Truncate text to a fixed number of lines.
 @mixin truncate($lines: 1) {
-  @if $lines == 1 {
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-  } @else {
-    display: -webkit-box;
-    -webkit-line-clamp: $lines;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-  }
+	@if $lines == 1 {
+		overflow: hidden;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+	} @else {
+		display: -webkit-box;
+		-webkit-line-clamp: $lines;
+		-webkit-box-orient: vertical;
+		overflow: hidden;
+	}
 }
 
-// ── Flex center ──────────────────────────────────────
+// Center flex children.
 @mixin flex-center($direction: row) {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: $direction;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-direction: $direction;
 }
 
-// ── Overlay absolu ───────────────────────────────────
+// Fill the positioned parent with an absolute overlay.
 @mixin absolute-fill($z: auto) {
-  position: absolute;
-  inset: 0;
-  z-index: $z;
+	position: absolute;
+	inset: 0;
+	z-index: $z;
 }
 
-// ── Smooth transition ────────────────────────────────
+// Add configured transitions to the selected properties.
 @mixin transition($props...) {
-  @if cfg.$enable-transitions {
-    $transitions: ();
-    @each $p in $props {
-      $transitions: list.append($transitions, $p cfg.$transition, comma);
-    }
-    transition: $transitions;
-  }
+	@if cfg.$enable-transitions {
+		$transitions: ();
+		@each $p in $props {
+			$transitions: list.append($transitions, $p cfg.$transition, comma);
+		}
+		transition: $transitions;
+	}
 }
 
-// ── Shadow conditionnelle ────────────────────────────
+// Apply a configured shadow when shadows are enabled.
 @mixin shadow($size: md) {
-  @if cfg.$enable-shadows {
-    @if      $size == sm  { box-shadow: cfg.$shadow-sm; }
-    @else if $size == md  { box-shadow: cfg.$shadow; }
-    @else if $size == lg  { box-shadow: cfg.$shadow-lg; }
-  }
+	@if cfg.$enable-shadows {
+		@if $size == sm {
+			box-shadow: cfg.$shadow-sm;
+		} @else if $size == md {
+			box-shadow: cfg.$shadow;
+		} @else if $size == lg {
+			box-shadow: cfg.$shadow-lg;
+		}
+	}
 }
 
-// ── Génère des classes responsives ───────────────────
+// Generate responsive variants at configured breakpoints.
 @mixin responsive-variants {
-  @content;
-  @if cfg.$enable-responsive {
-    @each $bp, $val in cfg.$breakpoints {
-      @include bp($bp) {
-        .#{$bp}\: {
-          @content;
-        }
-      }
-    }
-  }
+	@content;
+	@if cfg.$enable-responsive {
+		@each $bp, $val in cfg.$breakpoints {
+			@include bp($bp) {
+				.#{$bp}\: {
+					@content;
+				}
+			}
+		}
+	}
 }
 
 // ── Scrollbar custom ─────────────────────────────────
 @mixin custom-scrollbar($size: 6px, $color: var(--color-border)) {
-  &::-webkit-scrollbar       { width: $size; height: $size; }
-  &::-webkit-scrollbar-track { background: transparent; }
-  &::-webkit-scrollbar-thumb {
-    background: $color;
-    border-radius: calc(#{$size} / 2);
-  }
+	&::-webkit-scrollbar {
+		width: $size;
+		height: $size;
+	}
+	&::-webkit-scrollbar-track {
+		background: transparent;
+	}
+	&::-webkit-scrollbar-thumb {
+		background: $color;
+		border-radius: calc(#{$size} / 2);
+	}
 }
 
 // ── Background image ─────────────────────────────────
 @mixin bg-image($image) {
-  background-image: url($image);
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: cover;
+	background-image: url($image);
+	background-repeat: no-repeat;
+	background-position: center;
+	background-size: cover;
 }
 
 // ── Image cover center ───────────────────────────────
 @mixin image-cover-center {
-  display: block;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: center;
+	display: block;
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	object-position: center;
 }
 
 // ── Backdrop ─────────────────────────────────────────
 @mixin backdrop($z-index, $bg, $opacity: 0.25) {
-  &::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    display: block;
-    width: 100%;
-    height: 100%;
-    background: $bg;
-    opacity: $opacity;
-    z-index: $z-index;
-  }
+	&::before {
+		content: "";
+		position: absolute;
+		top: 0;
+		left: 0;
+		display: block;
+		width: 100%;
+		height: 100%;
+		background: $bg;
+		opacity: $opacity;
+		z-index: $z-index;
+	}
 }
 
 // ── Generate color classes ───────────────────────────
 @mixin generate-color-classes($name, $palette) {
-  @each $weight, $color in $palette {
-    .text-#{$name}-#{$weight} {
-      color: $color !important;
-    }
-    .bc-#{$name}-#{$weight} {
-      background-color: $color;
-    }
-  }
+	@each $weight, $color in $palette {
+		.text-#{$name}-#{$weight} {
+			color: $color;
+		}
+		.bc-#{$name}-#{$weight} {
+			background-color: $color;
+		}
+	}
 }

@@ -1,80 +1,53 @@
-@use '../config/config-default' as cfg;
-@use '../abstracts/mixins' as m;
+@layer myui.utilities {
+	.flex {
+		display: flex;
+	}
+	.inline-flex {
+		display: inline-flex;
+	}
+	.flex-row {
+		flex-direction: row;
+	}
+	.flex-col {
+		flex-direction: column;
+	}
+	.flex-wrap {
+		flex-wrap: wrap;
+	}
+	.flex-nowrap {
+		flex-wrap: nowrap;
+	}
+	.justify-start {
+		justify-content: flex-start;
+	}
+	.justify-center {
+		justify-content: center;
+	}
+	.justify-between {
+		justify-content: space-between;
+	}
+	.items-start {
+		align-items: flex-start;
+	}
+	.items-center {
+		align-items: center;
+	}
+	.items-end {
+		align-items: flex-end;
+	}
+	.items-stretch {
+		align-items: stretch;
+	}
+	.flex-1 {
+		flex: 1 1 0%;
+	}
+	.flex-none {
+		flex: none;
+	}
 
-@layer sidevui.utilities {
-  // Display
-  .flex        { display: flex; }
-  .inline-flex { display: inline-flex; }
-
-  // Direction
-  .flex-row         { flex-direction: row; }
-  .flex-row-reverse  { flex-direction: row-reverse; }
-  .flex-col          { flex-direction: column; }
-  .flex-col-reverse  { flex-direction: column-reverse; }
-
-  // Wrap
-  .flex-wrap    { flex-wrap: wrap; }
-  .flex-nowrap   { flex-wrap: nowrap; }
-
-  // Justify content
-  .justify-start   { justify-content: flex-start; }
-  .justify-end     { justify-content: flex-end; }
-  .justify-center  { justify-content: center; }
-  .justify-between { justify-content: space-between; }
-  .justify-around  { justify-content: space-around; }
-  .justify-evenly  { justify-content: space-evenly; }
-
-  // Align items
-  .items-start    { align-items: flex-start; }
-  .items-end      { align-items: flex-end; }
-  .items-center   { align-items: center; }
-  .items-baseline { align-items: baseline; }
-  .items-stretch  { align-items: stretch; }
-
-  // Align self
-  .self-auto    { align-self: auto; }
-  .self-start   { align-self: flex-start; }
-  .self-end     { align-self: flex-end; }
-  .self-center  { align-self: center; }
-  .self-stretch { align-self: stretch; }
-
-  // Grow / Shrink
-  .flex-1     { flex: 1 1 0%; }
-  .flex-auto  { flex: 1 1 auto; }
-  .flex-none  { flex: none; }
-  .grow       { flex-grow: 1; }
-  .grow-0     { flex-grow: 0; }
-  .shrink     { flex-shrink: 1; }
-  .shrink-0   { flex-shrink: 0; }
-
-  // Shortcuts
-  .flex-center {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  // Responsive
-  @if cfg.$enable-responsive {
-    @each $bp, $_ in cfg.$breakpoints {
-      @include m.bp($bp) {
-        .#{$bp}\:flex        { display: flex; }
-        .#{$bp}\:flex-row    { flex-direction: row; }
-        .#{$bp}\:flex-col    { flex-direction: column; }
-        .#{$bp}\:flex-wrap   { flex-wrap: wrap; }
-        .#{$bp}\:flex-nowrap { flex-wrap: nowrap; }
-        .#{$bp}\:justify-start   { justify-content: flex-start; }
-        .#{$bp}\:justify-end     { justify-content: flex-end; }
-        .#{$bp}\:justify-center  { justify-content: center; }
-        .#{$bp}\:justify-between { justify-content: space-between; }
-        .#{$bp}\:items-start   { align-items: flex-start; }
-        .#{$bp}\:items-end     { align-items: flex-end; }
-        .#{$bp}\:items-center  { align-items: center; }
-        .#{$bp}\:items-stretch { align-items: stretch; }
-        .#{$bp}\:flex-1    { flex: 1 1 0%; }
-        .#{$bp}\:flex-auto { flex: 1 1 auto; }
-        .#{$bp}\:flex-none { flex: none; }
-      }
-    }
-  }
+	.flex-center {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+	}
 }

@@ -1,18 +1,54 @@
-@use '../config/config-default' as cfg;
+@use "sass:map";
+@use "../abstracts/component-api" as api;
 
-@layer sidevui.components {
-  img.img {
-    &--fluid {
-      width: 100%;
-    }
+$image: (
+	sizes: (
+		xs: (
+			width: 2rem,
+		),
+		sm: (
+			width: 4rem,
+		),
+		md: (
+			width: 8rem,
+		),
+		lg: (
+			width: 12rem,
+		),
+		xl: (
+			width: 16rem,
+		),
+		xxl: (
+			width: 24rem,
+		),
+	),
+) !default;
 
-    &--rounded {
-      border-radius: var(--radius);
-    }
+@mixin image-variant($border-color) {
+	outline: 2px solid $border-color;
+}
 
-    &--circle {
-      border-radius: 50%;
-      aspect-ratio: 1/1;
-    }
-  }
+@layer myui.components {
+	img.img {
+		@include api.make-size-variants(map.get($image, sizes));
+
+		@each $name in api.$semantic-variant-names {
+			&--#{$name} {
+				@include image-variant(var(--color-#{$name}));
+			}
+		}
+
+		&--fluid {
+			width: 100%;
+		}
+
+		&--rounded {
+			border-radius: var(--radius);
+		}
+
+		&--circle {
+			border-radius: 50%;
+			aspect-ratio: 1 / 1;
+		}
+	}
 }

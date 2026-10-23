@@ -1,96 +1,97 @@
-@use 'sass:map';
-@use '../config/config-default' as cfg;
-@use '../abstracts/colors' as c;
-@use '../abstracts/mixins' as m;
+@use "../abstracts/mixins" as m;
 
-@layer sidevui.utilities {
-  // ── Color shade classes (text-* and bc-*) ──────────
-  @each $name, $palette in c.$color-maps {
-    @include m.generate-color-classes($name, $palette);
-  }
+@layer myui.utilities {
+	.text-primary {
+		color: var(--color-primary);
+	}
+	.text-secondary {
+		color: var(--color-secondary);
+	}
+	.text-success {
+		color: var(--color-success);
+	}
+	.text-warning {
+		color: var(--color-warning);
+	}
+	.text-danger {
+		color: var(--color-danger);
+	}
+	.text-info {
+		color: var(--color-info);
+	}
+	.text-muted {
+		color: var(--color-text-muted);
+	}
+	.text-white {
+		color: var(--color-white);
+	}
 
-  // ── Semantic color utilities ───────────────────────
-  .text-primary   { color: var(--color-primary); }
-  .text-secondary { color: var(--color-secondary); }
-  .text-success   { color: var(--color-success); }
-  .text-danger    { color: var(--color-danger); }
-  .text-warning   { color: var(--color-warning); }
-  .text-info      { color: var(--color-info); }
-  .text-muted     { color: var(--color-text-muted); }
-  .text-white     { color: var(--color-white); }
-  .text-black     { color: var(--color-black); }
+	.bg-primary {
+		background-color: var(--color-primary);
+	}
+	.bg-secondary {
+		background-color: var(--color-secondary);
+	}
+	.bg-success {
+		background-color: var(--color-success);
+	}
+	.bg-warning {
+		background-color: var(--color-warning);
+	}
+	.bg-danger {
+		background-color: var(--color-danger);
+	}
+	.bg-info {
+		background-color: var(--color-info);
+	}
+	.bg-surface {
+		background-color: var(--color-surface);
+	}
+	.bg-transparent {
+		background-color: transparent;
+	}
 
-  .bg-primary   { background-color: var(--color-primary); }
-  .bg-secondary { background-color: var(--color-secondary); }
-  .bg-success   { background-color: var(--color-success); }
-  .bg-danger    { background-color: var(--color-danger); }
-  .bg-warning   { background-color: var(--color-warning); }
-  .bg-info      { background-color: var(--color-info); }
-  .bg-white     { background-color: var(--color-white); }
-  .bg-black     { background-color: var(--color-black); }
-  .bg-surface   { background-color: var(--color-surface); }
-  .bg-transparent { background-color: transparent; }
+	.hidden {
+		display: none;
+	}
+	.block {
+		display: block;
+	}
+	.inline-block {
+		display: inline-block;
+	}
 
-  // ── Display ────────────────────────────────────────
-  .hidden    { display: none; }
-  .block     { display: block; }
-  .inline    { display: inline; }
-  .inline-block { display: inline-block; }
-  .invisible { visibility: hidden; }
-  .visible   { visibility: visible; }
+	.sr-only {
+		@include m.visually-hidden;
 
-  // ── Screen reader only ─────────────────────────────
-  .sr-only {
-    @include m.visually-hidden;
+		&-focusable:is(:active, :focus) {
+			position: static;
+			width: auto;
+			height: auto;
+			padding: 0;
+			margin: 0;
+			overflow: visible;
+			clip: auto;
+			white-space: normal;
+		}
+	}
 
-    &-focusable:is(:active, :focus) {
-      position: static;
-      width: auto;
-      height: auto;
-      padding: 0;
-      margin: 0;
-      overflow: visible;
-      clip: auto;
-      white-space: normal;
-    }
-  }
-
-  // ── Clearfix ───────────────────────────────────────
-  .clearfix::after {
-    content: '';
-    clear: both;
-    display: table;
-  }
-
-  // ── Overflow ───────────────────────────────────────
-  .overflow-hidden  { overflow: hidden; }
-  .overflow-auto    { overflow: auto; }
-  .overflow-scroll  { overflow: scroll; }
-  .overflow-x-auto  { overflow-x: auto; }
-  .overflow-y-auto  { overflow-y: auto; }
-
-  // ── Cursor ─────────────────────────────────────────
-  .cursor-pointer  { cursor: pointer; }
-  .cursor-default  { cursor: default; }
-  .cursor-grab     { cursor: grab; }
-  .cursor-grabbing { cursor: grabbing; }
-  .cursor-help     { cursor: help; }
-  .cursor-not-allowed { cursor: not-allowed; }
-
-  // ── User select ────────────────────────────────────
-  .select-none { user-select: none; }
-  .select-text { user-select: text; }
-  .select-all  { user-select: all; }
-
-  // ── Responsive display ─────────────────────────────
-  @if cfg.$enable-responsive {
-    @each $bp, $_ in cfg.$breakpoints {
-      @include m.bp($bp) {
-        .#{$bp}\:hidden { display: none; }
-        .#{$bp}\:block  { display: block; }
-        .#{$bp}\:inline { display: inline; }
-        .#{$bp}\:inline-block { display: inline-block; }
-      }
-    }
-  }
+	.overflow-hidden {
+		overflow: hidden;
+	}
+	.overflow-auto {
+		overflow: auto;
+	}
+	.cursor-pointer {
+		cursor: pointer;
+	}
+	.cursor-help {
+		cursor: help;
+	}
+	.cursor-not-allowed {
+		cursor: not-allowed;
+	}
+	.select-none {
+		user-select: none;
+	}
 }

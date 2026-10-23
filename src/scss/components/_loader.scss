@@ -1,29 +1,75 @@
-@use 'sass:map';
-@use '../config/config-default' as cfg;
-@use '../abstracts/component-api' as api;
+@use "sass:map";
+@use "../abstracts/component-api" as api;
 
 $loader: (
-  animation-duration: 1.5s,
-  border-size: 3px,
-  size: 2rem,
+	animation-duration: 1.5s,
+	border-size: 3px,
+	size: 2rem,
+	sizes: (
+		xs: (
+			width: 1rem,
+			height: 1rem,
+			border-width: 1px,
+		),
+		sm: (
+			width: 1.5rem,
+			height: 1.5rem,
+			border-width: 2px,
+		),
+		md: (
+			width: 2rem,
+			height: 2rem,
+			border-width: 3px,
+		),
+		lg: (
+			width: 2.5rem,
+			height: 2.5rem,
+			border-width: 3px,
+		),
+		xl: (
+			width: 3rem,
+			height: 3rem,
+			border-width: 4px,
+		),
+		xxl: (
+			width: 4rem,
+			height: 4rem,
+			border-width: 5px,
+		),
+	),
 ) !default;
 
-@layer sidevui.components {
-  .loader {
-    width: map.get($loader, size);
-    height: map.get($loader, size);
-    border: map.get($loader, border-size) solid var(--color-primary);
-    border-bottom-color: transparent !important;
-    border-radius: 100%;
-    display: block;
-    animation: loader-rotation map.get($loader, animation-duration) linear infinite;
+@mixin loader-variant($color) {
+	border-color: $color;
+}
 
-    @include api.make-semantic-variants(border-color);
-    @include api.make-accent-prop-variants(border-color);
-  }
+@layer myui.components {
+	.loader {
+		width: map.get($loader, size);
+		height: map.get($loader, size);
+		border: map.get($loader, border-size) solid var(--color-primary);
+		border-bottom-color: transparent;
+		border-radius: 100%;
+		display: block;
+		animation: loader-rotation map.get($loader, animation-duration) linear
+			infinite;
 
-  @keyframes loader-rotation {
-    0%   { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-  }
+		@each $name in api.$semantic-variant-names {
+			&--#{$name} {
+				@include loader-variant(var(--color-#{$name}));
+			}
+		}
+
+		@include api.make-accent-prop-variants(border-color);
+		@include api.make-size-variants(map.get($loader, sizes));
+	}
+
+	@keyframes loader-rotation {
+		0% {
+			transform: rotate(0deg);
+		}
+		100% {
+			transform: rotate(360deg);
+		}
+	}
 }

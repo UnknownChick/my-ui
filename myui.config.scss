@@ -1,0 +1,8 @@
+@use './src/scss' with (
+  $color-primary: #5b4ce2,
+  $color-secondary: #2f322a,
+  $color-success: #22b934,
+  $color-warning: #f0ad4e,
+  $color-danger: #ba2123,
+  $color-info: #5abfdd
+);

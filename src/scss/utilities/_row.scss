@@ -1,131 +1,150 @@
-@use 'sass:math';
-@use '../config/config-default' as cfg;
-@use '../abstracts/mixins' as m;
+@use "sass:math";
+@use "../config/config-default" as cfg;
+@use "../abstracts/mixins" as m;
 
 $_grid-columns: 12;
 $_gutter-width: 2rem;
 $_wrapper-width: 90%;
 
-@layer sidevui.utilities {
-  // Row
-  .row {
-    display: flex;
-    flex-wrap: wrap;
-    position: relative;
-    margin-inline: auto;
-    z-index: 2;
-    gap: $_gutter-width;
-    width: 100%;
-    --gap-size: #{$_gutter-width};
+@layer myui.utilities {
+	// Row
+	.row {
+		display: flex;
+		flex-wrap: wrap;
+		position: relative;
+		margin-inline: auto;
+		z-index: 2;
+		gap: $_gutter-width;
+		width: 100%;
+		--gap-size: #{$_gutter-width};
 
-    @each $size, $width in cfg.$breakpoints {
-      &--#{$size} {
-        max-width: $width;
-        width: $_wrapper-width;
-      }
+		@each $size, $width in cfg.$breakpoints {
+			&--#{$size} {
+				max-width: $width;
+				width: $_wrapper-width;
+			}
 
-      &--left-#{$size},
-      &--right-#{$size} {
-        width: calc((100% - ((100% - #{$width}) / 2)));
-        max-width: $_wrapper-width;
-      }
-      &--left-#{$size} {
-        margin-right: auto;
-        margin-left: 0;
-      }
-      &--right-#{$size} {
-        margin-right: 0;
-        margin-left: auto;
-      }
-    }
-  }
+			&--left-#{$size},
+			&--right-#{$size} {
+				width: calc((100% - ((100% - #{$width}) / 2)));
+				max-width: $_wrapper-width;
+			}
+			&--left-#{$size} {
+				margin-right: auto;
+				margin-left: 0;
+			}
+			&--right-#{$size} {
+				margin-right: 0;
+				margin-left: auto;
+			}
+		}
+	}
 
-  // Gap variations
-  @for $i from 0 through 5 {
-    .gap-#{$i} {
-      gap: #{$i}rem;
-      --gap-size: #{$i}rem;
-    }
-  }
+	// Gap variations
+	@for $i from 0 through 5 {
+		.gap-#{$i} {
+			gap: #{$i}rem;
+			--gap-size: #{$i}rem;
+		}
+	}
 
-  // Base column
-  .col {
-    flex-basis: 0;
-    flex-grow: 1;
-    max-width: 100%;
-    min-width: 0;
-  }
+	// Base column
+	.col {
+		flex-basis: 0;
+		flex-grow: 1;
+		max-width: 100%;
+		min-width: 0;
+	}
 
-  // Base columns (no breakpoint prefix)
-  @for $i from 1 through $_grid-columns {
-    .col-#{$i} {
-      flex: 0 0 calc(#{math.percentage(math.div($i, $_grid-columns))} - var(--gap-size) + #{math.div($i, $_grid-columns)} * var(--gap-size));
-      max-width: calc(#{math.percentage(math.div($i, $_grid-columns))} - var(--gap-size) + #{math.div($i, $_grid-columns)} * var(--gap-size));
-      min-width: 0;
-    }
-  }
+	// Base columns (no breakpoint prefix)
+	@for $i from 1 through $_grid-columns {
+		.col-#{$i} {
+			flex: 0 0
+				calc(
+					#{math.percentage(math.div($i, $_grid-columns))} - var(--gap-size) +
+						#{math.div($i, $_grid-columns)} * var(--gap-size)
+				);
+			max-width: calc(
+				#{math.percentage(math.div($i, $_grid-columns))} - var(--gap-size) +
+					#{math.div($i, $_grid-columns)} * var(--gap-size)
+			);
+			min-width: 0;
+		}
+	}
 
-  .col-auto {
-    flex: 0 0 auto;
-    width: auto;
-    max-width: 100%;
-    min-width: 0;
-  }
+	.col-auto {
+		flex: 0 0 auto;
+		width: auto;
+		max-width: 100%;
+		min-width: 0;
+	}
 
-  // Responsive columns
-  @each $bp, $width in cfg.$breakpoints {
-    @include m.bp($bp) {
-      .col-#{$bp} {
-        flex-basis: 0;
-        flex-grow: 1;
-        max-width: 100%;
-        min-width: 0;
-      }
+	// Responsive columns
+	@each $bp, $width in cfg.$breakpoints {
+		@include m.bp($bp) {
+			.col-#{$bp} {
+				flex-basis: 0;
+				flex-grow: 1;
+				max-width: 100%;
+				min-width: 0;
+			}
 
-      @for $i from 1 through $_grid-columns {
-        .col-#{$bp}-#{$i} {
-          flex: 0 0 calc(#{math.percentage(math.div($i, $_grid-columns))} - var(--gap-size) + #{math.div($i, $_grid-columns)} * var(--gap-size));
-          max-width: calc(#{math.percentage(math.div($i, $_grid-columns))} - var(--gap-size) + #{math.div($i, $_grid-columns)} * var(--gap-size));
-          min-width: 0;
-        }
-      }
+			@for $i from 1 through $_grid-columns {
+				.col-#{$bp}-#{$i} {
+					flex: 0 0
+						calc(
+							#{math.percentage(math.div($i, $_grid-columns))} -
+								var(--gap-size) +
+								#{math.div($i, $_grid-columns)} * var(--gap-size)
+						);
+					max-width: calc(
+						#{math.percentage(math.div($i, $_grid-columns))} - var(--gap-size) +
+							#{math.div($i, $_grid-columns)} * var(--gap-size)
+					);
+					min-width: 0;
+				}
+			}
 
-      .col-#{$bp}-auto {
-        flex: 0 0 auto;
-        width: auto;
-        max-width: 100%;
-        min-width: 0;
-      }
-    }
-  }
+			.col-#{$bp}-auto {
+				flex: 0 0 auto;
+				width: auto;
+				max-width: 100%;
+				min-width: 0;
+			}
+		}
+	}
 
-  // Order classes
-  @for $i from 0 through 12 {
-    .order-#{$i} { order: $i; }
-  }
+	// Order classes
+	@for $i from 0 through 12 {
+		.order-#{$i} {
+			order: $i;
+		}
+	}
 
-  @each $bp, $_ in cfg.$breakpoints {
-    @include m.bp($bp) {
-      @for $i from 0 through 12 {
-        .order-#{$bp}-#{$i} { order: $i; }
-      }
-    }
-  }
+	@each $bp, $_ in cfg.$breakpoints {
+		@include m.bp($bp) {
+			@for $i from 0 through 12 {
+				.order-#{$bp}-#{$i} {
+					order: $i;
+				}
+			}
+		}
+	}
 
-  // Offset classes
-  @for $i from 0 through ($_grid-columns - 1) {
-    .offset-#{$i} {
-      margin-left: math.percentage(math.div($i, $_grid-columns));
-    }
-  }
+	// Offset classes
+	@for $i from 0 through ($_grid-columns - 1) {
+		.offset-#{$i} {
+			margin-left: math.percentage(math.div($i, $_grid-columns));
+		}
+	}
 
-  @each $bp, $_ in cfg.$breakpoints {
-    @include m.bp($bp) {
-      @for $i from 0 through ($_grid-columns - 1) {
-        .offset-#{$bp}-#{$i} {
-          margin-left: math.percentage(math.div($i, $_grid-columns));
-        }
-      }
-    }
-  }
+	@each $bp, $_ in cfg.$breakpoints {
+		@include m.bp($bp) {
+			@for $i from 0 through ($_grid-columns - 1) {
+				.offset-#{$bp}-#{$i} {
+					margin-left: math.percentage(math.div($i, $_grid-columns));
+				}
+			}
+		}
+	}
 }

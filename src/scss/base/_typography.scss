@@ -1,14 +1,14 @@
-@use 'sass:map';
-@use '../config/config-default' as cfg;
+@use "sass:map";
+@use "../config/config-default" as cfg;
 
-@layer sidevui.base {
-  @each $tag, $size in cfg.$title-sizes {
-    #{$tag} {
-      font-size: $size;
-    }
-  }
+@layer myui.base {
+	@each $tag, $size in cfg.$title-sizes {
+		#{$tag} {
+			font-size: $size;
+		}
+	}
 
-  small {
-    font-size: var(--font-size-sm);
-  }
+	small {
+		font-size: var(--font-size-sm);
+	}
 }

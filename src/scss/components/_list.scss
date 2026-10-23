@@ -1,18 +1,60 @@
-@use 'sass:map';
-@use '../config/config-default' as cfg;
+@use "sass:map";
+@use "../config/config-default" as cfg;
+@use "../abstracts/component-api" as api;
 
 $list: (
-  padding: 1rem
+	padding: 1rem,
+	sizes: (
+		xs: (
+			"--list-item-padding": 0.375rem,
+			font-size: cfg.$font-size-xs,
+		),
+		sm: (
+			"--list-item-padding": 0.5rem,
+			font-size: cfg.$font-size-sm,
+		),
+		md: (
+			"--list-item-padding": 1rem,
+			font-size: cfg.$font-size-md,
+		),
+		lg: (
+			"--list-item-padding": 1.25rem,
+			font-size: cfg.$font-size-lg,
+		),
+		xl: (
+			"--list-item-padding": 1.5rem,
+			font-size: cfg.$font-size-xl,
+		),
+		xxl: (
+			"--list-item-padding": 1.75rem,
+			font-size: cfg.$font-size-xxl,
+		),
+	),
 ) !default;
 
-@layer sidevui.components {
-  .list {
-    &__item {
-      padding: map.get($list, padding) 0;
+@mixin list-variant($border-color) {
+	--list-item-border-color: #{$border-color};
+}
 
-      &:not(:last-child) {
-        border-bottom: cfg.$border-width solid var(--color-border);
-      }
-    }
-  }
+@layer myui.components {
+	.list {
+		--list-item-padding: #{map.get($list, padding)};
+		--list-item-border-color: var(--color-border);
+		font-size: cfg.$font-size-md;
+		@include api.make-size-variants(map.get($list, sizes));
+
+		@each $name in api.$semantic-variant-names {
+			&--#{$name} {
+				@include list-variant(var(--color-#{$name}));
+			}
+		}
+
+		&__item {
+			padding: var(--list-item-padding) 0;
+
+			&:not(:last-child) {
+				border-bottom: cfg.$border-width solid var(--list-item-border-color);
+			}
+		}
+	}
 }

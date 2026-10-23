@@ -1,51 +1,26 @@
-@use 'sass:map';
-@use '../config/config-default' as cfg;
-@use '../abstracts/mixins' as m;
+@use "sass:map";
+@use "../config/config-default" as cfg;
 
-$_viewport-vals: 25, 50, 75, 100;
+@layer myui.utilities {
+	@each $name, $width in cfg.$breakpoints {
+		.max-w-#{$name} {
+			max-width: $width;
+		}
+	}
 
-@layer sidevui.utilities {
-  // Named container widths from breakpoints
-  @each $name, $width in cfg.$breakpoints {
-    .w-#{$name}     { width: $width; }
-    .max-w-#{$name} { max-width: $width; }
-    .min-w-#{$name} { min-width: $width; }
-  }
-
-  // Percentage widths/heights (5, 10, ... 100)
-  @for $p from 1 through 20 {
-    .w-#{$p * 5}\% { width: #{$p * 5}\%; }
-    .h-#{$p * 5}\% { height: #{$p * 5}\%; }
-  }
-
-  // Viewport units
-  @each $v in $_viewport-vals {
-    .vw-#{$v}     { width: #{$v}vw; }
-    .min-vw-#{$v} { min-width: #{$v}vw; }
-    .max-vw-#{$v} { max-width: #{$v}vw; }
-    .vh-#{$v}     { height: #{$v}vh; }
-    .min-vh-#{$v} { min-height: #{$v}vh; }
-    .max-vh-#{$v} { max-height: #{$v}vh; }
-  }
-
-  // Keywords
-  .w-full  { width: 100%; }
-  .h-full  { height: 100%; }
-  .w-auto  { width: auto; }
-  .h-auto  { height: auto; }
-  .w-screen { width: 100vw; }
-  .h-screen { height: 100vh; }
-  .min-h-screen { min-height: 100vh; }
-
-  // Responsive
-  @if cfg.$enable-responsive {
-    @each $bp, $_ in cfg.$breakpoints {
-      @include m.bp($bp) {
-        .#{$bp}\:w-full  { width: 100%; }
-        .#{$bp}\:w-auto  { width: auto; }
-        .#{$bp}\:h-full  { height: 100%; }
-        .#{$bp}\:h-auto  { height: auto; }
-      }
-    }
-  }
+	.w-full {
+		width: 100%;
+	}
+	.w-auto {
+		width: auto;
+	}
+	.h-full {
+		height: 100%;
+	}
+	.h-auto {
+		height: auto;
+	}
+	.min-h-screen {
+		min-height: 100vh;
+	}
 }

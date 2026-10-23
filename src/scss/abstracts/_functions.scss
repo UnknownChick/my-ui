@@ -1,74 +1,94 @@
-@use 'sass:math';
-@use 'sass:string';
-@use 'sass:color';
-@use 'sass:list';
+@use "sass:math";
+@use "sass:color";
 
-// ── px → rem ─────────────────────────────────────────
-// Usage : font-size: rem(18);  → 1.125rem
+// Convert pixels to rem. Example: rem(18) returns 1.125rem.
 @function rem($px, $base: 16) {
-  @if math.is-unitless($px) {
-    @return math.div($px, $base) * 1rem;
-  }
-  @return math.div(math.div($px, $px * 0 + 1px), $base) * 1rem;
+	@if math.is-unitless($px) {
+		@return math.div($px, $base) * 1rem;
+	}
+	@return math.div(math.div($px, $px * 0 + 1px), $base) * 1rem;
 }
 
-// ── rem → em (pour les media queries) ────────────────
-// Usage : @media (min-width: em(768)) { ... }
+// Convert pixels to em for media queries.
 @function em($px, $base: 16) {
-  @return math.div($px, $base) * 1em;
+	@return math.div($px, $base) * 1em;
 }
 
-// ── Hex → RGB string (pour custom props + rgba()) ────
-// Usage : --color-primary-rgb: #{hex-to-rgb(#7c6aff)};
+// Convert a color to an RGB string for custom properties.
 @function hex-to-rgb($color) {
-  @return '#{color.red($color)}, #{color.green($color)}, #{color.blue($color)}';
+	@return "#{color.channel($color, "red", $space: rgb)}, #{color.channel($color, "green", $space: rgb)}, #{color.channel($color, "blue", $space: rgb)}";
 }
 
-// ── Couleur avec opacité via custom prop ─────────────
-// Usage : background: color-alpha(--color-primary, 0.15);
+// Apply alpha to an RGB custom property.
 @function color-alpha($prop, $alpha) {
-  @return rgba(var(#{$prop}-rgb), #{$alpha});
+	@return rgba(var(#{$prop}-rgb), #{$alpha});
 }
 
-// ── Tint (mélange avec blanc) ─────────────────────────
+// Mix a color with white.
 @function tint($color, $weight: 10%) {
-  @return color.mix(white, $color, $weight);
+	@return color.mix(white, $color, $weight);
 }
 
-// ── Shade (mélange avec noir) ─────────────────────────
+// Mix a color with black.
 @function shade($color, $weight: 10%) {
-  @return color.mix(black, $color, $weight);
+	@return color.mix(black, $color, $weight);
 }
 
-// ── Contraste automatique (blanc ou noir) ─────────────
-@function contrast-color($bg, $light: white, $dark: #111) {
-  $luminance: (
-    color.red($bg) * 0.299 +
-    color.green($bg) * 0.587 +
-    color.blue($bg) * 0.114
-  );
-  @return if(math.div($luminance, 255) > 0.5, $dark, $light);
+// Convert an sRGB channel to linear light.
+@function linear-channel($channel) {
+	$channel: math.div($channel, 255);
+	@if $channel <= 0.04045 {
+		@return math.div($channel, 12.92);
+	}
+	@return math.pow(math.div($channel + 0.055, 1.055), 2.4);
 }
 
-// ── Génère une palette 100-900 ───────────────────────
+// Calculate WCAG relative luminance for an sRGB color.
+@function relative-luminance($color) {
+	$red: linear-channel(color.channel($color, "red", $space: rgb));
+	$green: linear-channel(color.channel($color, "green", $space: rgb));
+	$blue: linear-channel(color.channel($color, "blue", $space: rgb));
+
+	@return $red * 0.2126 + $green * 0.7152 + $blue * 0.0722;
+}
+
+// Calculate the WCAG contrast ratio between two colors.
+@function contrast-ratio($foreground, $background) {
+	$foreground-luminance: relative-luminance($foreground);
+	$background-luminance: relative-luminance($background);
+	$lighter: math.max($foreground-luminance, $background-luminance);
+	$darker: math.min($foreground-luminance, $background-luminance);
+
+	@return math.div($lighter + 0.05, $darker + 0.05);
+}
+
+// Choose the lighter or darker foreground with the higher contrast ratio.
+@function contrast-color($background, $light: white, $dark: black) {
+	@if contrast-ratio($light, $background) > contrast-ratio($dark, $background) {
+		@return $light;
+	}
+	@return $dark;
+}
+
+// Generate a 100-900 color palette.
 @function generate-color-map($base-color) {
-  @return (
-    100: color.scale($base-color, $lightness: 80%),
-    200: color.scale($base-color, $lightness: 60%),
-    300: color.scale($base-color, $lightness: 40%),
-    400: color.scale($base-color, $lightness: 20%),
-    500: $base-color,
-    600: color.scale($base-color, $lightness: -20%),
-    700: color.scale($base-color, $lightness: -40%),
-    800: color.scale($base-color, $lightness: -60%),
-    900: color.scale($base-color, $lightness: -80%)
-  );
+	@return (
+		100: color.scale($base-color, $lightness: 80%),
+		200: color.scale($base-color, $lightness: 60%),
+		300: color.scale($base-color, $lightness: 40%),
+		400: color.scale($base-color, $lightness: 20%),
+		500: $base-color,
+		600: color.scale($base-color, $lightness: -20%),
+		700: color.scale($base-color, $lightness: -40%),
+		800: color.scale($base-color, $lightness: -60%),
+		900: color.scale($base-color, $lightness: -80%),
+	);
 }
 
-// ── Strips l'unité d'une valeur ───────────────────────
+// Remove a value's unit.
 @function strip-unit($value) {
-  @if math.is-unitless($value) {
-    @return $value;
-  }
-  @return math.div($value, ($value * 0 + 1));
+	@if math.is-unitless($value) {
+		@return $value;
+	}
+	@return math.div($value, ($value * 0 + 1));
 }

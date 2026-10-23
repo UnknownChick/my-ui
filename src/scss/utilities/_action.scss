@@ -1,14 +1,14 @@
-@layer sidevui.utilities {
-  .dragging {
-    cursor: grabbing;
-  }
+@layer myui.utilities {
+	.dragging {
+		cursor: grabbing;
+	}
 
-  .clickable {
-    cursor: pointer;
-  }
+	.clickable {
+		cursor: pointer;
+	}
 
-  .help {
-    text-decoration: underline;
-    cursor: help;
-  }
+	.help {
+		text-decoration: underline;
+		cursor: help;
+	}
 }

@@ -1,101 +1,155 @@
-@use 'sass:map';
-@use '../config/config-default' as cfg;
-@use '../abstracts/mixins' as m;
+@use "sass:map";
+@use "../config/config-default" as cfg;
+@use "../abstracts/mixins" as m;
+@use "../abstracts/component-api" as api;
 
 $dropdown: (
-  margin: 0.5rem,
-  transition-duration: 150ms,
-  width: 300px,
+	margin: 0.5rem,
+	transition-duration: 150ms,
+	width: max-content,
+	sizes: (
+		xs: (
+			"--dropdown-width": 12rem,
+			"--dropdown-item-padding": 0.25rem 0.5rem,
+			font-size: cfg.$font-size-xs,
+		),
+		sm: (
+			"--dropdown-width": 16rem,
+			"--dropdown-item-padding": 0.375rem 0.625rem,
+			font-size: cfg.$font-size-sm,
+		),
+		md: (
+			"--dropdown-width": 18.75rem,
+			"--dropdown-item-padding": 0.5rem 1rem,
+			font-size: cfg.$font-size-md,
+		),
+		lg: (
+			"--dropdown-width": 22rem,
+			"--dropdown-item-padding": 0.625rem 1.125rem,
+			font-size: cfg.$font-size-lg,
+		),
+		xl: (
+			"--dropdown-width": 26rem,
+			"--dropdown-item-padding": 0.75rem 1.25rem,
+			font-size: cfg.$font-size-xl,
+		),
+		xxl: (
+			"--dropdown-width": 30rem,
+			"--dropdown-item-padding": 0.875rem 1.5rem,
+			font-size: cfg.$font-size-xxl,
+		),
+	),
 ) !default;
 
-@layer sidevui.components {
-  .dropdown {
-    position: relative;
+@mixin dropdown-variant($border-color) {
+	--dropdown-border-color: #{$border-color};
+}
 
-    &--open {
-      .dropdown__content {
-        opacity: 1;
-        visibility: visible;
-        transform: scale(1);
-        transition: opacity map.get($dropdown, transition-duration) ease-out,
-                    transform map.get($dropdown, transition-duration) ease-out,
-                    visibility 0s linear 0s;
-        user-select: auto;
-      }
+@layer myui.components {
+	.dropdown {
+		position: relative;
+		width: fit-content;
+		--dropdown-width: #{map.get($dropdown, width)};
+		--dropdown-item-padding: 0.5rem 1rem;
+		--dropdown-border-color: var(--color-border);
+		@include api.make-size-variants(map.get($dropdown, sizes));
 
-      .dropdown__toggle__icon {
-        transform: rotate(180deg);
-      }
-    }
+		@each $name in api.$semantic-variant-names {
+			&--#{$name} {
+				@include dropdown-variant(var(--color-#{$name}));
+			}
+		}
 
-    &__toggle {
-      cursor: pointer;
+		&--open {
+			.dropdown__content {
+				opacity: 1;
+				visibility: visible;
+				transform: scale(1);
+				transition:
+					opacity map.get($dropdown, transition-duration) ease-out,
+					transform map.get($dropdown, transition-duration) ease-out,
+					visibility 0s linear 0s;
+				user-select: auto;
+			}
 
-      &__icon {
-        @include m.transition(transform);
-      }
-    }
+			.dropdown__toggle__icon {
+				transform: rotate(180deg);
+			}
+		}
 
-    &__content {
-      position: absolute;
-      border: cfg.$border-width solid var(--color-border);
-      border-radius: var(--radius);
-      overflow: hidden;
-      z-index: 10;
-      opacity: 0;
-      visibility: hidden;
-      transform: scale(0.95);
-      transform-origin: top center;
-      transition: opacity map.get($dropdown, transition-duration) ease-out,
-                  transform map.get($dropdown, transition-duration) ease-out,
-                  visibility 0s linear map.get($dropdown, transition-duration);
-      max-width: map.get($dropdown, width);
-      width: max-content;
-      background-color: var(--color-bg);
-      @include m.shadow(md);
-      user-select: none;
+		&__toggle {
+			cursor: pointer;
 
-      & > *:not(.dropdown__divider) {
-        display: block;
-        padding: 0.5rem 1rem;
-        text-decoration: none;
-        color: var(--color-text);
+			&__icon {
+				@include m.transition(transform);
+			}
+		}
 
-        &:is(a):hover {
-          background-color: var(--color-surface);
-        }
-      }
-    }
+		&__content {
+			position: absolute;
+			border: cfg.$border-width solid var(--dropdown-border-color);
+			border-radius: var(--radius);
+			overflow: hidden;
+			z-index: 10;
+			opacity: 0;
+			visibility: hidden;
+			transform: scale(0.95);
+			transform-origin: top center;
+			transition:
+				opacity map.get($dropdown, transition-duration) ease-out,
+				transform map.get($dropdown, transition-duration) ease-out,
+				visibility 0s linear map.get($dropdown, transition-duration);
+			width: var(--dropdown-width);
+			max-width: calc(100vw - 2rem);
+			background-color: var(--color-bg);
+			@include m.shadow(md);
+			user-select: none;
 
-    &__divider {
-      height: 2px;
-      width: 100%;
-      margin-block: 0.25rem;
-      background-color: var(--color-border);
-    }
+			& > *:not(.dropdown__divider) {
+				display: block;
+				padding: var(--dropdown-item-padding);
+				text-decoration: none;
+				color: var(--color-text);
 
-    &--tl .dropdown__content {
-      bottom: 100%; left: 0;
-      margin-bottom: map.get($dropdown, margin);
-      transform-origin: bottom left;
-    }
+				&:is(a):hover {
+					background-color: var(--color-surface);
+				}
+			}
+		}
 
-    &--tr .dropdown__content {
-      bottom: 100%; right: 0;
-      margin-bottom: map.get($dropdown, margin);
-      transform-origin: bottom right;
-    }
+		&__divider {
+			height: 2px;
+			width: 100%;
+			margin-block: 0.25rem;
+			background-color: var(--color-border);
+		}
 
-    &--bl .dropdown__content {
-      top: 100%; left: 0;
-      margin-top: map.get($dropdown, margin);
-      transform-origin: top left;
-    }
+		&--tl .dropdown__content {
+			bottom: 100%;
+			left: 0;
+			margin-bottom: map.get($dropdown, margin);
+			transform-origin: bottom left;
+		}
 
-    &--br .dropdown__content {
-      top: 100%; right: 0;
-      margin-top: map.get($dropdown, margin);
-      transform-origin: top right;
-    }
-  }
+		&--tr .dropdown__content {
+			bottom: 100%;
+			right: 0;
+			margin-bottom: map.get($dropdown, margin);
+			transform-origin: bottom right;
+		}
+
+		&--bl .dropdown__content {
+			top: 100%;
+			left: 0;
+			margin-top: map.get($dropdown, margin);
+			transform-origin: top left;
+		}
+
+		&--br .dropdown__content {
+			top: 100%;
+			right: 0;
+			margin-top: map.get($dropdown, margin);
+			transform-origin: top right;
+		}
+	}
 }

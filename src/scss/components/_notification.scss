@@ -1,54 +1,84 @@
-@use 'sass:map';
-@use '../config/config-default' as cfg;
-@use '../abstracts/component-api' as api;
+@use "sass:map";
+@use "../config/config-default" as cfg;
+@use "../abstracts/component-api" as api;
 
-// ── Configuration ────────────────────────────────────
+// Component settings
 
 $notification: (
-  sizes: (
-    xs: (padding: 0.5rem 0.75rem,  font-size: cfg.$font-size-xs),
-    sm: (padding: 0.75rem 1rem,    font-size: cfg.$font-size-sm),
-    md: (padding: 0.825rem 1.25rem, font-size: cfg.$font-size-md),
-    lg: (padding: 1.25rem 1.5rem,  font-size: cfg.$font-size-lg),
-    xl: (padding: 1.5rem 1.75rem,  font-size: cfg.$font-size-xl),
-  )
+	sizes: (
+		xs: (
+			padding: 0.5rem 0.75rem,
+			font-size: cfg.$font-size-xs,
+		),
+		sm: (
+			padding: 0.75rem 1rem,
+			font-size: cfg.$font-size-sm,
+		),
+		md: (
+			padding: 0.825rem 1.25rem,
+			font-size: cfg.$font-size-md,
+		),
+		lg: (
+			padding: 1.25rem 1.5rem,
+			font-size: cfg.$font-size-lg,
+		),
+		xl: (
+			padding: 1.5rem 1.75rem,
+			font-size: cfg.$font-size-xl,
+		),
+		xxl: (
+			padding: 1.75rem 2rem,
+			font-size: cfg.$font-size-xxl,
+		),
+	),
 ) !default;
 
-// ── Component Mixin (Public API) ─────────────────────
+// Public variant mixin
 @mixin notification-variant($background, $border, $color) {
-  background-color: $background;
-  border-left: 0.25rem solid $border;
-  color: $color;
+	background-color: $background;
+	border-left: 0.25rem solid $border;
+	color: $color;
 }
 
-// ── Styles ───────────────────────────────────────────
+// Component styles
 
-@layer sidevui.components {
-  .notification {
-    display: block;
-    padding: 0.825rem 1.25rem;
-    border-radius: var(--radius);
+@layer myui.components {
+	.notification {
+		display: block;
+		padding: 0.825rem 1.25rem;
+		border-radius: var(--radius);
+		border-left: 0.25rem solid transparent;
 
-    // Size variants
-    @include api.make-size-variants(map.get($notification, sizes));
+		// Size variants
+		@include api.make-size-variants(map.get($notification, sizes));
 
-    // Accent variants (custom: left border instead of full border)
-    @each $color-name, $color-values in cfg.$accents {
-      &--soft-#{$color-name} {
-        @include notification-variant(
-          map.get($color-values, soft),
-          map.get($color-values, high),
-          map.get($color-values, high)
-        );
-      }
+		@each $name in api.$semantic-variant-names {
+			&--#{$name} {
+				@include notification-variant(
+					var(--color-surface),
+					var(--color-#{$name}),
+					var(--color-text)
+				);
+			}
+		}
 
-      &--high-#{$color-name} {
-        @include notification-variant(
-          map.get($color-values, high),
-          map.get($color-values, soft),
-          map.get($color-values, soft)
-        );
-      }
-    }
-  }
+		// Accent variants (custom: left border instead of full border)
+		@each $color-name, $color-values in cfg.$accents {
+			&--soft-#{$color-name} {
+				@include notification-variant(
+					map.get($color-values, soft),
+					map.get($color-values, high),
+					map.get($color-values, high)
+				);
+			}
+
+			&--high-#{$color-name} {
+				@include notification-variant(
+					map.get($color-values, high),
+					map.get($color-values, soft),
+					map.get($color-values, soft)
+				);
+			}
+		}
+	}
 }

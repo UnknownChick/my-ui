@@ -1,47 +1,150 @@
-@use '../config/config-default' as cfg;
+@use "../config/config-default" as cfg;
 
-@layer sidevui.components {
-  @if cfg.$enable-dark-mode {
-    [data-theme='dark'] {
-      .card {
-        background-color: var(--color-surface);
-        border: cfg.$border-width solid var(--color-border);
-        box-shadow: none;
-      }
+// ── Dark theme tokens ───────────────────────────────
+// Sets CSS custom properties for dark mode. Applied via
+// [data-theme='dark'] on <html> (managed by ThemeToggle).
 
-      input:not(:is([type="hidden"], [type="checkbox"], [type="radio"], [type="range"])),
-      textarea,
-      select {
-        background-color: var(--color-bg);
-        border-color: var(--color-border);
-        color: var(--color-text);
-      }
+@layer myui.tokens {
+	@if cfg.$enable-dark-mode {
+		[data-theme="dark"] {
+			color-scheme: dark;
+			--color-bg: #{cfg.$dark-bg};
+			--color-surface: #{cfg.$dark-surface};
+			--color-text: #{cfg.$dark-text};
+			--color-text-muted: #{cfg.$dark-text-muted};
+			--color-border: #{cfg.$dark-border};
 
-      .modal {
-        background-color: var(--color-surface);
-        box-shadow: 0 12px 32px rgba(0, 0, 0, 0.4);
-      }
+			@if cfg.$enable-shadows {
+				--shadow-sm: #{cfg.$dark-shadow-sm};
+				--shadow: #{cfg.$dark-shadow};
+				--shadow-lg: #{cfg.$dark-shadow-lg};
+			}
+		}
+	}
+}
 
-      .drawer {
-        background-color: var(--color-surface);
-        box-shadow: 0 12px 32px rgba(0, 0, 0, 0.4);
-      }
+// ── Dark theme component overrides ──────────────────
+// Components that need more than just token swaps get
+// explicit dark-mode adjustments here.
 
-      .dropdown__content {
-        background-color: var(--color-surface);
-      }
+@layer myui.components {
+	@if cfg.$enable-dark-mode {
+		[data-theme="dark"] {
+			// Card
+			.card {
+				background-color: var(--color-surface);
+				border: cfg.$border-width solid var(--color-border);
+				box-shadow: var(--shadow);
+			}
 
-      .toast {
-        background-color: var(--color-surface);
-      }
+			// Forms
+			.form
+				input:not(
+					:is(
+						[type="hidden"],
+						[type="checkbox"],
+						[type="radio"],
+						[type="range"]
+					)
+				),
+			.form textarea,
+			.form select {
+				background-color: var(--color-bg);
+				border-color: var(--color-border);
+				color: var(--color-text);
 
-      table {
-        border-color: var(--color-border);
-      }
+				&::placeholder {
+					color: var(--color-text-muted);
+				}
+			}
 
-      .pagination__link {
-        background-color: var(--color-surface);
-      }
-    }
-  }
+			// Modal
+			.modal {
+				background-color: var(--color-surface);
+				box-shadow: var(--shadow-lg);
+			}
+
+			// Drawer
+			.drawer {
+				background-color: var(--color-surface);
+				box-shadow: var(--shadow-lg);
+			}
+
+			// Dropdown
+			.dropdown__content {
+				background-color: var(--color-surface);
+				border-color: var(--color-border);
+			}
+
+			// Toast
+			.toast {
+				background-color: var(--color-surface);
+				border-color: var(--color-border);
+			}
+
+			// Table
+			.table {
+				border-color: var(--color-border);
+
+				thead th {
+					background-color: var(--color-primary);
+				}
+
+				tbody tr:nth-child(odd) {
+					background-color: var(--color-bg);
+				}
+			}
+
+			// Pagination
+			.pagination__link {
+				background-color: var(--color-surface);
+				color: var(--color-text);
+			}
+
+			// Tabs
+			.tabs__button {
+				color: var(--color-text-muted);
+
+				&:hover {
+					color: var(--color-text);
+				}
+
+				&[aria-selected="true"] {
+					color: var(--color-primary);
+				}
+			}
+
+			// Accordion
+			.accordion__title {
+				color: var(--color-text);
+			}
+
+			// Tooltip
+			.tooltip {
+				background-color: var(--color-surface);
+				color: var(--color-text);
+				border: cfg.$border-width solid var(--color-border);
+			}
+
+			// Separator
+			hr,
+			.separator--muted {
+				border-color: var(--color-border);
+			}
+
+			// List
+			.list__item {
+				border-color: var(--color-border);
+			}
+
+			// Breadcrumb
+			.breadcrumb a {
+				color: var(--color-text-muted);
+
+				&:hover {
+					color: var(--color-text);
+				}
+			}
+		}
+	}
 }

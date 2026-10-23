@@ -1,81 +1,108 @@
-@use 'sass:map';
-@use '../config/config-default' as cfg;
-@use '../abstracts/mixins' as m;
-@use '../abstracts/component-api' as api;
+@use "sass:map";
+@use "../config/config-default" as cfg;
+@use "../abstracts/mixins" as m;
+@use "../abstracts/component-api" as api;
 
 $card: (
-  padding: 2rem,
-  title-font-size: cfg.$font-size-2xl,
-  sizes: (
-    sm: (padding: 1rem),
-    md: (padding: 2rem),
-    lg: (padding: 3rem),
-  ),
+	padding: 2rem,
+	title-font-size: cfg.$font-size-2xl,
+	sizes: (
+		xs: (
+			"--card-padding": 0.5rem,
+		),
+		sm: (
+			"--card-padding": 1rem,
+		),
+		md: (
+			"--card-padding": 2rem,
+		),
+		lg: (
+			"--card-padding": 3rem,
+		),
+		xl: (
+			"--card-padding": 3.5rem,
+		),
+		xxl: (
+			"--card-padding": 4rem,
+		),
+	),
 ) !default;
 
-@layer sidevui.components {
-  .card {
-    background-color: var(--color-bg);
-    border-radius: var(--radius);
-    overflow: hidden;
-    @include m.shadow(md);
+@mixin card-variant($background, $foreground) {
+	background-color: $background;
+	color: $foreground;
+}
 
-    &--responsive {
-      @include api.container(card);
-    }
+@layer myui.components {
+	.card {
+		background-color: var(--color-bg);
+		color: var(--color-text);
+		border-radius: var(--radius);
+		overflow: hidden;
+		--card-padding: #{map.get($card, padding)};
+		@include m.shadow(md);
+		@include api.make-size-variants(map.get($card, sizes));
 
-    &__title {
-      padding: map.get($card, padding);
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      border-bottom: cfg.$border-width solid var(--color-border);
+		@each $name in api.$semantic-variant-names {
+			&--#{$name} {
+				@include card-variant(var(--color-#{$name}), var(--color-on-#{$name}));
+			}
+		}
 
-      p {
-        font-size: map.get($card, title-font-size);
-        color: var(--color-text);
-      }
-    }
+		&--responsive {
+			@include api.container(card);
+		}
 
-    &__body {
-      padding: map.get($card, padding);
-    }
+		&__title {
+			padding: var(--card-padding);
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+			border-bottom: cfg.$border-width solid var(--color-border);
 
-    &__footer {
-      padding: 0 map.get($card, padding) map.get($card, padding);
-      display: flex;
-      align-items: center;
-      gap: 1rem;
-    }
+			p {
+				font-size: map.get($card, title-font-size);
+				color: inherit;
+			}
+		}
 
-    &__media {
-      img {
-        width: 100%;
-        height: auto;
-        display: block;
-      }
-    }
+		&__body {
+			padding: var(--card-padding);
+		}
 
-    @include api.make-size-variants(map.get($card, sizes));
-  }
+		&__footer {
+			padding: 0 var(--card-padding) var(--card-padding);
+			display: flex;
+			align-items: center;
+			gap: 1rem;
+		}
 
-  @container card (max-width: 400px) {
-    .card__footer {
-      flex-direction: column;
-    }
-  }
+		&__media {
+			img {
+				width: 100%;
+				height: auto;
+				display: block;
+			}
+		}
+	}
 
-  @container card (min-width: 600px) {
-    .card__body--grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 1rem;
-    }
-  }
+	@container card (max-width: 400px) {
+		.card__footer {
+			flex-direction: column;
+		}
+	}
 
-  @scope (.card) to (.card .card) {
-    :scope > .card__title {
-      font-weight: cfg.$font-weight-bold;
-    }
-  }
+	@container card (min-width: 600px) {
+		.card__body--grid {
+			display: grid;
+			grid-template-columns: 1fr 1fr;
+			gap: 1rem;
+		}
+	}
+
+	@scope (.card) to (.card .card) {
+		:scope > .card__title {
+			font-weight: cfg.$font-weight-bold;
+		}
+	}
 }

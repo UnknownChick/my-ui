@@ -1,35 +1,34 @@
-@use 'sass:map';
-@use '../config/config-default' as cfg;
-@use 'functions' as f;
+@use "../config/config-default" as cfg;
+@use "functions" as f;
 
-// ── Accents (re-exported from config) ────────────────
+// Accent colors from the project configuration.
 $accents: cfg.$accents;
 
 // ── Color shade maps (100-900) ───────────────────────
-$primary-map:   f.generate-color-map(cfg.$color-primary);
+$primary-map: f.generate-color-map(cfg.$color-primary);
 $secondary-map: f.generate-color-map(cfg.$color-secondary);
-$success-map:   f.generate-color-map(cfg.$color-success);
-$danger-map:    f.generate-color-map(cfg.$color-danger);
-$warning-map:   f.generate-color-map(cfg.$color-warning);
-$info-map:      f.generate-color-map(cfg.$color-info);
+$success-map: f.generate-color-map(cfg.$color-success);
+$danger-map: f.generate-color-map(cfg.$color-danger);
+$warning-map: f.generate-color-map(cfg.$color-warning);
+$info-map: f.generate-color-map(cfg.$color-info);
 $grayscale-map: f.generate-color-map(cfg.$color-grayscale);
-$text-map:      f.generate-color-map(cfg.$color-text);
+$text-map: f.generate-color-map(cfg.$color-text);
 
 // ── Status colors ────────────────────────────────────
 $status: (
-  online:  cfg.$color-success,
-  absent:  cfg.$color-warning,
-  offline: cfg.$color-danger,
+	online: cfg.$color-success,
+	absent: cfg.$color-warning,
+	offline: cfg.$color-danger,
 ) !default;
 
 // ── All palette maps for iteration ───────────────────
 $color-maps: (
-  'primary':   $primary-map,
-  'secondary': $secondary-map,
-  'success':   $success-map,
-  'danger':    $danger-map,
-  'warning':   $warning-map,
-  'info':      $info-map,
-  'grayscale': $grayscale-map,
-  'text':      $text-map,
+	"primary": $primary-map,
+	"secondary": $secondary-map,
+	"success": $success-map,
+	"danger": $danger-map,
+	"warning": $warning-map,
+	"info": $info-map,
+	"grayscale": $grayscale-map,
+	"text": $text-map,
 );
