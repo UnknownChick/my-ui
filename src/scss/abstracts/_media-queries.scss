@@ -1,15 +1,21 @@
 // Deprecated: breakpoint mixins are now in _mixins.scss as bp(), bp-down(), bp-between()
 // This file re-exports for backward compatibility.
-@use 'mixins' as m;
+@use "mixins" as m;
 
 @mixin min-device($breakpoint) {
-  @include m.bp($breakpoint) { @content; }
+	@include m.bp($breakpoint) {
+		@content;
+	}
 }
 
 @mixin max-device($breakpoint) {
-  @include m.bp-down($breakpoint) { @content; }
+	@include m.bp-down($breakpoint) {
+		@content;
+	}
 }
 
 @mixin between-devices($min-device, $max-device) {
-  @include m.bp-between($min-device, $max-device) { @content; }
+	@include m.bp-between($min-device, $max-device) {
+		@content;
+	}
 }

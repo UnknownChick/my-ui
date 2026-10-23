@@ -1,28 +1,54 @@
-@use 'sass:map';
-@use '../config/config-default' as cfg;
-@use '../abstracts/component-api' as api;
+@use "sass:map";
+@use "../abstracts/component-api" as api;
 
 $square: (
-  sizes: (
-    xs: (height: 1rem, width: 1.5rem),
-    sm: (height: 1.25rem, width: 1.75rem),
-    md: (height: 1.5rem, width: 2rem),
-    lg: (height: 1.75rem, width: 2.26rem),
-    xl: (height: 2rem, width: 2.5rem),
-  ),
+	sizes: (
+		xs: (
+			height: 1rem,
+			width: 1.5rem,
+		),
+		sm: (
+			height: 1.25rem,
+			width: 1.75rem,
+		),
+		md: (
+			height: 1.5rem,
+			width: 2rem,
+		),
+		lg: (
+			height: 1.75rem,
+			width: 2.26rem,
+		),
+		xl: (
+			height: 2rem,
+			width: 2.5rem,
+		),
+		xxl: (
+			height: 2.5rem,
+			width: 3rem,
+		),
+	),
 ) !default;
 
-@layer sidevui.components {
-  .square {
-    display: block;
-    border-radius: var(--radius);
-    width: 2rem;
-    height: 1.5rem;
+@mixin square-variant($color) {
+	background-color: $color;
+}
 
-    // Size variants
-    @include api.make-size-variants(map.get($square, sizes));
+@layer myui.components {
+	.square {
+		display: block;
+		border-radius: var(--radius);
+		width: 2rem;
+		height: 1.5rem;
 
-    // Accent variants (bg only)
-    @include api.make-accent-bg-variants;
-  }
+		@include api.make-size-variants(map.get($square, sizes));
+
+		@each $name in api.$semantic-variant-names {
+			&--#{$name} {
+				@include square-variant(var(--color-#{$name}));
+			}
+		}
+
+		@include api.make-accent-bg-variants;
+	}
 }

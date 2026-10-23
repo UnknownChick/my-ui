@@ -1,49 +1,88 @@
-@use 'sass:map';
-@use '../config/config-default' as cfg;
-@use '../abstracts/mixins' as m;
+@use "sass:map";
+@use "../config/config-default" as cfg;
+@use "../abstracts/mixins" as m;
+@use "../abstracts/component-api" as api;
 
 $accordion: (
-  icon-size: 0.5rem,
-  padding: 1rem,
-  title-font-weight: 700,
+	icon-size: 0.5rem,
+	padding: 1rem,
+	title-font-weight: 700,
+	sizes: (
+		xs: (
+			"--accordion-padding": 0.5rem,
+			font-size: cfg.$font-size-xs,
+		),
+		sm: (
+			"--accordion-padding": 0.75rem,
+			font-size: cfg.$font-size-sm,
+		),
+		md: (
+			"--accordion-padding": 1rem,
+			font-size: cfg.$font-size-md,
+		),
+		lg: (
+			"--accordion-padding": 1.25rem,
+			font-size: cfg.$font-size-lg,
+		),
+		xl: (
+			"--accordion-padding": 1.5rem,
+			font-size: cfg.$font-size-xl,
+		),
+		xxl: (
+			"--accordion-padding": 1.75rem,
+			font-size: cfg.$font-size-xxl,
+		),
+	),
 ) !default;
 
-@layer sidevui.components {
-  .accordion {
-    border-bottom: cfg.$border-width solid var(--color-border);
+@mixin accordion-variant($border-color) {
+	border-bottom-color: $border-color;
+}
 
-    &__title {
-      list-style: none;
-      font-weight: map.get($accordion, title-font-weight);
-      cursor: pointer;
-      padding: map.get($accordion, padding) 0;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      position: relative;
+@layer myui.components {
+	.accordion {
+		border-bottom: cfg.$border-width solid var(--color-border);
+		--accordion-padding: #{map.get($accordion, padding)};
 
-      &::after {
-        content: '';
-        display: block;
-        width: map.get($accordion, icon-size);
-        height: map.get($accordion, icon-size);
-        margin-left: 0.5rem;
-        margin-right: 0.5rem;
-        border-right: 2px solid var(--color-text-muted);
-        border-bottom: 2px solid var(--color-text-muted);
-        transform: rotate(45deg);
-        @include m.transition(transform);
-      }
-    }
+		@include api.make-size-variants(map.get($accordion, sizes));
+		@each $name in api.$semantic-variant-names {
+			&--#{$name} {
+				@include accordion-variant(var(--color-#{$name}));
+			}
+		}
 
-    &[open] &__title {
-      &::after {
-        transform: rotate(225deg);
-      }
-    }
+		&__title {
+			list-style: none;
+			font-weight: map.get($accordion, title-font-weight);
+			cursor: pointer;
+			padding: var(--accordion-padding) 0;
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+			position: relative;
 
-    &__content {
-      padding-bottom: map.get($accordion, padding);
-    }
-  }
+			&::after {
+				content: "";
+				display: block;
+				width: map.get($accordion, icon-size);
+				height: map.get($accordion, icon-size);
+				margin-left: 0.5rem;
+				margin-right: 0.5rem;
+				border-right: 2px solid var(--color-text-muted);
+				border-bottom: 2px solid var(--color-text-muted);
+				transform: rotate(45deg);
+				@include m.transition(transform);
+			}
+		}
+
+		&__content {
+			padding-bottom: var(--accordion-padding);
+		}
+
+		&[open] &__title {
+			&::after {
+				transform: rotate(225deg);
+			}
+		}
+	}
 }

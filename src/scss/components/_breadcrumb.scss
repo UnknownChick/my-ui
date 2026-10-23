@@ -1,48 +1,92 @@
-@use 'sass:map';
-@use '../config/config-default' as cfg;
-@use '../abstracts/mixins' as m;
+@use "sass:map";
+@use "../config/config-default" as cfg;
+@use "../abstracts/mixins" as m;
+@use "../abstracts/component-api" as api;
 
 $breadcrumb: (
-  padding: 0.25rem,
-  separator: '/',
+	padding: 0.25rem,
+	separator: "/",
+	sizes: (
+		xs: (
+			"--breadcrumb-padding": 0.125rem,
+			font-size: cfg.$font-size-xs,
+		),
+		sm: (
+			"--breadcrumb-padding": 0.1875rem,
+			font-size: cfg.$font-size-sm,
+		),
+		md: (
+			"--breadcrumb-padding": 0.25rem,
+			font-size: cfg.$font-size-md,
+		),
+		lg: (
+			"--breadcrumb-padding": 0.375rem,
+			font-size: cfg.$font-size-lg,
+		),
+		xl: (
+			"--breadcrumb-padding": 0.5rem,
+			font-size: cfg.$font-size-xl,
+		),
+		xxl: (
+			"--breadcrumb-padding": 0.625rem,
+			font-size: cfg.$font-size-xxl,
+		),
+	),
 ) !default;
 
-@layer sidevui.components {
-  @scope (.breadcrumb) {
-    :scope {
-      display: block;
-    }
+@mixin breadcrumb-variant($color) {
+	color: $color;
+}
 
-    ul {
-      list-style: none;
-      display: inline-flex;
-    }
+@layer myui.components {
+	.breadcrumb {
+		display: block;
+		color: var(--color-primary);
+		--breadcrumb-padding: #{map.get($breadcrumb, padding)};
 
-    li {
-      height: max-content;
+		@include api.make-size-variants(map.get($breadcrumb, sizes));
+		@each $name in api.$semantic-variant-names {
+			&--#{$name} {
+				@include breadcrumb-variant(var(--color-#{$name}));
+			}
+		}
+	}
 
-      &:not(:last-child)::after {
-        content: map.get($breadcrumb, separator);
-        padding: map.get($breadcrumb, padding);
-      }
+	@scope (.breadcrumb) {
+		:scope {
+			display: block;
+		}
 
-      &:not(:last-child) a {
-        opacity: 0.75;
-      }
-    }
+		ul {
+			list-style: none;
+			display: inline-flex;
+		}
 
-    a {
-      color: var(--color-primary);
-      text-decoration: none;
-      line-height: 1;
-      padding: map.get($breadcrumb, padding);
-      border-radius: var(--radius-sm);
-      display: inline-block;
-      @include m.transition(background-color);
+		a {
+			color: inherit;
+			text-decoration: none;
+			line-height: 1;
+			padding: var(--breadcrumb-padding);
+			border-radius: var(--radius-sm);
+			display: inline-block;
+			@include m.transition(background-color);
 
-      &:hover {
-        background-color: var(--color-surface);
-      }
-    }
-  }
+			&:hover {
+				background-color: var(--color-surface);
+			}
+		}
+
+		li {
+			height: max-content;
+
+			&:not(:last-child)::after {
+				content: map.get($breadcrumb, separator);
+				padding: var(--breadcrumb-padding);
+			}
+
+			&:not(:last-child) a {
+				opacity: 0.75;
+			}
+		}
+	}
 }

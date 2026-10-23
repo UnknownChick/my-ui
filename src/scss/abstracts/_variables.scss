@@ -1,11 +1,12 @@
 // Deprecated: all variables are now in config/_config-default.scss
 // This file re-exports for backward compatibility.
-@use '../config/config-default' as cfg;
+@use "../config/config-default" as cfg;
 
 $breakpoints: cfg.$breakpoints;
-$font-primary:  cfg.$font-sans;
+// Deprecated aliases retained for existing consumers.
+$font-primary: cfg.$font-sans;
 $font-secondary: cfg.$font-sans;
 $border-radius: cfg.$border-radius;
-$box-shadow:    cfg.$shadow;
-$line-height-text:  cfg.$line-height;
+$box-shadow: cfg.$shadow;
+$line-height-text: cfg.$line-height;
 $line-height-title: cfg.$line-height-title;

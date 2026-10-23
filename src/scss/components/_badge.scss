@@ -1,35 +1,66 @@
-@use 'sass:map';
-@use '../config/config-default' as cfg;
-@use '../abstracts/component-api' as api;
+@use "sass:map";
+@use "../config/config-default" as cfg;
+@use "../abstracts/component-api" as api;
 
 $badge: (
-  sizes: (
-    xs: (padding: 0.125rem, font-size: 0.5rem),
-    sm: (padding: 0.25rem,  font-size: 0.5rem),
-    md: (padding: 0.375rem, font-size: cfg.$font-size-xs),
-    lg: (padding: 0.5rem,   font-size: cfg.$font-size-md),
-  )
+	sizes: (
+		xs: (
+			padding: 0.125rem,
+			font-size: 0.5rem,
+		),
+		sm: (
+			padding: 0.25rem,
+			font-size: 0.5rem,
+		),
+		md: (
+			padding: 0.375rem,
+			font-size: cfg.$font-size-xs,
+		),
+		lg: (
+			padding: 0.5rem,
+			font-size: cfg.$font-size-md,
+		),
+		xl: (
+			padding: 0.625rem,
+			font-size: cfg.$font-size-lg,
+		),
+		xxl: (
+			padding: 0.75rem,
+			font-size: cfg.$font-size-xxl,
+		),
+	),
 ) !default;
 
 @mixin badge-variant($background, $border, $color) {
-  background-color: $background;
-  border: cfg.$border-width solid $border;
-  color: $color;
+	background-color: $background;
+	border: cfg.$border-width solid $border;
+	color: $color;
 }
 
-@layer sidevui.components {
-  .badge {
-    display: block;
-    border-radius: var(--radius);
-    padding: 0.375rem;
-    text-transform: uppercase;
-    font-weight: 600;
-    font-size: cfg.$font-size-xs;
-    width: max-content;
-    line-height: 1;
-    align-content: center;
+@layer myui.components {
+	.badge {
+		display: block;
+		border-radius: var(--radius);
+		padding: 0.375rem;
+		text-transform: uppercase;
+		font-weight: 600;
+		font-size: cfg.$font-size-xs;
+		width: max-content;
+		line-height: 1;
+		align-content: center;
 
-    @include api.make-size-variants(map.get($badge, sizes));
-    @include api.make-accent-variants;
-  }
+		@include api.make-size-variants(map.get($badge, sizes));
+
+		@each $name in api.$semantic-variant-names {
+			&--#{$name} {
+				@include badge-variant(
+					var(--color-#{$name}),
+					var(--color-#{$name}),
+					var(--color-on-#{$name})
+				);
+			}
+		}
+
+		@include api.make-accent-variants;
+	}
 }

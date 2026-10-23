@@ -1,94 +1,158 @@
-@use 'sass:map';
-@use '../config/config-default' as cfg;
-@use '../abstracts/mixins' as m;
+@use "sass:map";
+@use "../config/config-default" as cfg;
+@use "../abstracts/mixins" as m;
+@use "../abstracts/component-api" as api;
 
 $_cn: toast;
 
 $toast: (
-  max-width: 400px,
-  padding: 1.5rem,
-  progress-height: 0.25rem,
-  transition-duration: 0.3s,
-  positions: (
-    tl: (top: 2rem, left: 2rem),
-    tr: (top: 2rem, right: 2rem),
-    bl: (bottom: 2rem, left: 2rem),
-    br: (bottom: 2rem, right: 2rem),
-  )
+	max-width: 400px,
+	padding: 1.5rem,
+	progress-height: 0.25rem,
+	transition-duration: 0.3s,
+	sizes: (
+		xs: (
+			"--toast-max-width": 16rem,
+			"--toast-padding": 0.5rem,
+			font-size: cfg.$font-size-xs,
+		),
+		sm: (
+			"--toast-max-width": 20rem,
+			"--toast-padding": 0.75rem,
+			font-size: cfg.$font-size-sm,
+		),
+		md: (
+			"--toast-max-width": 25rem,
+			"--toast-padding": 1rem,
+			font-size: cfg.$font-size-md,
+		),
+		lg: (
+			"--toast-max-width": 30rem,
+			"--toast-padding": 1.25rem,
+			font-size: cfg.$font-size-lg,
+		),
+		xl: (
+			"--toast-max-width": 36rem,
+			"--toast-padding": 1.5rem,
+			font-size: cfg.$font-size-xl,
+		),
+		xxl: (
+			"--toast-max-width": 42rem,
+			"--toast-padding": 1.75rem,
+			font-size: cfg.$font-size-xxl,
+		),
+	),
+	positions: (
+		tl: (
+			top: 2rem,
+			left: 2rem,
+		),
+		tr: (
+			top: 2rem,
+			right: 2rem,
+		),
+		bl: (
+			bottom: 2rem,
+			left: 2rem,
+		),
+		br: (
+			bottom: 2rem,
+			right: 2rem,
+		),
+	),
 ) !default;
 
-@keyframes toast-progress-decrease {
-  from { width: 100%; }
-  to   { width: 0%; }
+@mixin toast-variant($color) {
+	--toast-progress-color: #{$color};
 }
 
-@layer sidevui.components {
-  .toast {
-    display: block;
-    position: fixed;
-    background-color: var(--color-bg);
-    border: cfg.$border-width solid var(--color-border);
-    border-radius: var(--radius);
-    max-width: map.get($toast, max-width);
-    @include m.shadow(md);
-    overflow: hidden;
-    opacity: 0;
-    visibility: hidden;
-    transition: transform map.get($toast, transition-duration) ease-in-out,
-               opacity map.get($toast, transition-duration) ease-in-out,
-               visibility map.get($toast, transition-duration) ease-in-out;
+@keyframes toast-progress-decrease {
+	from {
+		width: 100%;
+	}
+	to {
+		width: 0%;
+	}
+}
 
-    @each $pos, $val in map.get($toast, positions) {
-      &--#{$pos} {
-        top: map.get($val, top);
-        right: map.get($val, right);
-        bottom: map.get($val, bottom);
-        left: map.get($val, left);
+@layer myui.components {
+	.toast {
+		display: block;
+		position: fixed;
+		background-color: var(--color-bg);
+		border: cfg.$border-width solid var(--color-border);
+		border-radius: var(--radius);
+		max-width: var(--toast-max-width);
+		--toast-max-width: #{map.get($toast, max-width)};
+		--toast-padding: #{map.get($toast, padding)};
+		--toast-progress-color: var(--color-primary);
+		@include api.make-size-variants(map.get($toast, sizes));
 
-        @if $pos == tl or $pos == tr {
-          transform: translateY(-150%);
-        } @else {
-          transform: translateY(150%);
-        }
-      }
-    }
+		@each $name in api.$semantic-variant-names {
+			&--#{$name} {
+				@include toast-variant(var(--color-#{$name}));
+			}
+		}
+		@include m.shadow(md);
+		overflow: hidden;
+		opacity: 0;
+		visibility: hidden;
+		transition:
+			transform map.get($toast, transition-duration) ease-in-out,
+			opacity map.get($toast, transition-duration) ease-in-out,
+			visibility map.get($toast, transition-duration) ease-in-out;
 
-    &__progress {
-      position: absolute;
-      top: 0;
-      left: 0;
-      height: map.get($toast, progress-height);
-      width: 100%;
-      background-color: var(--color-primary);
-      animation: none;
-    }
+		@each $pos, $val in map.get($toast, positions) {
+			&--#{$pos} {
+				top: map.get($val, top);
+				right: map.get($val, right);
+				bottom: map.get($val, bottom);
+				left: map.get($val, left);
 
-    &__content {
-      padding: map.get($toast, padding);
-    }
+				@if $pos == tl or $pos == tr {
+					transform: translateY(-150%);
+				} @else {
+					transform: translateY(150%);
+				}
+			}
+		}
 
-    &--active {
-      transform: translateY(0);
-      opacity: 1;
-      visibility: visible;
+		&__progress {
+			position: absolute;
+			top: 0;
+			left: 0;
+			height: map.get($toast, progress-height);
+			width: 100%;
+			background-color: var(--toast-progress-color);
+			animation: none;
+		}
 
-      .toast__progress {
-        animation-name: toast-progress-decrease;
-        animation-timing-function: linear;
-        animation-fill-mode: forwards;
-      }
-    }
+		&__content {
+			padding: var(--toast-padding);
+		}
 
-    &--closing-left {
-      transform: translateX(-150%);
-      opacity: 0;
-      visibility: hidden;
-    }
+		&--active {
+			transform: translateY(0);
+			opacity: 1;
+			visibility: visible;
 
-    &--closing-right {
-      transform: translateX(150%);
-      opacity: 0;
-      visibility: hidden;
-    }
-  }
+			.toast__progress {
+				animation-name: toast-progress-decrease;
+				animation-timing-function: linear;
+				animation-fill-mode: forwards;
+			}
+		}
+
+		&--closing-left {
+			transform: translateX(-150%);
+			opacity: 0;
+			visibility: hidden;
+		}
+
+		&--closing-right {
+			transform: translateX(150%);
+			opacity: 0;
+			visibility: hidden;
+		}
+	}
 }

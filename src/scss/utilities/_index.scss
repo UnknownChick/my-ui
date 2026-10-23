@@ -1,13 +1,10 @@
-@forward 'action';
-@forward 'aspect-ratio';
-@forward 'border';
-@forward 'flexbox';
-@forward 'grid';
-@forward 'helpers';
-@forward 'opacity';
-@forward 'position';
-@forward 'prose';
-@forward 'row';
-@forward 'sizing';
-@forward 'spacing';
-@forward 'typography';
+// Keep the default utility bundle focused. Advanced partials remain opt-in.
+@forward "action";
+@forward "aspect-ratio";
+@forward "border";
+@forward "flexbox";
+@forward "grid";
+@forward "helpers";
+@forward "sizing";
+@forward "spacing";
+@forward "typography";

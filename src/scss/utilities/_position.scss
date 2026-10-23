@@ -1,39 +1,83 @@
-@use '../config/config-default' as cfg;
-@use '../abstracts/mixins' as m;
+@use "../config/config-default" as cfg;
+@use "../abstracts/mixins" as m;
 
-@layer sidevui.utilities {
-  .static   { position: static; }
-  .relative { position: relative; }
-  .absolute { position: absolute; }
-  .fixed    { position: fixed; }
-  .sticky   { position: sticky; }
+@layer myui.utilities {
+	.static {
+		position: static;
+	}
+	.relative {
+		position: relative;
+	}
+	.absolute {
+		position: absolute;
+	}
+	.fixed {
+		position: fixed;
+	}
+	.sticky {
+		position: sticky;
+	}
 
-  // Inset helpers
-  .inset-0  { inset: 0; }
-  .top-0    { top: 0; }
-  .right-0  { right: 0; }
-  .bottom-0 { bottom: 0; }
-  .left-0   { left: 0; }
+	// Inset helpers
+	.inset-0 {
+		inset: 0;
+	}
+	.top-0 {
+		top: 0;
+	}
+	.right-0 {
+		right: 0;
+	}
+	.bottom-0 {
+		bottom: 0;
+	}
+	.left-0 {
+		left: 0;
+	}
 
-  // Z-index
-  .z-0   { z-index: 0; }
-  .z-10  { z-index: 10; }
-  .z-20  { z-index: 20; }
-  .z-30  { z-index: 30; }
-  .z-40  { z-index: 40; }
-  .z-50  { z-index: 50; }
-  .z-auto { z-index: auto; }
+	// Z-index
+	.z-0 {
+		z-index: 0;
+	}
+	.z-10 {
+		z-index: 10;
+	}
+	.z-20 {
+		z-index: 20;
+	}
+	.z-30 {
+		z-index: 30;
+	}
+	.z-40 {
+		z-index: 40;
+	}
+	.z-50 {
+		z-index: 50;
+	}
+	.z-auto {
+		z-index: auto;
+	}
 
-  // Responsive
-  @if cfg.$enable-responsive {
-    @each $bp, $_ in cfg.$breakpoints {
-      @include m.bp($bp) {
-        .#{$bp}\:static   { position: static; }
-        .#{$bp}\:relative { position: relative; }
-        .#{$bp}\:absolute { position: absolute; }
-        .#{$bp}\:fixed    { position: fixed; }
-        .#{$bp}\:sticky   { position: sticky; }
-      }
-    }
-  }
+	// Responsive
+	@if cfg.$enable-responsive {
+		@each $bp, $_ in cfg.$breakpoints {
+			@include m.bp($bp) {
+				.#{$bp}\:static {
+					position: static;
+				}
+				.#{$bp}\:relative {
+					position: relative;
+				}
+				.#{$bp}\:absolute {
+					position: absolute;
+				}
+				.#{$bp}\:fixed {
+					position: fixed;
+				}
+				.#{$bp}\:sticky {
+					position: sticky;
+				}
+			}
+		}
+	}
 }

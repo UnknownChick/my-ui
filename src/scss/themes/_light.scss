@@ -1,0 +1,24 @@
+@use "../config/config-default" as cfg;
+
+// ── Light theme (explicit) ──────────────────────────
+// Applied when [data-theme='light'] is set on <html>.
+// These values mirror :root defaults, ensuring consistency
+// when the user explicitly chooses light mode.
+
+@layer myui.tokens {
+	[data-theme="light"],
+	[data-theme="white"] {
+		color-scheme: light;
+		--color-bg: #{cfg.$color-bg};
+		--color-surface: #{cfg.$color-surface};
+		--color-text: #{cfg.$color-text};
+		--color-text-muted: #{cfg.$color-text-muted};
+		--color-border: #{cfg.$color-border};
+
+		@if cfg.$enable-shadows {
+			--shadow-sm: #{cfg.$shadow-sm};
+			--shadow: #{cfg.$shadow};
+			--shadow-lg: #{cfg.$shadow-lg};
+		}
+	}
+}

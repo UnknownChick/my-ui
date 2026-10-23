@@ -1,87 +1,112 @@
-@use 'sass:map';
-@use '../config/config-default' as cfg;
+@use "sass:map";
+@use "../config/config-default" as cfg;
+
+$semantic-variant-names: (
+	primary, secondary, success, danger, warning, info
+) !default;
 
 // ── Single Accent Helpers ────────────────────────────
 // Apply soft accent (light bg, dark text)
 @mixin accent-soft($bg, $fg) {
-  background-color: $bg;
-  border-color: $fg;
-  color: $fg;
+	background-color: $bg;
+	border-color: $fg;
+	color: $fg;
 }
 
 // Apply high accent (dark bg, light text)
 @mixin accent-high($bg, $fg) {
-  background-color: $bg;
-  border-color: $bg;
-  color: $fg;
+	background-color: $bg;
+	border-color: $bg;
+	color: $fg;
 }
 
 // ── Bulk Accent Variant Generation ───────────────────
 // Generates --soft-* and --high-* modifier classes for all accents
 @mixin make-accent-variants($border: true) {
-  @each $name, $values in cfg.$accents {
-    $soft: map.get($values, soft);
-    $high: map.get($values, high);
+	@each $name, $values in cfg.$accents {
+		$soft: map.get($values, soft);
+		$high: map.get($values, high);
 
-    &--soft-#{$name} {
-      background-color: $soft;
-      color: $high;
-      @if $border { border-color: $high; }
-    }
+		&--soft-#{$name} {
+			background-color: $soft;
+			color: $high;
+			@if $border {
+				border-color: $high;
+			}
+		}
 
-    &--high-#{$name} {
-      background-color: $high;
-      color: $soft;
-      @if $border { border-color: $high; }
-    }
-  }
+		&--high-#{$name} {
+			background-color: $high;
+			color: $soft;
+			@if $border {
+				border-color: $high;
+			}
+		}
+	}
 }
 
 // ── Accent Background Only ───────────────────────────
 // Generates variants that only set background-color (dot, square)
 @mixin make-accent-bg-variants {
-  @each $name, $values in cfg.$accents {
-    &--soft-#{$name} { background-color: map.get($values, soft); }
-    &--high-#{$name} { background-color: map.get($values, high); }
-  }
+	@each $name, $values in cfg.$accents {
+		&--soft-#{$name} {
+			background-color: map.get($values, soft);
+		}
+		&--high-#{$name} {
+			background-color: map.get($values, high);
+		}
+	}
 }
 
 // ── Accent Color Property ────────────────────────────
 // Generates variants that set a specific CSS property
 @mixin make-accent-prop-variants($property) {
-  @each $name, $values in cfg.$accents {
-    &--#{$name} { #{$property}: map.get($values, high); }
-  }
+	@each $name, $values in cfg.$accents {
+		&--#{$name} {
+			#{$property}: map.get($values, high);
+		}
+	}
 }
 
 // ── Size Variant Generation ──────────────────────────
 // Takes a sizes map and generates --size modifier classes
 @mixin make-size-variants($sizes-map) {
-  @each $size, $values in $sizes-map {
-    &--#{$size} {
-      @each $prop, $val in $values {
-        #{$prop}: $val;
-      }
-    }
-  }
+	@each $size, $values in $sizes-map {
+		&--#{$size} {
+			@each $prop, $val in $values {
+				#{$prop}: $val;
+			}
+		}
+	}
 }
 
 // ── Semantic Color Variants ──────────────────────────
 // Generates modifier classes for the 6 semantic colors
 @mixin make-semantic-variants($property: background-color) {
-  &--primary   { #{$property}: var(--color-primary); }
-  &--secondary { #{$property}: var(--color-secondary); }
-  &--success   { #{$property}: var(--color-success); }
-  &--danger    { #{$property}: var(--color-danger); }
-  &--warning   { #{$property}: var(--color-warning); }
-  &--info      { #{$property}: var(--color-info); }
+	@each $name in $semantic-variant-names {
+		&--#{$name} {
+			#{$property}: var(--color-#{$name});
+		}
+	}
+}
+
+@mixin make-semantic-surface-variants($border: true) {
+	@each $name in $semantic-variant-names {
+		&--#{$name} {
+			background-color: var(--color-#{$name});
+			color: var(--color-on-#{$name});
+			@if $border {
+				border-color: var(--color-#{$name});
+			}
+		}
+	}
 }
 
 // ── Container Query Setup ────────────────────────────
 // Makes a component a container query context
 @mixin container($name: null, $type: inline-size) {
-  container-type: $type;
-  @if $name {
-    container-name: $name;
-  }
+	container-type: $type;
+	@if $name {
+		container-name: $name;
+	}
 }

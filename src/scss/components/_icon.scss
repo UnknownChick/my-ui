@@ -1,22 +1,56 @@
-@use 'sass:map';
-@use '../abstracts/component-api' as api;
+@use "sass:map";
+@use "../abstracts/component-api" as api;
 
 $icon: (
-  sizes: (
-    xxs:   (height: 1rem,  width: 1rem),
-    xs:    (height: 2rem,  width: 2rem),
-    sm:    (height: 3rem,  width: 3rem),
-    md:    (height: 4rem,  width: 4rem),
-    lg:    (height: 5rem,  width: 5rem),
-    xl:    (height: 6rem,  width: 6rem),
-    xxl:   (height: 7rem,  width: 7rem),
-    fluid: (height: 100%,  width: 100%),
-  )
+	sizes: (
+		xxs: (
+			height: 1rem,
+			width: 1rem,
+		),
+		xs: (
+			height: 2rem,
+			width: 2rem,
+		),
+		sm: (
+			height: 3rem,
+			width: 3rem,
+		),
+		md: (
+			height: 4rem,
+			width: 4rem,
+		),
+		lg: (
+			height: 5rem,
+			width: 5rem,
+		),
+		xl: (
+			height: 6rem,
+			width: 6rem,
+		),
+		xxl: (
+			height: 7rem,
+			width: 7rem,
+		),
+		fluid: (
+			height: 100%,
+			width: 100%,
+		),
+	),
 ) !default;
 
-@layer sidevui.components {
-  .icon {
-    display: block;
-    @include api.make-size-variants(map.get($icon, sizes));
-  }
+@mixin icon-variant($color) {
+	color: $color;
+}
+
+@layer myui.components {
+	.icon {
+		display: block;
+		@include api.make-size-variants(map.get($icon, sizes));
+
+		@each $name in api.$semantic-variant-names {
+			&--#{$name} {
+				@include icon-variant(var(--color-#{$name}));
+			}
+		}
+	}
 }

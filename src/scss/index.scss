@@ -1,9 +1,18 @@
 @charset "utf-8";
 
-@use 'layers';
-@use 'base';
-@use 'layouts';
-@use 'components';
-@use 'themes';
-@use 'utilities';
-// @use 'vendor';
+@forward "config/config-default";
+@forward "abstracts/functions";
+@forward "abstracts/mixins";
+@forward "abstracts/component-api";
+
+@use "sass:meta";
+@use "config/config-default" as cfg;
+@use "layers";
+@use "base";
+@use "layouts";
+@use "components";
+@use "themes";
+
+@if cfg.$enable-utilities {
+	@include meta.load-css("utilities");
+}

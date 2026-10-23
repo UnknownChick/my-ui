@@ -1,88 +1,223 @@
-@use 'sass:map';
-@use '../config/config-default' as cfg;
-@use '../abstracts/mixins' as m;
+@use "sass:map";
+@use "../config/config-default" as cfg;
+@use "../abstracts/mixins" as m;
+@use "../abstracts/component-api" as api;
 
 $modal: (
-  backdrop-color: rgba(0 0 0 / 50%),
-  close-size: 1.5rem,
-  padding: 1rem,
+	backdrop-color: rgba(0 0 0 / 50%),
+	close-size: 1.5rem,
+	padding: 1rem,
+	sizes: (
+		xs: (
+			"--modal-padding": 0.5rem,
+			max-width: 20rem,
+		),
+		sm: (
+			"--modal-padding": 0.75rem,
+			max-width: 28rem,
+		),
+		md: (
+			"--modal-padding": 1rem,
+			max-width: 40rem,
+		),
+		lg: (
+			"--modal-padding": 1.5rem,
+			max-width: 56rem,
+		),
+		xl: (
+			"--modal-padding": 2rem,
+			max-width: 72rem,
+		),
+		xxl: (
+			"--modal-padding": 2.5rem,
+			max-width: 90rem,
+		),
+	),
 ) !default;
 
-@layer sidevui.components {
-  .modal {
-    background-color: var(--color-bg);
-    border-radius: var(--radius);
-    @include m.shadow(lg);
-    margin: auto;
-    width: 100%;
-    overflow: visible;
-    color: var(--color-text);
+@mixin modal-variant($background, $foreground) {
+	background-color: $background;
+	color: $foreground;
+}
 
-    &__close {
-      position: absolute;
-      background-color: var(--color-text-muted);
-      color: var(--color-white);
-      border-radius: 50%;
-      width: map.get($modal, close-size);
-      height: map.get($modal, close-size);
-      top: map.get($modal, padding);
-      right: map.get($modal, padding);
-      padding: 0.125rem;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      cursor: pointer;
-      @include m.transition(transform);
+@layer myui.components {
+	.modal {
+		background-color: var(--color-bg);
+		border-radius: var(--radius);
+		@include m.shadow(lg);
+		margin: auto;
+		width: 100%;
+		overflow: visible;
+		color: var(--color-text);
+		--modal-padding: #{map.get($modal, padding)};
+		@include api.make-size-variants(map.get($modal, sizes));
 
-      &:hover { transform: scale(1.1); }
-    }
+		@each $name in api.$semantic-variant-names {
+			&--#{$name} {
+				@include modal-variant(var(--color-#{$name}), var(--color-on-#{$name}));
+			}
+		}
 
-    &__title {
-      padding: map.get($modal, padding);
-      border-bottom: cfg.$border-width solid var(--color-border);
-    }
+		&__close {
+			position: absolute;
+			background-color: var(--color-text-muted);
+			color: var(--color-white);
+			border-radius: 50%;
+			width: map.get($modal, close-size);
+			height: map.get($modal, close-size);
+			top: var(--modal-padding);
+			right: var(--modal-padding);
+			padding: 0.125rem;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			cursor: pointer;
+			@include m.transition(transform);
 
-    &__content {
-      padding: map.get($modal, padding);
-    }
+			&:hover {
+				transform: scale(1.1);
+			}
+		}
 
-    &__footer {
-      padding: map.get($modal, padding);
-      display: flex;
-      justify-content: flex-end;
-      gap: 1rem;
-    }
+		&__title {
+			padding: var(--modal-padding);
+			border-bottom: cfg.$border-width solid var(--color-border);
+		}
 
-    &--fade-in  { animation: modalFadeIn 0.3s ease-out forwards; }
-    &--fade-out { animation: modalFadeOut 0.3s ease-out forwards; }
+		&__content {
+			padding: var(--modal-padding);
+		}
 
-    &--scale-in  { animation: modalScaleIn 0.3s cubic-bezier(0.34, 1.56, 0.64, 1) forwards; }
-    &--scale-out { animation: modalScaleOut 0.3s ease-out forwards; }
+		&__footer {
+			padding: var(--modal-padding);
+			display: flex;
+			justify-content: flex-end;
+			gap: 1rem;
+		}
 
-    &--slide-up-in    { animation: modalSlideUpIn 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
-    &--slide-up-out   { animation: modalSlideUpOut 0.3s ease-out forwards; }
-    &--slide-down-in  { animation: modalSlideDownIn 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
-    &--slide-down-out { animation: modalSlideDownOut 0.3s ease-out forwards; }
-  }
+		&--fade-in {
+			animation: modalFadeIn 0.3s ease-out forwards;
+		}
+		&--fade-out {
+			animation: modalFadeOut 0.3s ease-out forwards;
+		}
 
-  dialog.preview { padding: 0; }
+		&--scale-in {
+			animation: modalScaleIn 0.3s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+		}
+		&--scale-out {
+			animation: modalScaleOut 0.3s ease-out forwards;
+		}
 
-  ::backdrop {
-    background-color: map.get($modal, backdrop-color);
-    animation: backdropFadeIn 0.3s ease-out forwards;
-  }
+		&--slide-up-in {
+			animation: modalSlideUpIn 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+		}
+		&--slide-up-out {
+			animation: modalSlideUpOut 0.3s ease-out forwards;
+		}
+		&--slide-down-in {
+			animation: modalSlideDownIn 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+		}
+		&--slide-down-out {
+			animation: modalSlideDownOut 0.3s ease-out forwards;
+		}
+	}
 
-  dialog[open]::backdrop {
-    animation: backdropFadeIn 0.3s ease-out forwards;
-  }
+	dialog.preview {
+		padding: 0;
+	}
 
-  @keyframes modalFadeIn    { from { opacity: 0; } to { opacity: 1; } }
-  @keyframes modalFadeOut   { from { opacity: 1; } to { opacity: 0; } }
-  @keyframes modalScaleIn   { from { opacity: 0; transform: scale(0.7); } to { opacity: 1; transform: scale(1); } }
-  @keyframes modalScaleOut  { from { opacity: 1; transform: scale(1); } to { opacity: 0; transform: scale(0.7); } }
-  @keyframes modalSlideUpIn    { from { opacity: 0; transform: translateY(100px); } to { opacity: 1; transform: translateY(0); } }
-  @keyframes modalSlideUpOut   { from { opacity: 1; transform: translateY(0); } to { opacity: 0; transform: translateY(-100px); } }
-  @keyframes modalSlideDownIn  { from { opacity: 0; transform: translateY(-100px); } to { opacity: 1; transform: translateY(0); } }
-  @keyframes modalSlideDownOut { from { opacity: 1; transform: translateY(0); } to { opacity: 0; transform: translateY(100px); } }
-  @keyframes backdropFadeIn    { from { opacity: 0; } to { opacity: 1; } }
+	::backdrop {
+		background-color: map.get($modal, backdrop-color);
+		animation: backdropFadeIn 0.3s ease-out forwards;
+	}
+
+	dialog[open]::backdrop {
+		animation: backdropFadeIn 0.3s ease-out forwards;
+	}
+
+	@keyframes modalFadeIn {
+		from {
+			opacity: 0;
+		}
+		to {
+			opacity: 1;
+		}
+	}
+	@keyframes modalFadeOut {
+		from {
+			opacity: 1;
+		}
+		to {
+			opacity: 0;
+		}
+	}
+	@keyframes modalScaleIn {
+		from {
+			opacity: 0;
+			transform: scale(0.7);
+		}
+		to {
+			opacity: 1;
+			transform: scale(1);
+		}
+	}
+	@keyframes modalScaleOut {
+		from {
+			opacity: 1;
+			transform: scale(1);
+		}
+		to {
+			opacity: 0;
+			transform: scale(0.7);
+		}
+	}
+	@keyframes modalSlideUpIn {
+		from {
+			opacity: 0;
+			transform: translateY(100px);
+		}
+		to {
+			opacity: 1;
+			transform: translateY(0);
+		}
+	}
+	@keyframes modalSlideUpOut {
+		from {
+			opacity: 1;
+			transform: translateY(0);
+		}
+		to {
+			opacity: 0;
+			transform: translateY(-100px);
+		}
+	}
+	@keyframes modalSlideDownIn {
+		from {
+			opacity: 0;
+			transform: translateY(-100px);
+		}
+		to {
+			opacity: 1;
+			transform: translateY(0);
+		}
+	}
+	@keyframes modalSlideDownOut {
+		from {
+			opacity: 1;
+			transform: translateY(0);
+		}
+		to {
+			opacity: 0;
+			transform: translateY(100px);
+		}
+	}
+	@keyframes backdropFadeIn {
+		from {
+			opacity: 0;
+		}
+		to {
+			opacity: 1;
+		}
+	}
 }

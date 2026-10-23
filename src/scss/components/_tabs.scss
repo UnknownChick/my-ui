@@ -1,66 +1,126 @@
-@use 'sass:map';
-@use '../config/config-default' as cfg;
-@use '../abstracts/mixins' as m;
+@use "sass:map";
+@use "../config/config-default" as cfg;
+@use "../abstracts/mixins" as m;
+@use "../abstracts/component-api" as api;
 
 $tabs: (
-  animation-duration: 300ms,
-  animation-timing: ease-in-out,
-  button-padding: 0.75rem 1rem,
-  padding: 1rem,
+	animation-duration: 300ms,
+	animation-timing: ease-in-out,
+	button-padding: 0.75rem 1rem,
+	padding: 1rem,
+	sizes: (
+		xs: (
+			"--tabs-button-padding": 0.25rem 0.5rem,
+			"--tabs-panel-padding": 0.5rem,
+			font-size: cfg.$font-size-xs,
+		),
+		sm: (
+			"--tabs-button-padding": 0.375rem 0.625rem,
+			"--tabs-panel-padding": 0.75rem,
+			font-size: cfg.$font-size-sm,
+		),
+		md: (
+			"--tabs-button-padding": 0.75rem 1rem,
+			"--tabs-panel-padding": 1rem,
+			font-size: cfg.$font-size-md,
+		),
+		lg: (
+			"--tabs-button-padding": 0.875rem 1.125rem,
+			"--tabs-panel-padding": 1.25rem,
+			font-size: cfg.$font-size-lg,
+		),
+		xl: (
+			"--tabs-button-padding": 1rem 1.25rem,
+			"--tabs-panel-padding": 1.5rem,
+			font-size: cfg.$font-size-xl,
+		),
+		xxl: (
+			"--tabs-button-padding": 1.125rem 1.5rem,
+			"--tabs-panel-padding": 1.75rem,
+			font-size: cfg.$font-size-xxl,
+		),
+	),
 ) !default;
 
-@layer sidevui.components {
-  .tabs {
-    &__nav {
-      display: flex;
-      border-bottom: cfg.$border-width solid var(--color-border);
-    }
+@mixin tabs-variant($color) {
+	--tabs-active-color: #{$color};
+}
 
-    &__button {
-      padding: map.get($tabs, button-padding);
-      cursor: pointer;
-      border: none;
-      background-color: transparent;
-      border-bottom: 2px solid transparent;
-      margin-bottom: -1px;
-      font-weight: 600;
-      @include m.transition(color, border-color);
+@layer myui.components {
+	.tabs {
+		--tabs-button-padding: #{map.get($tabs, button-padding)};
+		--tabs-panel-padding: #{map.get($tabs, padding)};
+		--tabs-active-color: var(--color-primary);
+		@include api.make-size-variants(map.get($tabs, sizes));
 
-      &:hover {
-        color: var(--color-secondary);
-      }
+		@each $name in api.$semantic-variant-names {
+			&--#{$name} {
+				@include tabs-variant(var(--color-#{$name}));
+			}
+		}
 
-      &[aria-selected="true"] {
-        border-bottom-color: var(--color-primary);
-        color: var(--color-primary);
-        font-weight: 600;
-      }
-    }
+		&__nav {
+			display: flex;
+			border-bottom: cfg.$border-width solid var(--color-border);
+		}
 
-    &__content {
-      position: relative;
-    }
+		&__button {
+			padding: var(--tabs-button-padding);
+			cursor: pointer;
+			border: none;
+			background-color: transparent;
+			border-bottom: 2px solid transparent;
+			margin-bottom: -1px;
+			font-weight: 600;
+			@include m.transition(color, border-color);
 
-    &__panel {
-      padding: map.get($tabs, padding);
+			&:hover {
+				color: var(--color-secondary);
+			}
 
-      &--fade-in {
-        animation: tabs-fade-in map.get($tabs, animation-duration) map.get($tabs, animation-timing);
-      }
+			&[aria-selected="true"] {
+				border-bottom-color: var(--tabs-active-color);
+				color: var(--tabs-active-color);
+				font-weight: 600;
+			}
+		}
 
-      &--slide-in {
-        animation: tabs-slide-in map.get($tabs, animation-duration) map.get($tabs, animation-timing);
-      }
-    }
-  }
+		&__content {
+			position: relative;
+		}
 
-  @keyframes tabs-fade-in {
-    from { opacity: 0; }
-    to   { opacity: 1; }
-  }
+		&__panel {
+			padding: var(--tabs-panel-padding);
 
-  @keyframes tabs-slide-in {
-    from { opacity: 0; transform: translateX(20px); }
-    to   { opacity: 1; transform: translateX(0); }
-  }
+			&--fade-in {
+				animation: tabs-fade-in map.get($tabs, animation-duration)
+					map.get($tabs, animation-timing);
+			}
+
+			&--slide-in {
+				animation: tabs-slide-in map.get($tabs, animation-duration)
+					map.get($tabs, animation-timing);
+			}
+		}
+	}
+
+	@keyframes tabs-fade-in {
+		from {
+			opacity: 0;
+		}
+		to {
+			opacity: 1;
+		}
+	}
+
+	@keyframes tabs-slide-in {
+		from {
+			opacity: 0;
+			transform: translateX(20px);
+		}
+		to {
+			opacity: 1;
+			transform: translateX(0);
+		}
+	}
 }

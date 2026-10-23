@@ -1,26 +1,43 @@
-@use '../config/config-default' as cfg;
+@use "../config/config-default" as cfg;
 
-@layer sidevui.base {
-  body {
-    font-family: var(--font-sans);
-    color: var(--color-text);
-    background-color: var(--color-bg);
-    line-height: var(--line-height);
-    font-size: cfg.$font-size-md;
-    -webkit-font-smoothing: antialiased;
-  }
+@layer myui.base {
+	body {
+		font-family: var(--font-sans);
+		color: var(--color-text);
+		background-color: var(--color-bg);
+		line-height: var(--line-height);
+		font-size: cfg.$font-size-md;
+		-webkit-font-smoothing: antialiased;
+	}
 
-  h1, h2, h3, h4, h5, h6 {
-    line-height: var(--line-height-title);
-    font-weight: var(--font-weight-bold);
-  }
+	h1,
+	h2,
+	h3,
+	h4,
+	h5,
+	h6 {
+		line-height: var(--line-height-title);
+		font-weight: var(--font-weight-bold);
+	}
 
-  p, ul, a, input, button, label, table, select, option, ::placeholder {
-    font-family: var(--font-sans);
-    font-weight: var(--font-weight-normal);
-  }
+	p,
+	ul,
+	a,
+	input,
+	button,
+	label,
+	table,
+	select,
+	option,
+	::placeholder {
+		font-family: var(--font-sans);
+		font-weight: var(--font-weight-normal);
+	}
 
-  code, kbd, samp, pre {
-    font-family: var(--font-mono);
-  }
+	code,
+	kbd,
+	samp,
+	pre {
+		font-family: var(--font-mono);
+	}
 }
