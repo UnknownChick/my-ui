@@ -66,8 +66,8 @@ $progress: (
 			@each $color-name, $color-values in cfg.$accents {
 				&--#{$color-name} {
 					@include progress-variant(
-						map.get($color-values, high),
-						map.get($color-values, soft)
+						var(--accent-#{$color-name}-high),
+						var(--accent-#{$color-name}-soft)
 					);
 				}
 			}

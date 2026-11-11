@@ -59,6 +59,23 @@ class FakeClassList {
 }
 
 class FakeElement extends FakeEventTarget {
+	attributes = new Map();
+	id = "";
+	focus() {
+		document.activeElement = this;
+	}
+	setAttribute(name, value) {
+		this.attributes.set(name, String(value));
+	}
+	getAttribute(name) {
+		return this.attributes.get(name) ?? null;
+	}
+	hasAttribute(name) {
+		return this.attributes.has(name);
+	}
+	removeAttribute(name) {
+		this.attributes.delete(name);
+	}
 	constructor(children = {}) {
 		super();
 		this.children = children;
@@ -66,12 +83,16 @@ class FakeElement extends FakeEventTarget {
 		this.classList = new FakeClassList();
 	}
 
+	matches(selector) {
+		return selector === ".dropdown" && this.isDropdown;
+	}
+
 	querySelector(selector) {
 		return this.children[selector] ?? null;
 	}
 
 	querySelectorAll() {
-		return [];
+		return this.items ?? [];
 	}
 
 	contains(target) {
@@ -91,11 +112,16 @@ class FakeCustomEvent {
 		this.bubbles = bubbles;
 		this.target = null;
 		this.currentTarget = null;
+		this.defaultPrevented = false;
+	}
+	preventDefault() {
+		this.defaultPrevented = true;
 	}
 }
 
 globalThis.CustomEvent = FakeCustomEvent;
 globalThis.document = new FakeEventTarget();
+document.activeElement = null;
 
 const { default: Dropdown } = await import("../src/js/components/dropdown.js");
 
@@ -106,6 +132,7 @@ test("dropdown opens, closes on outside click, emits events, and cleans up", () 
 		".dropdown__toggle": toggle,
 		".dropdown__content": content,
 	});
+	root.isDropdown = true;
 	const outside = new FakeElement();
 	const events = [];
 
@@ -113,17 +140,61 @@ test("dropdown opens, closes on outside click, emits events, and cleans up", () 
 	root.addEventListener("dropdown:close", (event) => events.push(event.type));
 
 	const dropdown = new Dropdown(root);
+	assert.throws(() => new Dropdown(root), /instance already exists/);
+	assert.equal(Dropdown.getOrCreate(root), dropdown);
+	assert.equal(
+		Dropdown.autoInit(
+			".dropdown",
+			{},
+			{ matches: () => false, querySelectorAll: () => [root] },
+		)[0],
+		dropdown,
+	);
 
 	toggle.dispatchEvent(new FakeCustomEvent("click"));
 	assert.equal(root.classList.contains("dropdown--open"), true);
+	assert.equal(toggle.getAttribute("aria-expanded"), "true");
+	assert.equal(toggle.getAttribute("aria-controls"), content.id);
 	assert.deepEqual(events, ["dropdown:open"]);
 
 	document.trigger("click", { target: outside });
 	assert.equal(root.classList.contains("dropdown--open"), false);
+	assert.equal(toggle.getAttribute("aria-expanded"), "false");
 	assert.deepEqual(events, ["dropdown:open", "dropdown:close"]);
 
 	dropdown.destroy();
 	assert.equal(Dropdown.getInstance(root), undefined);
 	assert.equal(toggle.listenerCount("click"), 0);
 	assert.equal(document.listenerCount("click"), 0);
+});
+
+test("dropdown keyboard controls update focus and restore it on Escape", () => {
+	const first = new FakeElement();
+	const second = new FakeElement();
+	const toggle = new FakeElement();
+	const content = new FakeElement();
+	content.items = [first, second];
+	const root = new FakeElement({
+		".dropdown__toggle": toggle,
+		".dropdown__content": content,
+	});
+	const dropdown = new Dropdown(root);
+
+	const open = new FakeCustomEvent("keydown");
+	open.key = "ArrowDown";
+	toggle.dispatchEvent(open);
+	assert.equal(document.activeElement, first);
+	assert.equal(toggle.getAttribute("aria-expanded"), "true");
+
+	const advance = new FakeCustomEvent("keydown");
+	advance.key = "ArrowDown";
+	content.dispatchEvent(advance);
+	assert.equal(document.activeElement, second);
+
+	const escapeKey = new FakeCustomEvent("keydown");
+	escapeKey.key = "Escape";
+	content.dispatchEvent(escapeKey);
+	assert.equal(document.activeElement, toggle);
+	assert.equal(toggle.getAttribute("aria-expanded"), "false");
+	dropdown.destroy();
 });

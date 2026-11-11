@@ -92,7 +92,7 @@
 	@if cfg.$enable-transitions {
 		$transitions: ();
 		@each $p in $props {
-			$transitions: list.append($transitions, $p cfg.$transition, comma);
+			$transitions: list.append($transitions, $p var(--transition), comma);
 		}
 		transition: $transitions;
 	}
@@ -102,11 +102,11 @@
 @mixin shadow($size: md) {
 	@if cfg.$enable-shadows {
 		@if $size == sm {
-			box-shadow: cfg.$shadow-sm;
+			box-shadow: var(--shadow-sm);
 		} @else if $size == md {
-			box-shadow: cfg.$shadow;
+			box-shadow: var(--shadow);
 		} @else if $size == lg {
-			box-shadow: cfg.$shadow-lg;
+			box-shadow: var(--shadow-lg);
 		}
 	}
 }

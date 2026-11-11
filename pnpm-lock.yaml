@@ -7,6 +7,10 @@ settings:
 importers:
 
   .:
+    dependencies:
+      lucide:
+        specifier: ^1.61.0
+        version: 1.61.0
     devDependencies:
       '@biomejs/biome':
         specifier: 2.6.2
@@ -23,9 +27,6 @@ importers:
       lightningcss:
         specifier: ^1.33.0
         version: 1.33.0
-      lucide:
-        specifier: ^1.61.0
-        version: 1.61.0
       postcss:
         specifier: ^8.5.31
         version: 8.5.31

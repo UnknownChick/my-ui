@@ -7,27 +7,27 @@ $table: (
 	sizes: (
 		xs: (
 			"--table-cell-padding": 0.375rem,
-			font-size: cfg.$font-size-xs,
+			font-size: var(--font-size-xs),
 		),
 		sm: (
 			"--table-cell-padding": 0.5rem,
-			font-size: cfg.$font-size-sm,
+			font-size: var(--font-size-sm),
 		),
 		md: (
 			"--table-cell-padding": 1rem,
-			font-size: cfg.$font-size-md,
+			font-size: var(--font-size-md),
 		),
 		lg: (
 			"--table-cell-padding": 1.25rem,
-			font-size: cfg.$font-size-lg,
+			font-size: var(--font-size-lg),
 		),
 		xl: (
 			"--table-cell-padding": 1.5rem,
-			font-size: cfg.$font-size-xl,
+			font-size: var(--font-size-xl),
 		),
 		xxl: (
 			"--table-cell-padding": 1.75rem,
-			font-size: cfg.$font-size-xxl,
+			font-size: var(--font-size-xxl),
 		),
 	),
 ) !default;

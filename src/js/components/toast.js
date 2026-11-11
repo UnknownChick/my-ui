@@ -8,7 +8,7 @@ import Component from "../Component.js";
  * @example
  * new Toast('#btn', {
  *   title: 'Done!',
- *   message: '<p>Saved successfully.</p>',
+ *   message: 'Saved successfully.',
  *   position: 'top right',
  *   size: 'sm',
  *   color: 'success',
@@ -73,7 +73,7 @@ export default class Toast extends Component {
 		}
 
 		const msgEl = document.createElement("div");
-		msgEl.innerHTML = opts.message;
+		msgEl.textContent = opts.message;
 		content.appendChild(msgEl);
 
 		toastEl.appendChild(content);

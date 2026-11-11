@@ -8,32 +8,32 @@ $avatar: (
 		xs: (
 			width: 2rem,
 			height: 2rem,
-			font-size: cfg.$font-size-sm,
+			font-size: var(--font-size-sm),
 		),
 		sm: (
 			width: 2.5rem,
 			height: 2.5rem,
-			font-size: cfg.$font-size-md,
+			font-size: var(--font-size-md),
 		),
 		md: (
 			width: 3rem,
 			height: 3rem,
-			font-size: cfg.$font-size-lg,
+			font-size: var(--font-size-lg),
 		),
 		lg: (
 			width: 3.5rem,
 			height: 3.5rem,
-			font-size: cfg.$font-size-xl,
+			font-size: var(--font-size-xl),
 		),
 		xl: (
 			width: 4rem,
 			height: 4rem,
-			font-size: cfg.$font-size-2xl,
+			font-size: var(--font-size-2xl),
 		),
 		xxl: (
 			width: 5rem,
 			height: 5rem,
-			font-size: cfg.$font-size-3xl,
+			font-size: var(--font-size-3xl),
 		),
 	),
 ) !default;
@@ -52,7 +52,7 @@ $avatar: (
 		width: 3rem;
 		background-color: var(--color-primary);
 		color: var(--color-white);
-		font-size: cfg.$font-size-lg;
+		font-size: var(--font-size-lg);
 		font-weight: 600;
 		overflow: hidden;
 		@include m.flex-center(column);

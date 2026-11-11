@@ -6,27 +6,27 @@ $alert: (
 	sizes: (
 		xs: (
 			padding: 0.5rem 0.75rem,
-			font-size: cfg.$font-size-xs,
+			font-size: var(--font-size-xs),
 		),
 		sm: (
 			padding: 0.75rem 1rem,
-			font-size: cfg.$font-size-sm,
+			font-size: var(--font-size-sm),
 		),
 		md: (
 			padding: 0.825rem 1.25rem,
-			font-size: cfg.$font-size-md,
+			font-size: var(--font-size-md),
 		),
 		lg: (
 			padding: 1.25rem 1.5rem,
-			font-size: cfg.$font-size-lg,
+			font-size: var(--font-size-lg),
 		),
 		xl: (
 			padding: 1.5rem 1.75rem,
-			font-size: cfg.$font-size-xl,
+			font-size: var(--font-size-xl),
 		),
 		xxl: (
 			padding: 1.75rem 2rem,
-			font-size: cfg.$font-size-xxl,
+			font-size: var(--font-size-xxl),
 		),
 	),
 ) !default;
@@ -43,12 +43,12 @@ $alert: (
 		padding: map.get($alert, sizes, md, padding);
 		background-color: transparent;
 		color: inherit;
-		border: solid cfg.$border-width var(--color-border);
+		border: solid var(--border-width) var(--color-border);
 		border-radius: var(--radius);
 		position: relative;
 		line-height: 1;
 		font-weight: 600;
-		font-size: map.get($alert, sizes, md, font-size);
+		font-size: var(--font-size-md);
 		width: 100%;
 
 		@include api.make-size-variants(map.get($alert, sizes));

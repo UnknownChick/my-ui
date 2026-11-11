@@ -30,6 +30,7 @@ export default class Tooltip extends Component {
 		}
 
 		this._tooltipEl = null;
+		this._describedBy = this.el.getAttribute("aria-describedby");
 
 		this._showHandler = () => this.show();
 		this._hideHandler = () => this.hide();
@@ -55,6 +56,14 @@ export default class Tooltip extends Component {
 			.join(" ");
 		tooltip.textContent = message;
 		tooltip.setAttribute("role", "tooltip");
+		tooltip.id = `myui-tooltip-${Tooltip._nextId++}`;
+		const describedBy = new Set(
+			(this.el.getAttribute("aria-describedby") || "")
+				.split(/\s+/)
+				.filter(Boolean),
+		);
+		describedBy.add(tooltip.id);
+		this.el.setAttribute("aria-describedby", [...describedBy].join(" "));
 
 		document.body.appendChild(tooltip);
 		this._tooltipEl = tooltip;
@@ -107,6 +116,17 @@ export default class Tooltip extends Component {
 
 	hide() {
 		if (this._tooltipEl) {
+			const describedBy = new Set(
+				(this.el.getAttribute("aria-describedby") || "")
+					.split(/\s+/)
+					.filter(Boolean),
+			);
+			describedBy.delete(this._tooltipEl.id);
+			if (describedBy.size)
+				this.el.setAttribute("aria-describedby", [...describedBy].join(" "));
+			else if (this._describedBy)
+				this.el.setAttribute("aria-describedby", this._describedBy);
+			else this.el.removeAttribute("aria-describedby");
 			this._tooltipEl.remove();
 			this._tooltipEl = null;
 			this.emit("tooltip:hide");
@@ -118,3 +138,5 @@ export default class Tooltip extends Component {
 		super.destroy();
 	}
 }
+
+Tooltip._nextId = 1;

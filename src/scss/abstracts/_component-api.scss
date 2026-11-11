@@ -24,8 +24,8 @@ $semantic-variant-names: (
 // Generates --soft-* and --high-* modifier classes for all accents
 @mixin make-accent-variants($border: true) {
 	@each $name, $values in cfg.$accents {
-		$soft: map.get($values, soft);
-		$high: map.get($values, high);
+		$soft: var(--accent-#{$name}-soft);
+		$high: var(--accent-#{$name}-high);
 
 		&--soft-#{$name} {
 			background-color: $soft;
@@ -50,10 +50,12 @@ $semantic-variant-names: (
 @mixin make-accent-bg-variants {
 	@each $name, $values in cfg.$accents {
 		&--soft-#{$name} {
-			background-color: map.get($values, soft);
+			background-color: var(--accent-#{$name}-soft);
+			color: var(--accent-#{$name}-high);
 		}
 		&--high-#{$name} {
-			background-color: map.get($values, high);
+			background-color: var(--accent-#{$name}-high);
+			color: var(--accent-#{$name}-soft);
 		}
 	}
 }
@@ -63,7 +65,7 @@ $semantic-variant-names: (
 @mixin make-accent-prop-variants($property) {
 	@each $name, $values in cfg.$accents {
 		&--#{$name} {
-			#{$property}: map.get($values, high);
+			#{$property}: var(--accent-#{$name}-high);
 		}
 	}
 }

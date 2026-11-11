@@ -1,10 +1,9 @@
-@use "sass:map";
 @use "../config/config-default" as cfg;
 
 @layer myui.base {
 	@each $tag, $size in cfg.$title-sizes {
 		#{$tag} {
-			font-size: $size;
+			font-size: var(--fs-title-#{$tag});
 		}
 	}
 

@@ -78,7 +78,7 @@ $drawer: (
 			align-items: center;
 			justify-content: space-between;
 			padding: 1rem;
-			border-bottom: cfg.$border-width solid var(--color-border);
+			border-bottom: var(--border-width) solid var(--color-border);
 		}
 
 		&__close {

@@ -2,10 +2,10 @@
 
 @layer myui.utilities {
 	.border {
-		border: cfg.$border-width solid var(--color-border);
+		border: var(--border-width) solid var(--color-border);
 	}
 	.border-b {
-		border-bottom: cfg.$border-width solid var(--color-border);
+		border-bottom: var(--border-width) solid var(--color-border);
 	}
 	.border-0 {
 		border: 0;

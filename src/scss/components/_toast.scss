@@ -14,32 +14,32 @@ $toast: (
 		xs: (
 			"--toast-max-width": 16rem,
 			"--toast-padding": 0.5rem,
-			font-size: cfg.$font-size-xs,
+			font-size: var(--font-size-xs),
 		),
 		sm: (
 			"--toast-max-width": 20rem,
 			"--toast-padding": 0.75rem,
-			font-size: cfg.$font-size-sm,
+			font-size: var(--font-size-sm),
 		),
 		md: (
 			"--toast-max-width": 25rem,
 			"--toast-padding": 1rem,
-			font-size: cfg.$font-size-md,
+			font-size: var(--font-size-md),
 		),
 		lg: (
 			"--toast-max-width": 30rem,
 			"--toast-padding": 1.25rem,
-			font-size: cfg.$font-size-lg,
+			font-size: var(--font-size-lg),
 		),
 		xl: (
 			"--toast-max-width": 36rem,
 			"--toast-padding": 1.5rem,
-			font-size: cfg.$font-size-xl,
+			font-size: var(--font-size-xl),
 		),
 		xxl: (
 			"--toast-max-width": 42rem,
 			"--toast-padding": 1.75rem,
-			font-size: cfg.$font-size-xxl,
+			font-size: var(--font-size-xxl),
 		),
 	),
 	positions: (
@@ -80,7 +80,7 @@ $toast: (
 		display: block;
 		position: fixed;
 		background-color: var(--color-bg);
-		border: cfg.$border-width solid var(--color-border);
+		border: var(--border-width) solid var(--color-border);
 		border-radius: var(--radius);
 		max-width: var(--toast-max-width);
 		--toast-max-width: #{map.get($toast, max-width)};

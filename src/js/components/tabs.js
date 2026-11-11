@@ -46,6 +46,29 @@ export default class Tabs extends Component {
 			console.warn("[Tabs] No buttons or panels found");
 			return;
 		}
+		this._buttons.forEach((button, index) => {
+			if (!button.id) button.id = `myui-tab-${Tabs._nextId++}`;
+			const panelId = button.getAttribute("aria-controls");
+			const panel =
+				this._panels.find((item) => panelId && item.id === panelId) ||
+				this._panels[index];
+			if (!panel) {
+				console.warn("[Tabs] Tab has no matching panel:", button);
+				return;
+			}
+			if (!panel.id) panel.id = `myui-panel-${Tabs._nextId++}`;
+			button.setAttribute("aria-controls", panel.id);
+			panel.setAttribute("aria-labelledby", button.id);
+			button.setAttribute("role", "tab");
+			if (!button.hasAttribute("aria-selected")) {
+				button.setAttribute("aria-selected", "false");
+			}
+			button.tabIndex =
+				button.getAttribute("aria-selected") === "true" ? 0 : -1;
+			panel.setAttribute("role", "tabpanel");
+			if (!panel.hasAttribute("tabindex")) panel.setAttribute("tabindex", "0");
+		});
+		this._nav.setAttribute("role", "tablist");
 
 		// Click events
 		this.on("click", this._nav, (e) => {
@@ -61,7 +84,7 @@ export default class Tabs extends Component {
 		// Hash
 		if (this.options.saveSelection) {
 			this._hashHandler = () => this._handleHash(true);
-			window.addEventListener("hashchange", this._hashHandler);
+			this.on("hashchange", window, this._hashHandler);
 		}
 
 		// Init default
@@ -159,6 +182,13 @@ export default class Tabs extends Component {
 				e.preventDefault();
 				newIdx = this._buttons.length - 1;
 				break;
+			case "Enter":
+			case " ":
+				if (!this.options.autoActivate) {
+					e.preventDefault();
+					this.activateTab(idx, false);
+				}
+				return;
 			default:
 				return;
 		}
@@ -195,9 +225,8 @@ export default class Tabs extends Component {
 	}
 
 	destroy() {
-		if (this._hashHandler) {
-			window.removeEventListener("hashchange", this._hashHandler);
-		}
 		super.destroy();
 	}
 }
+
+Tabs._nextId = 1;

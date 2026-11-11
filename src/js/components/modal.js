@@ -28,10 +28,13 @@ export default class Modal extends Component {
 	};
 
 	static activeModals = [];
+	static _scrollLock = null;
+	static _scrollLockOwners = new Set();
 
 	init() {
 		this._isOpen = false;
 		this._triggerElement = null;
+		this._closeTimer = null;
 
 		this._setupTriggers();
 		this._setupCloseButtons();
@@ -46,7 +49,10 @@ export default class Modal extends Component {
 		document
 			.querySelectorAll(`[data-modal-target="${this.el.id}"]`)
 			.forEach((trigger) => {
-				trigger.addEventListener("click", (e) => {
+				trigger.setAttribute("aria-controls", this.el.id);
+				trigger.setAttribute("aria-haspopup", "dialog");
+				trigger.setAttribute("aria-expanded", "false");
+				this.on("click", trigger, (e) => {
 					e.preventDefault();
 					this.open(e.currentTarget);
 				});
@@ -81,8 +87,8 @@ export default class Modal extends Component {
 
 		// Native cancel event
 		this.on("cancel", (e) => {
-			if (!this.options.closeOnEscape) e.preventDefault();
-			else this.close();
+			e.preventDefault();
+			if (this.options.closeOnEscape) this.close();
 		});
 
 		// Footer auto-close
@@ -111,24 +117,35 @@ export default class Modal extends Component {
 			if (e.key === "Escape" && this.options.closeOnEscape) this.close();
 			if (e.key === "Tab" && this.options.trapFocus) this._handleFocusTrap(e);
 		};
-		document.addEventListener("keydown", this._keydownHandler);
+		this.on("keydown", document, this._keydownHandler);
 	}
 
 	// ── Open / Close ─────────────────────────────────────
 
 	open(triggerElement = null) {
-		if (this._isOpen) return;
+		if (this._isOpen) {
+			if (this._closeTimer) {
+				clearTimeout(this._closeTimer);
+				this._closeTimer = null;
+				this.el.classList.remove(`modal--${this.options.animation}-out`);
+				this.el.classList.add(`modal--${this.options.animation}-in`);
+			}
+			return;
+		}
 		if (this.options.onBeforeOpen?.(this.el) === false) return;
+		clearTimeout(this._closeTimer);
+		this._closeTimer = null;
+		this.el.classList.remove(`modal--${this.options.animation}-out`);
 
 		this._triggerElement = triggerElement || document.activeElement;
 		this.el.showModal();
 		this._isOpen = true;
+		this._setTriggerExpanded(true);
 		Modal.activeModals.push(this);
 
 		if (this.options.lockScroll) this._lockScroll();
 
 		if (this.options.animation) {
-			this.el.classList.remove(`modal--${this.options.animation}-out`);
 			this.el.classList.add(`modal--${this.options.animation}-in`);
 		}
 
@@ -139,32 +156,48 @@ export default class Modal extends Component {
 	}
 
 	close() {
-		if (!this._isOpen) return;
+		if (!this._isOpen || this._closeTimer) return;
 		if (this.options.onBeforeClose?.(this.el) === false) return;
 
 		if (this.options.animation) {
 			this.el.classList.remove(`modal--${this.options.animation}-in`);
 			this.el.classList.add(`modal--${this.options.animation}-out`);
-			setTimeout(() => this._finalizeClose(), this.options.animationDuration);
+			clearTimeout(this._closeTimer);
+			this._closeTimer = setTimeout(
+				() => this._finalizeClose(),
+				this.options.animationDuration,
+			);
 		} else {
 			this._finalizeClose();
 		}
 	}
 
 	_finalizeClose() {
+		if (!this._isOpen) return;
+		clearTimeout(this._closeTimer);
+		this._closeTimer = null;
 		this.el.close();
 		this._isOpen = false;
+		this._setTriggerExpanded(false);
 
 		const idx = Modal.activeModals.indexOf(this);
 		if (idx > -1) Modal.activeModals.splice(idx, 1);
 
-		if (this.options.lockScroll && Modal.activeModals.length === 0)
-			this._unlockScroll();
+		if (this.options.lockScroll) this._unlockScroll();
 		if (this.options.restoreFocus && this._triggerElement)
 			this._triggerElement.focus();
 
 		this.options.onClose?.(this.el);
 		this.emit("modal:close");
+	}
+
+	_setTriggerExpanded(expanded) {
+		if (!this.el.id) return;
+		document
+			.querySelectorAll(`[data-modal-target="${this.el.id}"]`)
+			.forEach((trigger) => {
+				trigger.setAttribute("aria-expanded", String(expanded));
+			});
 	}
 
 	toggle(trigger = null) {
@@ -174,17 +207,26 @@ export default class Modal extends Component {
 	// ── Scroll Lock ──────────────────────────────────────
 
 	_lockScroll() {
-		if (!document.body.hasAttribute("data-modal-scroll-locked")) {
+		if (Modal._scrollLockOwners.has(this)) return;
+		if (Modal._scrollLockOwners.size === 0) {
 			const w = window.innerWidth - document.documentElement.clientWidth;
+			Modal._scrollLock = {
+				overflow: document.body.style.overflow,
+				paddingRight: document.body.style.paddingRight,
+			};
 			document.body.style.overflow = "hidden";
 			document.body.style.paddingRight = `${w}px`;
 			document.body.setAttribute("data-modal-scroll-locked", "true");
 		}
+		Modal._scrollLockOwners.add(this);
 	}
 
 	_unlockScroll() {
-		document.body.style.overflow = "";
-		document.body.style.paddingRight = "";
+		Modal._scrollLockOwners.delete(this);
+		if (Modal._scrollLockOwners.size > 0 || !Modal._scrollLock) return;
+		document.body.style.overflow = Modal._scrollLock.overflow;
+		document.body.style.paddingRight = Modal._scrollLock.paddingRight;
+		Modal._scrollLock = null;
 		document.body.removeAttribute("data-modal-scroll-locked");
 	}
 
@@ -219,8 +261,9 @@ export default class Modal extends Component {
 	// ── Cleanup ──────────────────────────────────────────
 
 	destroy() {
-		this.close();
-		document.removeEventListener("keydown", this._keydownHandler);
+		clearTimeout(this._closeTimer);
+		this._closeTimer = null;
+		if (this._isOpen) this._finalizeClose();
 		super.destroy();
 	}
 }

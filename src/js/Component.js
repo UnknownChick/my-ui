@@ -32,6 +32,11 @@ export default class Component {
 			console.warn(`[${this.constructor.name}] Element not found:`, selector);
 			return;
 		}
+		if (this.constructor.getInstance(this.el)) {
+			throw new Error(
+				`[${this.constructor.name}] An instance already exists for this element; use getOrCreate() or destroy it first.`,
+			);
+		}
 
 		this.options = {
 			...this.constructor.defaults,
@@ -41,6 +46,7 @@ export default class Component {
 
 		this._listeners = [];
 		this._state = {};
+		this._destroyed = false;
 
 		// Store instance on element
 		this.constructor._instances.set(this.el, this);
@@ -55,8 +61,10 @@ export default class Component {
 
 	/** Override in subclasses to tear down the component */
 	destroy() {
+		if (this._destroyed) return;
+		this._destroyed = true;
 		this.off();
-		this.constructor._instances.delete(this.el);
+		if (this.el) this.constructor._instances.delete(this.el);
 	}
 
 	// ── DOM Helpers ──────────────────────────────────────
@@ -91,7 +99,7 @@ export default class Component {
 	/**
 	 * Attach an event listener and track it for cleanup.
 	 * @param {string} event - Event name
-	 * @param {Element|string} target - Element or CSS selector (scoped to this.el)
+	 * @param {EventTarget|string} target - Event target or CSS selector (scoped to this.el)
 	 * @param {Function} handler - Event handler
 	 * @param {Object} [opts] - addEventListener options
 	 */
@@ -100,7 +108,7 @@ export default class Component {
 		if (typeof target === "string") {
 			el = this.el.querySelector(target);
 		} else if (typeof target === "function") {
-			// on(event, handler) shorthand — attach to this.el
+			// on(event, handler[, options]) shorthand — attach to this.el
 			opts = handler;
 			handler = target;
 			el = this.el;
@@ -171,7 +179,7 @@ export default class Component {
 		const data = {};
 		const prefix = this.constructor.name.toLowerCase();
 
-		for (const [key, value] of Object.entries(this.el.dataset)) {
+		for (const [key, value] of Object.entries(this.el.dataset || {})) {
 			// Only parse attributes matching the component prefix
 			if (key.startsWith(prefix)) {
 				const optionKey = key.slice(prefix.length);
@@ -206,15 +214,26 @@ export default class Component {
 		return this._instances.get(el);
 	}
 
+	/** Return the element's existing instance, or create one. */
+	static getOrCreate(element, options = {}) {
+		// biome-ignore lint/complexity/noThisInStatic: polymorphic class factory
+		return this.getInstance(element) ?? new this(element, options);
+	}
+
 	/**
 	 * Auto-initialize components for all elements matching a selector.
 	 * @param {string} selector - CSS selector
 	 * @param {Object} options - Options passed to each instance
 	 * @returns {Component[]} Array of created instances
 	 */
-	static autoInit(selector, options = {}) {
-		return Array.from(document.querySelectorAll(selector)).map(
-			(el) => new this(el, options),
-		);
+	static autoInit(selector, options = {}, root = document) {
+		const elements = [
+			...(root.matches?.(selector) ? [root] : []),
+			...root.querySelectorAll(selector),
+		];
+		return elements.map((el) => {
+			// biome-ignore lint/complexity/noThisInStatic: polymorphic class factory
+			return this.getOrCreate(el, options);
+		});
 	}
 }

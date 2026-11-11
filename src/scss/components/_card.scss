@@ -5,7 +5,7 @@
 
 $card: (
 	padding: 2rem,
-	title-font-size: cfg.$font-size-2xl,
+	title-font-size: var(--font-size-2xl),
 	sizes: (
 		xs: (
 			"--card-padding": 0.5rem,
@@ -58,7 +58,7 @@ $card: (
 			display: flex;
 			align-items: center;
 			justify-content: space-between;
-			border-bottom: cfg.$border-width solid var(--color-border);
+			border-bottom: var(--border-width) solid var(--color-border);
 
 			p {
 				font-size: map.get($card, title-font-size);

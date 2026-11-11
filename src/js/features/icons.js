@@ -8,13 +8,8 @@ import {
 	X,
 } from "lucide";
 
-createIcons({
-	icons: {
-		ChevronLeft,
-		ChevronRight,
-		Ellipsis,
-		Search,
-		Smile,
-		X,
-	},
-});
+export function initIcons() {
+	createIcons({
+		icons: { ChevronLeft, ChevronRight, Ellipsis, Search, Smile, X },
+	});
+}

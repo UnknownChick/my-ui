@@ -1,3 +1,4 @@
+@use "sass:map";
 @use "../config/config-default" as cfg;
 @use "../abstracts/tokens" as t;
 @use "../abstracts/functions" as f;
@@ -37,8 +38,8 @@
 		--font-size-lg: #{cfg.$font-size-lg};
 		--font-size-xl: #{cfg.$font-size-xl};
 		--font-size-xxl: #{cfg.$font-size-xxl};
-		--font-size-2xl: #{cfg.$font-size-2xl};
 		--font-size-3xl: #{cfg.$font-size-3xl};
+		--font-size-2xl: #{cfg.$font-size-2xl};
 		--line-height: #{cfg.$line-height};
 		--line-height-title: #{cfg.$line-height-title};
 		--font-weight-normal: #{cfg.$font-weight-normal};
@@ -66,6 +67,8 @@
 		--radius-xl: #{cfg.$border-radius-xl};
 		--border-width: #{cfg.$border-width};
 		--transition: #{cfg.$transition};
+		--color-primary-hover: #{map.get(c.$primary-map, 700)};
+		--color-primary-active: #{map.get(c.$primary-map, 800)};
 
 		@if cfg.$enable-shadows {
 			--shadow-sm: #{cfg.$shadow-sm};

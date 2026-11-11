@@ -3,7 +3,7 @@
 @layer myui.utilities {
 	@each $name, $value in cfg.$font-sizes-fluid {
 		.fs-#{$name} {
-			font-size: $value;
+			font-size: var(--fs-fluid-#{$name});
 		}
 	}
 

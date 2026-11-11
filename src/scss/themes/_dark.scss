@@ -1,4 +1,6 @@
+@use "sass:map";
 @use "../config/config-default" as cfg;
+@use "../abstracts/colors" as colors;
 
 // ── Dark theme tokens ───────────────────────────────
 // Sets CSS custom properties for dark mode. Applied via
@@ -13,7 +15,8 @@
 			--color-text: #{cfg.$dark-text};
 			--color-text-muted: #{cfg.$dark-text-muted};
 			--color-border: #{cfg.$dark-border};
-
+			--color-primary-hover: #{map.get(colors.$primary-map, 300)};
+			--color-primary-active: #{map.get(colors.$primary-map, 200)};
 			@if cfg.$enable-shadows {
 				--shadow-sm: #{cfg.$dark-shadow-sm};
 				--shadow: #{cfg.$dark-shadow};
@@ -33,7 +36,7 @@
 			// Card
 			.card {
 				background-color: var(--color-surface);
-				border: cfg.$border-width solid var(--color-border);
+				border: var(--border-width) solid var(--color-border);
 				box-shadow: var(--shadow);
 			}
 
@@ -123,7 +126,7 @@
 			.tooltip {
 				background-color: var(--color-surface);
 				color: var(--color-text);
-				border: cfg.$border-width solid var(--color-border);
+				border: var(--border-width) solid var(--color-border);
 			}
 
 			// Separator

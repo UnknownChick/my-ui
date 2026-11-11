@@ -3,31 +3,31 @@
 @layer myui.utilities {
 	@each $key, $val in cfg.$spacing-scale {
 		.m-#{$key} {
-			margin: $val;
+			margin: var(--spacing-#{$key});
 		}
 		.mt-#{$key} {
-			margin-top: $val;
+			margin-top: var(--spacing-#{$key});
 		}
 		.mb-#{$key} {
-			margin-bottom: $val;
+			margin-bottom: var(--spacing-#{$key});
 		}
 		.mx-#{$key} {
-			margin-inline: $val;
+			margin-inline: var(--spacing-#{$key});
 		}
 		.my-#{$key} {
-			margin-block: $val;
+			margin-block: var(--spacing-#{$key});
 		}
 		.p-#{$key} {
-			padding: $val;
+			padding: var(--spacing-#{$key});
 		}
 		.px-#{$key} {
-			padding-inline: $val;
+			padding-inline: var(--spacing-#{$key});
 		}
 		.py-#{$key} {
-			padding-block: $val;
+			padding-block: var(--spacing-#{$key});
 		}
 		.gap-#{$key} {
-			gap: $val;
+			gap: var(--spacing-#{$key});
 		}
 	}
 

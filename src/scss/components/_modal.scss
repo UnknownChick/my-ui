@@ -81,7 +81,7 @@ $modal: (
 
 		&__title {
 			padding: var(--modal-padding);
-			border-bottom: cfg.$border-width solid var(--color-border);
+			border-bottom: var(--border-width) solid var(--color-border);
 		}
 
 		&__content {

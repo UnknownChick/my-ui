@@ -11,32 +11,32 @@ $dropdown: (
 		xs: (
 			"--dropdown-width": 12rem,
 			"--dropdown-item-padding": 0.25rem 0.5rem,
-			font-size: cfg.$font-size-xs,
+			font-size: var(--font-size-xs),
 		),
 		sm: (
 			"--dropdown-width": 16rem,
 			"--dropdown-item-padding": 0.375rem 0.625rem,
-			font-size: cfg.$font-size-sm,
+			font-size: var(--font-size-sm),
 		),
 		md: (
 			"--dropdown-width": 18.75rem,
 			"--dropdown-item-padding": 0.5rem 1rem,
-			font-size: cfg.$font-size-md,
+			font-size: var(--font-size-md),
 		),
 		lg: (
 			"--dropdown-width": 22rem,
 			"--dropdown-item-padding": 0.625rem 1.125rem,
-			font-size: cfg.$font-size-lg,
+			font-size: var(--font-size-lg),
 		),
 		xl: (
 			"--dropdown-width": 26rem,
 			"--dropdown-item-padding": 0.75rem 1.25rem,
-			font-size: cfg.$font-size-xl,
+			font-size: var(--font-size-xl),
 		),
 		xxl: (
 			"--dropdown-width": 30rem,
 			"--dropdown-item-padding": 0.875rem 1.5rem,
-			font-size: cfg.$font-size-xxl,
+			font-size: var(--font-size-xxl),
 		),
 	),
 ) !default;
@@ -87,7 +87,7 @@ $dropdown: (
 
 		&__content {
 			position: absolute;
-			border: cfg.$border-width solid var(--dropdown-border-color);
+			border: var(--border-width) solid var(--dropdown-border-color);
 			border-radius: var(--radius);
 			overflow: hidden;
 			z-index: 10;

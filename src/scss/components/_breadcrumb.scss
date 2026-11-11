@@ -9,27 +9,27 @@ $breadcrumb: (
 	sizes: (
 		xs: (
 			"--breadcrumb-padding": 0.125rem,
-			font-size: cfg.$font-size-xs,
+			font-size: var(--font-size-xs),
 		),
 		sm: (
 			"--breadcrumb-padding": 0.1875rem,
-			font-size: cfg.$font-size-sm,
+			font-size: var(--font-size-sm),
 		),
 		md: (
 			"--breadcrumb-padding": 0.25rem,
-			font-size: cfg.$font-size-md,
+			font-size: var(--font-size-md),
 		),
 		lg: (
 			"--breadcrumb-padding": 0.375rem,
-			font-size: cfg.$font-size-lg,
+			font-size: var(--font-size-lg),
 		),
 		xl: (
 			"--breadcrumb-padding": 0.5rem,
-			font-size: cfg.$font-size-xl,
+			font-size: var(--font-size-xl),
 		),
 		xxl: (
 			"--breadcrumb-padding": 0.625rem,
-			font-size: cfg.$font-size-xxl,
+			font-size: var(--font-size-xxl),
 		),
 	),
 ) !default;

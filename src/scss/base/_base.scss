@@ -6,7 +6,7 @@
 		color: var(--color-text);
 		background-color: var(--color-bg);
 		line-height: var(--line-height);
-		font-size: cfg.$font-size-md;
+		font-size: var(--font-size-md);
 		-webkit-font-smoothing: antialiased;
 	}
 

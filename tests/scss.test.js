@@ -28,6 +28,20 @@ test("custom brand colors generate theme tokens and readable foregrounds", () =>
 	assert.match(css, /\[data-theme=dark\]/);
 });
 
+test("semantic and accent custom properties drive component styles at runtime", () => {
+	const css = compile('@use "src/scss";');
+	assert.match(css, /--tooltip-background:\s*var\(--color-primary\)/);
+	assert.match(css, /--accent-blue-soft:\s*#ebf0ff/);
+	assert.match(css, /background-color:\s*var\(--accent-blue-soft\)/);
+	assert.match(css, /background-color:\s*var\(--color-primary\)/);
+	assert.match(css, /--font-size-md:\s*1rem/);
+	assert.match(css, /.btn--md\s*\{[^}]*font-size:\s*var\(--font-size-md\)/);
+	assert.match(css, /.p-4\s*\{[^}]*padding:\s*var\(--spacing-4\)/);
+	assert.match(css, /.fs-md\s*\{[^}]*font-size:\s*var\(--fs-fluid-md\)/);
+	assert.match(css, /--color-primary-hover:/);
+	assert.match(css, /[data-theme=dark][^{]*\{[^}]*--shadow:/);
+});
+
 test("contrast helpers use WCAG relative luminance", () => {
 	const css = compile(`
 		@use "src/scss" as myui;

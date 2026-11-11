@@ -72,7 +72,7 @@
 			th,
 			td {
 				padding: 0.5rem;
-				border: cfg.$border-width solid var(--color-border);
+				border: var(--border-width) solid var(--color-border);
 				text-align: left;
 			}
 		}
