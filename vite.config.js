@@ -2,11 +2,16 @@ import autoprefixer from "autoprefixer";
 import browserslist from "browserslist";
 import { browserslistToTargets } from "lightningcss";
 import path from "node:path";
-import { defineConfig } from "vite";
+import { defineConfig } from "vitest/config";
 
 const projectRoot = import.meta.dirname;
 
 export default defineConfig({
+	test: {
+		environment: "jsdom",
+		include: ["tests/**/*.test.js"],
+		restoreMocks: true,
+	},
 	css: {
 		preprocessorOptions: {
 			scss: {

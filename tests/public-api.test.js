@@ -1,10 +1,11 @@
 import assert from "node:assert/strict";
+import { execFileSync } from "node:child_process";
 import { mkdir, mkdtemp, readFile, rm, symlink } from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";
-import { test } from "node:test";
 import { pathToFileURL } from "node:url";
 import * as sass from "sass";
+import { test } from "vitest";
 import Component from "../src/js/Component.js";
 
 class Probe extends Component {}
@@ -24,8 +25,6 @@ class FakeElement {
 	}
 }
 
-globalThis.document = { querySelector: () => null };
-
 test("components have explicit construction and getOrCreate semantics", () => {
 	const element = new FakeElement({ probeEnabled: "false", probeCount: "3" });
 	const probe = new Probe(element, { count: 4 });
@@ -37,6 +36,21 @@ test("components have explicit construction and getOrCreate semantics", () => {
 	probe.destroy();
 	assert.equal(Probe.getInstance(element), undefined);
 	assert.doesNotThrow(() => new Probe(element).destroy());
+});
+
+test("reduced-motion detection is safe without browser APIs", () => {
+	assert.equal(Component.prefersReducedMotion(), false);
+	globalThis.matchMedia = () => ({ matches: true });
+	assert.equal(Component.prefersReducedMotion(), true);
+	delete globalThis.matchMedia;
+});
+
+test("pagination source does not require the CSS :has selector", async () => {
+	const source = await readFile(
+		path.join(process.cwd(), "src/js/components/pagination.js"),
+		"utf8",
+	);
+	assert.doesNotMatch(source, /:has\(/);
 });
 
 test("autoInit includes a matching root and reuses an existing instance", () => {
@@ -70,6 +84,26 @@ test("published JavaScript API and Sass package import resolve for consumers", a
 		const modules = path.join(consumer, "node_modules");
 		await mkdir(modules);
 		await symlink(process.cwd(), path.join(modules, "myui"), "dir");
+		const jsApi = execFileSync(
+			process.execPath,
+			[
+				"--input-type=module",
+				"-e",
+				"import { Dropdown, initMyUI } from 'myui'; console.log(typeof Dropdown.getOrCreate, typeof initMyUI)",
+			],
+			{ cwd: consumer, encoding: "utf8" },
+		);
+		assert.match(jsApi, /function function/);
+		const componentApi = execFileSync(
+			process.execPath,
+			[
+				"--input-type=module",
+				"-e",
+				"import Dropdown from 'myui/components/dropdown'; console.log(typeof Dropdown.getOrCreate)",
+			],
+			{ cwd: consumer, encoding: "utf8" },
+		);
+		assert.match(componentApi, /function/);
 		const css = sass.compileString('@use "pkg:myui";', {
 			url: pathToFileURL(path.join(consumer, "consumer.scss")),
 			importers: [new sass.NodePackageImporter(consumer)],

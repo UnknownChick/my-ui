@@ -1,6 +1,4 @@
-@use "sass:map";
 @use "../config/config-default" as cfg;
-@use "../abstracts/colors" as colors;
 
 // ── Dark theme tokens ───────────────────────────────
 // Sets CSS custom properties for dark mode. Applied via
@@ -15,8 +13,25 @@
 			--color-text: #{cfg.$dark-text};
 			--color-text-muted: #{cfg.$dark-text-muted};
 			--color-border: #{cfg.$dark-border};
-			--color-primary-hover: #{map.get(colors.$primary-map, 300)};
-			--color-primary-active: #{map.get(colors.$primary-map, 200)};
+			@each $name in (
+					"primary", "secondary", "success", "danger", "warning", "info"
+				)
+			{
+				--color-#{$name}-hover: color-mix(
+					in srgb,
+					var(--color-#{$name}),
+					white 25%
+				);
+				--color-#{$name}-active: color-mix(
+					in srgb,
+					var(--color-#{$name}),
+					white 40%
+				);
+			}
+			--color-white-hover: color-mix(in srgb, var(--color-white), black 8%);
+			--color-white-active: color-mix(in srgb, var(--color-white), black 14%);
+			--color-black-hover: color-mix(in srgb, var(--color-black), white 22%);
+			--color-black-active: color-mix(in srgb, var(--color-black), white 32%);
 			@if cfg.$enable-shadows {
 				--shadow-sm: #{cfg.$dark-shadow-sm};
 				--shadow: #{cfg.$dark-shadow};

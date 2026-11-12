@@ -11,6 +11,21 @@
 			--color-#{$name}: #{$value};
 			--color-on-#{$name}: #{f.contrast-color($value)};
 		}
+		@each $name in (
+				"primary", "secondary", "success", "danger", "warning", "info"
+			)
+		{
+			--color-#{$name}-hover: color-mix(
+				in srgb,
+				var(--color-#{$name}),
+				black 20%
+			);
+			--color-#{$name}-active: color-mix(
+				in srgb,
+				var(--color-#{$name}),
+				black 35%
+			);
+		}
 
 		--color-white: #{cfg.$color-white};
 		--color-black: #{cfg.$color-black};
@@ -67,8 +82,6 @@
 		--radius-xl: #{cfg.$border-radius-xl};
 		--border-width: #{cfg.$border-width};
 		--transition: #{cfg.$transition};
-		--color-primary-hover: #{map.get(c.$primary-map, 700)};
-		--color-primary-active: #{map.get(c.$primary-map, 800)};
 
 		@if cfg.$enable-shadows {
 			--shadow-sm: #{cfg.$shadow-sm};

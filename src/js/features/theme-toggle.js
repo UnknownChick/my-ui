@@ -68,8 +68,8 @@ export const ThemeToggle = {
 	/** Initialize theme from localStorage or system preference */
 	init() {
 		if (initialized) return;
-		initialized = true;
 		if (typeof document === "undefined") return;
+		initialized = true;
 		const saved = getSavedTheme();
 		const theme = saved || getSystemPreference();
 		applyTheme(theme);

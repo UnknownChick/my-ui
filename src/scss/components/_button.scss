@@ -35,55 +35,67 @@ $btn: (
 	colors: (
 		primary: (
 			default: var(--color-primary),
-			hover: var(--color-primary-700),
+			hover: var(--color-primary-hover),
+			active: var(--color-primary-active),
 			text: var(--color-on-primary),
 		),
 		secondary: (
 			default: var(--color-secondary),
-			hover: var(--color-secondary-700),
+			hover: var(--color-secondary-hover),
+			active: var(--color-secondary-active),
 			text: var(--color-on-secondary),
 		),
 		success: (
 			default: var(--color-success),
-			hover: var(--color-success-700),
+			hover: var(--color-success-hover),
+			active: var(--color-success-active),
 			text: var(--color-on-success),
 		),
 		danger: (
 			default: var(--color-danger),
-			hover: var(--color-danger-700),
+			hover: var(--color-danger-hover),
+			active: var(--color-danger-active),
 			text: var(--color-on-danger),
 		),
 		warning: (
 			default: var(--color-warning),
-			hover: var(--color-warning-700),
+			hover: var(--color-warning-hover),
+			active: var(--color-warning-active),
 			text: var(--color-on-warning),
 		),
 		info: (
 			default: var(--color-info),
-			hover: var(--color-info-700),
+			hover: var(--color-info-hover),
+			active: var(--color-info-active),
 			text: var(--color-on-info),
 		),
 		white: (
 			default: var(--color-white),
 			hover: var(--color-grayscale-200),
+			active: var(--color-grayscale-300),
 			text: var(--color-black),
 		),
 		black: (
 			default: var(--color-black),
 			hover: var(--color-grayscale-800),
+			active: var(--color-grayscale-900),
 			text: var(--color-white),
 		),
 	),
 ) !default;
 
-@mixin button-solid($main, $hover, $text) {
+@mixin button-solid($main, $hover, $text, $active: $hover) {
 	background-color: $main;
 	border-color: $main;
 	color: $text;
 
-	&:not(:disabled):is(:hover, :active, :focus) {
+	&:not(:disabled):is(:hover, :focus-visible) {
 		background-color: $hover;
 		border-color: $hover;
+	}
+	&:not(:disabled):active {
+		background-color: $active;
+		border-color: $active;
 	}
 }
 
@@ -103,10 +115,15 @@ $btn: (
 	border-color: $bg;
 	color: $fg;
 
-	&:not(:disabled):is(:hover, :active, :focus) {
+	&:not(:disabled):is(:hover, :focus-visible) {
 		background-color: $fg;
 		border-color: $fg;
 		color: $bg;
+	}
+	&:not(:disabled):active {
+		background-color: $bg;
+		border-color: $bg;
+		color: $fg;
 	}
 }
 
@@ -143,7 +160,8 @@ $btn: (
 				@include button-solid(
 					map.get($color-values, default),
 					map.get($color-values, hover),
-					map.get($color-values, text)
+					map.get($color-values, text),
+					$active: map.get($color-values, active, map.get($color-values, hover))
 				);
 			}
 

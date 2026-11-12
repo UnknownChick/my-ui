@@ -128,7 +128,9 @@ export default class Modal extends Component {
 				clearTimeout(this._closeTimer);
 				this._closeTimer = null;
 				this.el.classList.remove(`modal--${this.options.animation}-out`);
-				this.el.classList.add(`modal--${this.options.animation}-in`);
+				if (!Component.prefersReducedMotion()) {
+					this.el.classList.add(`modal--${this.options.animation}-in`);
+				}
 			}
 			return;
 		}
@@ -145,7 +147,7 @@ export default class Modal extends Component {
 
 		if (this.options.lockScroll) this._lockScroll();
 
-		if (this.options.animation) {
+		if (this.options.animation && !Component.prefersReducedMotion()) {
 			this.el.classList.add(`modal--${this.options.animation}-in`);
 		}
 
@@ -158,6 +160,12 @@ export default class Modal extends Component {
 	close() {
 		if (!this._isOpen || this._closeTimer) return;
 		if (this.options.onBeforeClose?.(this.el) === false) return;
+		if (Component.prefersReducedMotion() || !this.options.animation) {
+			this.el.classList.remove(`modal--${this.options.animation}-in`);
+			this.el.classList.remove(`modal--${this.options.animation}-out`);
+			this._finalizeClose();
+			return;
+		}
 
 		if (this.options.animation) {
 			this.el.classList.remove(`modal--${this.options.animation}-in`);
@@ -240,7 +248,10 @@ export default class Modal extends Component {
 
 	_focusFirst() {
 		const els = this._getFocusable();
-		if (els.length) setTimeout(() => els[0].focus(), 50);
+		if (els.length) {
+			const delay = Component.prefersReducedMotion() ? 0 : 50;
+			setTimeout(() => els[0].focus(), delay);
+		}
 	}
 
 	_handleFocusTrap(e) {

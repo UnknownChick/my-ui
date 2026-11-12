@@ -76,7 +76,7 @@ $table: (
 			td {
 				padding: var(--table-cell-padding);
 
-				&:has(select) {
+				&.table__cell--select {
 					padding: 0.5rem 1rem;
 				}
 

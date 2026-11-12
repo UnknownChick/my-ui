@@ -15,6 +15,13 @@ export default class Component {
 	/** Override in subclasses to provide default options */
 	static defaults = {};
 
+	/** Whether the user has requested reduced motion. Safe outside a browser. */
+	static prefersReducedMotion() {
+		return Boolean(
+			globalThis.matchMedia?.("(prefers-reduced-motion: reduce)").matches,
+		);
+	}
+
 	/** Store instances keyed by element for getInstance() */
 	static _instances = new WeakMap();
 

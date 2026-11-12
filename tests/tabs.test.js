@@ -1,83 +1,51 @@
-import assert from "node:assert/strict";
-import { test } from "node:test";
+import { afterEach, describe, expect, it } from "vitest";
+import Tabs from "../src/js/components/tabs.js";
 
-class Target {
-	listeners = new Map();
-	addEventListener(type, fn) {
-		this.listeners.set(type, fn);
-	}
-	removeEventListener(type) {
-		this.listeners.delete(type);
-	}
-	dispatchEvent(event) {
-		this.listeners.get(event.type)?.(event);
-	}
-}
-class Classes {
-	add() {}
-	remove() {}
-}
-class Element extends Target {
-	attrs = new Map();
-	classList = new Classes();
-	id = "";
-	setAttribute(key, value) {
-		this.attrs.set(key, String(value));
-	}
-	getAttribute(key) {
-		return this.attrs.get(key) ?? null;
-	}
-	hasAttribute(key) {
-		return this.attrs.has(key);
-	}
-	removeAttribute(key) {
-		this.attrs.delete(key);
-	}
-	focus() {
-		document.activeElement = this;
-	}
-}
-globalThis.document = new Target();
-document.activeElement = null;
-globalThis.CustomEvent = class {
-	constructor(type, options = {}) {
-		this.type = type;
-		this.detail = options.detail;
-	}
-};
-const { default: Tabs } = await import("../src/js/components/tabs.js");
+afterEach(() => {
+	document.body.innerHTML = "";
+});
 
-test("tabs establish ARIA relationships and support keyboard activation", () => {
-	const nav = new Element();
-	const tabA = new Element();
-	const tabB = new Element();
-	const panelA = new Element();
-	const panelB = new Element();
-	const root = new Element();
-	root.querySelector = (selector) => (selector === ".tabs__nav" ? nav : {});
-	root.querySelectorAll = (selector) =>
-		selector === ".tabs__button"
-			? [tabA, tabB]
-			: selector === ".tabs__panel"
-				? [panelA, panelB]
-				: [];
-	const tabs = new Tabs(root, { autoActivate: false });
-	assert.equal(nav.getAttribute("role"), "tablist");
-	assert.equal(tabA.getAttribute("aria-controls"), panelA.id);
-	assert.equal(panelA.getAttribute("aria-labelledby"), tabA.id);
-	assert.equal(panelB.hasAttribute("hidden"), true);
+describe("Tabs", () => {
+	it("sets ARIA relationships, roving focus, and manual keyboard activation", () => {
+		document.body.innerHTML = `
+			<div class="tabs">
+				<div class="tabs__nav">
+					<button class="tabs__button">Overview</button>
+					<button class="tabs__button">Settings</button>
+				</div>
+				<div class="tabs__content">
+					<div class="tabs__panel">Overview content</div>
+					<div class="tabs__panel">Settings content</div>
+				</div>
+			</div>`;
+		const root = document.querySelector(".tabs");
+		const nav = root.querySelector(".tabs__nav");
+		const [overview, settings] = root.querySelectorAll(".tabs__button");
+		const [overviewPanel, settingsPanel] =
+			root.querySelectorAll(".tabs__panel");
+		const tabs = new Tabs(root, { autoActivate: false });
 
-	document.activeElement = tabA;
-	nav.dispatchEvent({
-		type: "keydown",
-		key: "ArrowRight",
-		preventDefault() {},
+		expect(nav.getAttribute("role")).toBe("tablist");
+		expect(overview.getAttribute("role")).toBe("tab");
+		expect(overview.getAttribute("aria-controls")).toBe(overviewPanel.id);
+		expect(overviewPanel.getAttribute("aria-labelledby")).toBe(overview.id);
+		expect(overview.getAttribute("aria-selected")).toBe("true");
+		expect(settingsPanel.hasAttribute("hidden")).toBe(true);
+
+		overview.focus();
+		nav.dispatchEvent(
+			new KeyboardEvent("keydown", { key: "ArrowRight", bubbles: true }),
+		);
+		expect(document.activeElement).toBe(settings);
+		expect(settings.getAttribute("aria-selected")).toBe("false");
+		nav.dispatchEvent(
+			new KeyboardEvent("keydown", { key: "Enter", bubbles: true }),
+		);
+		expect(settings.getAttribute("aria-selected")).toBe("true");
+		expect(overviewPanel.hasAttribute("hidden")).toBe(true);
+		expect(settingsPanel.hasAttribute("hidden")).toBe(false);
+
+		tabs.destroy();
+		expect(Tabs.getInstance(root)).toBeUndefined();
 	});
-	assert.equal(document.activeElement, tabB);
-	assert.equal(tabB.getAttribute("aria-selected"), "false");
-	nav.dispatchEvent({ type: "keydown", key: "Enter", preventDefault() {} });
-	assert.equal(tabB.getAttribute("aria-selected"), "true");
-	assert.equal(panelA.hasAttribute("hidden"), true);
-	assert.equal(panelB.hasAttribute("hidden"), false);
-	tabs.destroy();
 });

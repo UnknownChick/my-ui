@@ -94,10 +94,10 @@ Interactive controls keep their ARIA state in sync. Dropdowns open with Enter, S
 
 | Component | Required markup | Main behavior | Cleanup / notes |
 | --- | --- | --- | --- |
-| Accordion | `details.accordion`, `.accordion__title`, `.accordion__content` | Native disclosure, optional group closing and animation | Cancels animation on destroy |
+| Accordion | `details.accordion`, `.accordion__title`, `.accordion__content` | Native disclosure, optional group closing and animation | Cancels animation on destroy; respects reduced motion |
 | Drawer | `.drawer`, optional `.drawer__close`; `data-drawer-target` trigger | Backdrop, Escape close, focus containment and restoration | Destroy removes backdrop and listeners |
 | Dropdown | `.dropdown__toggle` and `.dropdown__content` | Click/outside close and keyboard menu navigation | Syncs `aria-controls` and `aria-expanded` |
-| Modal | Native `dialog.modal`; `data-modal-target` trigger | Native modal, Escape/backdrop options and focus handling | Destroy cancels animation and listeners |
+| Modal | Native `dialog.modal`; `data-modal-target` trigger | Native modal, Escape/backdrop options, focus and scroll-lock handling | Destroy cancels animation and listeners; respects reduced motion |
 | Pagination | `.pagination`, `.pagination__list`, `.pagination__link` | Active page and previous/next states | `onChange` callback and `pagination:change` event |
 | Tabs | `.tabs__nav`, `.tabs__button`, `.tabs__panel`; `aria-controls` maps button to panel | Arrow/Home/End navigation; optional hash persistence | `onChange` callback |
 | Toast | Trigger, usually `[data-toast-trigger]` | Timed live-region notification | Title and message are plain text |
@@ -105,6 +105,10 @@ Interactive controls keep their ARIA state in sync. Dropdowns open with Enter, S
 | ThemeToggle | `[data-theme-toggle]` controls | Persists choice or follows system preference | `ThemeToggle.destroy()` removes listeners |
 
 Opening buttons for drawers and dialogs receive `aria-controls` and an `aria-expanded` state automatically. Tabs can omit IDs/roles: My UI creates stable-in-page IDs, links each tab to its corresponding panel by `aria-controls` (or by position when omitted), and maintains the roving tab stop.
+
+Avatar markup with an image uses `class="avatar avatar--image"`; table cells containing a select can use `class="table__cell table__cell--select"`. These explicit modifiers avoid relational selectors.
+
+The build targets Chrome 118+, Firefox 146+, and Safari/iOS 17.4+. This reflects the CSS features used by the source (including scoped styles and container queries); older browsers need a separate fallback or polyfill.
 
 ### Runtime theme customization
 
@@ -117,17 +121,22 @@ Sass configuration sets compiled defaults. Override CSS custom properties on an 
       --radius: 0.75rem;
     }
 
-Colors, spacing, font sizes, radii, transitions and shadows are emitted as custom properties and consumed by the component and utility classes, so these overrides affect the actual rendered styles. Theme selectors override neutral surface/text/border tokens; brand colors remain shared unless overridden. Sass values are build-time defaults, while CSS variables support runtime or scoped overrides.
+Colors, spacing, font sizes, radii, transitions and shadows are emitted as custom properties and consumed by the component and utility classes, so these overrides affect the actual rendered styles. Buttons use `--color-<semantic>-hover` and `--color-<semantic>-active`; their defaults are derived from the runtime semantic color, and dark mode uses lighter interaction shades. Theme selectors override neutral surface/text/border tokens; brand colors remain shared unless overridden. Sass values are build-time defaults, while CSS variables support runtime or scoped overrides.
 
 ## Build and package
+
+The development/test toolchain requires Node.js 22.22.2 or newer. The published browser bundle has its own support targets listed above.
 
 ```sh
 npm run dev
 npm run build
 npm run build:scss
 npm test
+npm run test:watch
 npm run lint
 npm pack --dry-run
 ```
 
 The package metadata points Sass consumers to `src/scss/index.scss` and ships the compiled default stylesheet as `dist/myui.css`. `prepack` builds that stylesheet before `npm pack` or `npm publish`. The repository is prepared for packaging but is not published automatically; choose the package license and verify the npm name before publishing.
+
+Unit tests run with Vitest and jsdom, so interactive component tests exercise a DOM implementation without launching a browser. Use Playwright separately for end-to-end checks in supported browsers.

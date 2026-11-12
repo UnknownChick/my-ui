@@ -39,6 +39,12 @@ export default class Accordion extends Component {
 	}
 
 	close() {
+		if (Component.prefersReducedMotion()) {
+			this.el.open = false;
+			this._resetAnimationStyles();
+			this.emit("accordion:close");
+			return;
+		}
 		this._isClosing = true;
 		const startHeight = `${this.el.offsetHeight}px`;
 		const endHeight = `${this._summary.offsetHeight}px`;
@@ -70,9 +76,13 @@ export default class Accordion extends Component {
 				});
 		}
 
-		this.el.style.height = `${this.el.offsetHeight}px`;
 		this.el.open = true;
-		requestAnimationFrame(() => this._expand());
+		if (Component.prefersReducedMotion()) {
+			this._resetAnimationStyles();
+		} else {
+			this.el.style.height = `${this.el.offsetHeight}px`;
+			requestAnimationFrame(() => this._expand());
+		}
 
 		this.emit("accordion:open");
 	}
@@ -99,12 +109,20 @@ export default class Accordion extends Component {
 		this._animation = null;
 		this._isClosing = false;
 		this._isExpanding = false;
+		this._resetAnimationStyles();
+	}
+
+	_resetAnimationStyles() {
+		this._animation?.cancel();
+		this._animation = null;
+		this._isClosing = false;
+		this._isExpanding = false;
 		this.el.style.height = "";
 		this.el.style.overflow = "";
 	}
 
 	destroy() {
-		this._animation?.cancel();
+		this._resetAnimationStyles();
 		super.destroy();
 	}
 }

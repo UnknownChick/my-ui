@@ -26,14 +26,10 @@ export default class Pagination extends Component {
 	init() {
 		this._list = this.$(Pagination.SEL.list);
 		this._pageLinks = this.$$(Pagination.SEL.linkPage);
-		this._prevItem = this.el.querySelector(
-			`.pagination__item:has(${Pagination.SEL.prev})`,
-		);
-		this._nextItem = this.el.querySelector(
-			`.pagination__item:has(${Pagination.SEL.next})`,
-		);
-		this._prevLink = this._prevItem?.querySelector(Pagination.SEL.prev);
-		this._nextLink = this._nextItem?.querySelector(Pagination.SEL.next);
+		this._prevLink = this.$(Pagination.SEL.prev);
+		this._nextLink = this.$(Pagination.SEL.next);
+		this._prevItem = this._prevLink?.closest(Pagination.SEL.item);
+		this._nextItem = this._nextLink?.closest(Pagination.SEL.item);
 
 		// Page link clicks
 		this._pageLinks.forEach((link) => {
@@ -83,14 +79,10 @@ export default class Pagination extends Component {
 
 	_updatePrevNext() {
 		const activeItem = this.$(Pagination.SEL.active);
-		const firstPageItem = this.el.querySelector(
-			`.pagination__item:not(:has(${Pagination.SEL.prev})):not(:has(${Pagination.SEL.ellipsis}))`,
-		);
-		const numberedItems = Array.from(
-			this.el.querySelectorAll(
-				`.pagination__item:has(${Pagination.SEL.linkPage})`,
-			),
-		);
+		const numberedItems = this.$$(Pagination.SEL.linkPage)
+			.map((link) => link.closest(Pagination.SEL.item))
+			.filter(Boolean);
+		const firstPageItem = numberedItems[0];
 		const lastPageItem = numberedItems[numberedItems.length - 1];
 
 		if (this._prevItem && this._prevLink) {

@@ -1,8 +1,8 @@
 import assert from "node:assert/strict";
 import path from "node:path";
-import { test } from "node:test";
 import { fileURLToPath } from "node:url";
 import * as sass from "sass";
+import { test } from "vitest";
 
 const projectRoot = path.resolve(
 	path.dirname(fileURLToPath(import.meta.url)),
@@ -39,7 +39,18 @@ test("semantic and accent custom properties drive component styles at runtime", 
 	assert.match(css, /.p-4\s*\{[^}]*padding:\s*var\(--spacing-4\)/);
 	assert.match(css, /.fs-md\s*\{[^}]*font-size:\s*var\(--fs-fluid-md\)/);
 	assert.match(css, /--color-primary-hover:/);
+	assert.match(css, /--color-primary-active:\s*color-mix/);
+	assert.match(css, /--color-success-hover:\s*color-mix/);
+	assert.match(css, /--color-white-active:\s*color-mix/);
+	assert.match(css, /white 25%/);
+	assert.match(
+		css,
+		/color-mix\(\s*in srgb,\s*var\(--color-primary\),\s*black 20%\s*\)/,
+	);
 	assert.match(css, /[data-theme=dark][^{]*\{[^}]*--shadow:/);
+	assert.match(css, /\.avatar--image\s*\{/);
+	assert.match(css, /\.table__cell--select\s*\{/);
+	assert.doesNotMatch(css, /:has\(/);
 });
 
 test("contrast helpers use WCAG relative luminance", () => {
@@ -77,6 +88,7 @@ test("form styles are opt-in through the form wrapper", () => {
 
 test("the default bundle keeps core utilities and omits advanced families", () => {
 	const css = compile('@use "src/scss";');
+	assert.doesNotMatch(css, /:has\(/);
 
 	assert.match(css, /\.flex\s*\{/);
 	assert.match(css, /\.grid-cols-3\s*\{/);
