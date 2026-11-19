@@ -9,6 +9,21 @@ const projectRoot = path.resolve(
 	"..",
 );
 
+test("showcase keeps the interactive playground and component navigation", async () => {
+	const html = await readFile(path.join(projectRoot, "index.html"), "utf8");
+	const playground = html
+		.split('<section class="playground" id="playground"')[1]
+		.split('<div class="showcase__sections" id="components">')[0];
+	assert.ok(playground);
+	assert.match(playground, /id="playground-component"/);
+	assert.match(playground, /id="playground-variant"/);
+	assert.match(playground, /id="playground-size"/);
+	assert.match(playground, /id="playground-state"/);
+	assert.match(playground, /id="playground-code"/);
+	assert.match(html, /href="#components"/);
+	assert.match(html, /src="src\/js\/showcase-playground\.js"/);
+});
+
 test("button showcase displays every variant and a disabled state", async () => {
 	const html = await readFile(path.join(projectRoot, "index.html"), "utf8");
 	const buttonSection = html

@@ -47,6 +47,7 @@ export default defineConfig({
 		copyPublicDir: false,
 		rollupOptions: {
 			input: {
+				index: "./index.html",
 				js: "./src/js/auto.js",
 				style: "./myui.config.scss",
 			},

@@ -4,6 +4,7 @@
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <meta name="theme-color" content="#5b4ce2" />
+        <meta name="description" content="Découvrez les composants, variantes et thèmes de My UI, une bibliothèque d’interface modulaire en SCSS." />
         <link rel="icon" href="data:," />
         <title>My UI — composants SCSS</title>
         <link rel="stylesheet" href="myui.config.scss" />
@@ -497,9 +498,204 @@
                     scroll-behavior: auto;
                 }
             }
+
+            /* Interactive component playground */
+            .showcase__layout {
+                display: block;
+                width: min(100% - 2rem, 76rem);
+                padding: 0 0 4rem;
+            }
+
+            .showcase__sidebar {
+                position: absolute;
+                width: 1px;
+                height: 1px;
+                overflow: hidden;
+                clip-path: inset(50%);
+                white-space: nowrap;
+            }
+
+            .showcase__topbar {
+                padding-inline: max(1rem, calc((100vw - 76rem) / 2));
+                background: var(--color-bg);
+            }
+
+            .showcase__topbar-nav {
+                display: flex;
+                align-items: center;
+                gap: 1.5rem;
+                margin-left: auto;
+                margin-right: 1.5rem;
+            }
+
+            .showcase__topbar-nav a {
+                color: var(--color-text-muted);
+                font-size: 0.875rem;
+                text-decoration: none;
+            }
+
+            .showcase__topbar-nav a:hover { color: var(--color-primary); }
+
+            .showcase__hero { display: none; }
+
+            .playground {
+                padding-block: clamp(2.5rem, 7vw, 6rem) clamp(2rem, 4vw, 3.5rem);
+                border-bottom: 1px solid var(--color-border);
+            }
+
+            .playground__intro {
+                display: grid;
+                grid-template-columns: minmax(0, 1fr) minmax(16rem, 0.65fr);
+                align-items: end;
+                gap: 2rem;
+                margin-bottom: clamp(2rem, 5vw, 3.5rem);
+            }
+
+            .playground__eyebrow {
+                margin: 0 0 0.85rem;
+                color: var(--color-primary);
+                font-size: 0.75rem;
+                font-weight: 700;
+                letter-spacing: 0.11em;
+                text-transform: uppercase;
+            }
+
+            .playground__intro h1 {
+                max-width: 13ch;
+                margin: 0;
+                font-size: clamp(2.75rem, 6.5vw, 5.5rem);
+                letter-spacing: -0.065em;
+                line-height: 0.98;
+            }
+
+            .playground__intro-copy {
+                max-width: 36ch;
+                margin: 0 0 0.25rem;
+                color: var(--color-text-muted);
+            }
+
+            .playground__workspace {
+                display: grid;
+                grid-template-columns: minmax(15rem, 0.72fr) minmax(0, 1.7fr);
+                min-height: 27rem;
+                overflow: hidden;
+                border: 1px solid var(--color-border);
+                border-radius: calc(var(--radius-xl) + 0.25rem);
+                background: var(--color-surface);
+            }
+
+            .playground__controls {
+                display: flex;
+                flex-direction: column;
+                gap: 1.5rem;
+                padding: clamp(1.25rem, 3vw, 2rem);
+                border-right: 1px solid var(--color-border);
+                background: var(--color-bg);
+            }
+
+            .playground__control-heading,
+            .playground__preview-heading {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                gap: 1rem;
+            }
+
+            .playground__control-heading h2,
+            .playground__preview-heading h2 { margin: 0; font-size: 1rem; }
+
+            .playground__control-heading span,
+            .playground__preview-heading span {
+                color: var(--color-text-muted);
+                font-size: 0.75rem;
+            }
+
+            .playground__field { display: grid; gap: 0.5rem; }
+            .playground__field label { color: var(--color-text-muted); font-size: 0.75rem; font-weight: 700; }
+
+            .playground__field select {
+                width: 100%;
+                min-height: 2.75rem;
+                padding: 0.625rem 0.75rem;
+                border: 1px solid var(--color-border);
+                border-radius: var(--radius);
+                background: var(--color-bg);
+                color: var(--color-text);
+                font: inherit;
+            }
+
+            .playground__hint { margin-top: auto; color: var(--color-text-muted); font-size: 0.75rem; }
+            .playground__demo { display: grid; grid-template-rows: auto minmax(13rem, 1fr) auto; min-width: 0; }
+
+            .playground__preview-heading {
+                min-height: 3.75rem;
+                padding-inline: 1.5rem;
+                border-bottom: 1px solid var(--color-border);
+            }
+
+            .playground__live {
+                display: grid;
+                min-height: 15rem;
+                place-items: center;
+                padding: 2rem;
+                background-color: var(--color-bg);
+                background-image: radial-gradient(var(--color-border) 0.7px, transparent 0.7px);
+                background-size: 18px 18px;
+            }
+
+            .playground__sample {
+                display: grid;
+                justify-items: center;
+                gap: 0.85rem;
+                padding: 2.5rem;
+                border: 1px solid var(--color-border);
+                border-radius: var(--radius-xl);
+                background: var(--color-bg);
+                box-shadow: var(--shadow-sm);
+            }
+
+            .playground__sample-label { margin: 0; color: var(--color-text-muted); font-size: 0.75rem; }
+            .playground__sample .btn.is-preview-hover,
+            .playground__sample .btn.is-preview-active { background: var(--playground-interaction-color); border-color: var(--playground-interaction-color); color: var(--playground-foreground); }
+
+            .playground__code { overflow: hidden; border-top: 1px solid var(--color-border); background: var(--color-surface); }
+            .playground__code-tabs { display: flex; align-items: center; justify-content: space-between; min-height: 3rem; padding-inline: 1.25rem; border-bottom: 1px solid var(--color-border); }
+            .playground__code-switches { display: flex; gap: 0.35rem; }
+
+            .playground__code-tab,
+            .playground__copy {
+                min-height: 2rem;
+                padding: 0.35rem 0.65rem;
+                border: 0;
+                border-radius: var(--radius-sm);
+                background: transparent;
+                color: var(--color-text-muted);
+                font: inherit;
+                font-size: 0.75rem;
+                cursor: pointer;
+            }
+
+            .playground__code-tab[aria-selected="true"] { background: var(--color-bg); color: var(--color-text); }
+            .playground__code pre { min-height: 5.5rem; margin: 0; padding: 1rem 1.25rem 1.25rem; overflow: auto; color: var(--color-text); font-size: 0.78rem; line-height: 1.65; }
+            .playground__code-message { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; }
+
+            @media (max-width: 760px) {
+                .playground__intro { grid-template-columns: minmax(0, 1fr); align-items: start; }
+                .playground__workspace { grid-template-columns: minmax(0, 1fr); }
+                .playground__controls { border-right: 0; border-bottom: 1px solid var(--color-border); }
+            }
+
+            @media (max-width: 600px) {
+                .showcase__topbar-nav { display: none; }
+                .playground__intro h1 { font-size: clamp(2.6rem, 14vw, 4rem); }
+                .playground__live { padding: 1rem; }
+                .playground__sample { padding: 1.5rem; }
+            }
         </style>
+        <link rel="stylesheet" href="src/scss/showcase.css" />
     </head>
     <body>
+        <a class="showcase__skip" href="#collection">Aller aux composants</a>
         <div class="showcase">
             <header class="showcase__topbar">
                 <a class="showcase__brand" href="#top">
@@ -509,16 +705,19 @@
                         <span class="showcase__brand-caption">Design system SCSS</span>
                     </span>
                 </a>
+                <nav class="showcase__topbar-nav" aria-label="Navigation principale">
+                    <a href="#collection">Composants</a>
+                    <a href="#playground">Playground</a>
+                    <a href="#colors">Fondations</a>
+                </nav>
                 <div class="showcase__topbar-actions">
-                    <span class="showcase__topbar-note">BEM · Sass · thèmes personnalisables</span>
-                    <button class="btn btn--secondary btn--sm" type="button" data-theme-toggle>
-                        Basculer le thème
-                    </button>
+                    <span class="showcase__topbar-note">v0.0.0 · BEM · Sass</span>
+                    <button class="btn btn--secondary btn--sm showcase__theme-toggle" type="button" data-theme-toggle aria-label="Basculer entre le thème clair et le thème sombre"><span aria-hidden="true">◐</span> Thème</button>
                 </div>
             </header>
 
             <div class="showcase__layout">
-                <aside class="showcase__sidebar" aria-label="Navigation de la vitrine">
+                <aside class="showcase__sidebar" aria-label="Navigation de la vitrine" hidden>
                     <p class="showcase__nav-title">Explorer</p>
                     <nav aria-label="Sections">
                         <ul class="showcase__nav-list">
@@ -555,25 +754,148 @@
                 </aside>
 
                 <main class="showcase__main" id="top">
-                    <section class="showcase__hero" aria-labelledby="showcase-title">
-                        <p class="showcase__eyebrow">Bibliothèque de composants · SCSS</p>
-                        <h1 id="showcase-title">Construire des interfaces, simplement.</h1>
-                        <p class="showcase__hero-copy">
-                            Une base modulaire en BEM, des couleurs configurables et des composants
-                            conçus pour s’adapter à chaque projet.
-                        </p>
-                        <div class="showcase__hero-actions">
-                            <a class="btn btn--white btn--md" href="#button">Découvrir les composants</a>
-                            <a class="btn btn--link" href="#colors">Voir les thèmes</a>
+                    <section class="landing-hero" aria-labelledby="landing-title">
+                        <div class="landing-hero__content">
+                            <p class="landing-kicker"><span aria-hidden="true"></span> Votre boîte à outils d’interface</p>
+                            <h1 id="landing-title">De belles interfaces, <em>brique par brique.</em></h1>
+                            <p class="landing-hero__description">Des composants pensés pour aller ensemble, assez flexibles pour devenir les vôtres. Imaginez, assemblez, créez.</p>
+                            <div class="landing-hero__actions">
+                                <a class="btn btn--primary landing-button" href="#collection">Explorer les composants <span aria-hidden="true">↗</span></a>
+                                <a class="landing-hero__text-link" href="#playground">Tester le playground <span aria-hidden="true">→</span></a>
+                            </div>
+                            <div class="landing-hero__facts" aria-label="Les chiffres de My UI">
+                                <div><strong>24</strong><span>composants</span></div>
+                                <div><strong>6</strong><span>tailles</span></div>
+                                <div><strong>2</strong><span>thèmes</span></div>
+                            </div>
                         </div>
-                        <div class="showcase__hero-stats" aria-label="Caractéristiques de My UI">
-                            <span class="showcase__hero-stat"><strong>24</strong> composants</span>
-                            <span class="showcase__hero-stat"><strong>6</strong> tailles</span>
-                            <span class="showcase__hero-stat"><strong>2</strong> thèmes</span>
+
+                        <div class="hero-art" aria-hidden="true">
+                            <div class="hero-art__canvas">
+                                <div class="hero-art__canvas-top"><span>MY UI / COLLECTION</span><span>✳</span></div>
+                                <div class="hero-art__window">
+                                    <div class="hero-art__window-top">
+                                        <span class="hero-art__window-mark">M</span>
+                                        <span class="hero-art__window-name"><strong>Mon espace</strong><small>Projet créatif</small></span>
+                                        <span class="hero-art__dots">•••</span>
+                                    </div>
+                                    <div class="hero-art__window-body">
+                                        <div class="hero-art__window-heading"><span>VOTRE PROJET</span><span class="badge badge--soft-green">En cours</span></div>
+                                        <p class="hero-art__window-title">Tout commence<br />par une idée.</p>
+                                        <p class="hero-art__window-copy">Une collection de petits détails qui font la différence.</p>
+                                        <div class="hero-art__progress-label"><span>Progression</span><strong>75 %</strong></div>
+                                        <progress class="progress progress--primary progress--md" max="100" value="75"></progress>
+                                        <div class="hero-art__window-bottom">
+                                            <div class="hero-art__avatars"><span class="avatar avatar--xs avatar--primary">AL</span><span class="avatar avatar--xs avatar--warning">JD</span><span class="avatar avatar--xs avatar--info">ML</span></div>
+                                            <span class="btn btn--primary btn--xs">C’est parti <span>↗</span></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="hero-art__floating hero-art__floating--colors"><span class="hero-art__color-dots"><i></i><i></i><i></i></span><span><strong>À votre image</strong><small>Couleurs personnalisables</small></span></div>
+                                <div class="hero-art__floating hero-art__floating--ready"><span class="hero-art__check">✓</span><span><strong>Prêt à créer</strong><small>Modulaire & réutilisable</small></span></div>
+                                <span class="hero-art__canvas-bottom">DESIGNED TO BUILD / 01—24</span>
+                            </div>
+                        </div>
+                    </section>
+
+                    <section class="collection" id="collection" aria-labelledby="collection-title">
+                        <div class="landing-section-heading">
+                            <div>
+                                <p class="landing-section-label"><span>01</span> / LA COLLECTION</p>
+                                <h2 id="collection-title">Une idée, mille possibilités.</h2>
+                            </div>
+                            <div class="landing-section-heading__aside">
+                                <p>Les essentiels d’une interface réunis au même endroit. Choisissez un composant pour découvrir ses variantes.</p>
+                                <a href="#components">Voir les exemples détaillés <span aria-hidden="true">↗</span></a>
+                            </div>
+                        </div>
+
+                        <div class="component-grid">
+                            <a class="component-tile" href="#button">
+                                <div class="component-tile__preview component-tile__preview--violet" aria-hidden="true"><span class="btn btn--primary btn--sm">Continuer</span><span class="btn btn--primary-outline btn--sm">Annuler</span></div>
+                                <div class="component-tile__info"><div><p>01 / ACTION</p><h3>Button</h3><span>Déclencher une action</span></div><span class="component-tile__arrow" aria-hidden="true">↗</span></div>
+                            </a>
+                            <a class="component-tile" href="#badge">
+                                <div class="component-tile__preview component-tile__preview--peach" aria-hidden="true"><span class="badge badge--soft-purple">Nouveau</span><span class="badge badge--soft-green">En ligne</span><span class="badge badge--soft-orange">Bêta</span></div>
+                                <div class="component-tile__info"><div><p>02 / STATUT</p><h3>Badge</h3><span>Mettre en évidence</span></div><span class="component-tile__arrow" aria-hidden="true">↗</span></div>
+                            </a>
+                            <a class="component-tile" href="#avatar">
+                                <div class="component-tile__preview component-tile__preview--green" aria-hidden="true"><span class="avatar avatar--md avatar--primary">AL</span><span class="avatar avatar--md avatar--warning">JD</span><span class="avatar avatar--md avatar--info">ML</span></div>
+                                <div class="component-tile__info"><div><p>03 / IDENTITÉ</p><h3>Avatar</h3><span>Donner un visage</span></div><span class="component-tile__arrow" aria-hidden="true">↗</span></div>
+                            </a>
+                            <a class="component-tile" href="#alert">
+                                <div class="component-tile__preview component-tile__preview--blue" aria-hidden="true"><span class="alert alert--success alert--sm">✓ &nbsp; Tout est enregistré</span></div>
+                                <div class="component-tile__info"><div><p>04 / MESSAGE</p><h3>Alert</h3><span>Informer au bon moment</span></div><span class="component-tile__arrow" aria-hidden="true">↗</span></div>
+                            </a>
+                            <a class="component-tile" href="#forms">
+                                <div class="component-tile__preview component-tile__preview--sand" aria-hidden="true"><span class="component-tile__field"><span>Adresse e-mail</span><span class="component-tile__fake-input">hello@myui.fr <span>✓</span></span></span></div>
+                                <div class="component-tile__info"><div><p>05 / SAISIE</p><h3>Form controls</h3><span>Recueillir les informations</span></div><span class="component-tile__arrow" aria-hidden="true">↗</span></div>
+                            </a>
+                            <a class="component-tile" href="#tabs">
+                                <div class="component-tile__preview component-tile__preview--violet" aria-hidden="true"><span class="component-tile__tabs"><span class="component-tile__tab--active">Aperçu</span><span>Activité</span><span>Fichiers</span></span></div>
+                                <div class="component-tile__info"><div><p>06 / NAVIGATION</p><h3>Tabs</h3><span>Organiser le contenu</span></div><span class="component-tile__arrow" aria-hidden="true">↗</span></div>
+                            </a>
+                            <a class="component-tile" href="#loader">
+                                <div class="component-tile__preview component-tile__preview--peach" aria-hidden="true"><span class="loader loader--primary loader--sm"></span><span class="loader loader--success loader--md"></span><span class="loader loader--purple loader--lg"></span></div>
+                                <div class="component-tile__info"><div><p>07 / CHARGEMENT</p><h3>Loader</h3><span>Faire patienter en douceur</span></div><span class="component-tile__arrow" aria-hidden="true">↗</span></div>
+                            </a>
+                            <a class="component-tile" href="#progress">
+                                <div class="component-tile__preview component-tile__preview--green" aria-hidden="true"><span class="component-tile__progress"><span><b>Avancement</b><b>75 %</b></span><progress class="progress progress--primary progress--md" value="75" max="100"></progress></span></div>
+                                <div class="component-tile__info"><div><p>08 / PROGRESSION</p><h3>Progress</h3><span>Visualiser le chemin parcouru</span></div><span class="component-tile__arrow" aria-hidden="true">↗</span></div>
+                            </a>
+                            <a class="component-tile" href="#card">
+                                <div class="component-tile__preview component-tile__preview--blue" aria-hidden="true"><span class="component-tile__mini-card"><span class="component-tile__mini-icon">✳</span><span><b>Votre projet</b><small>Tout prend forme ici.</small></span><span>↗</span></span></div>
+                                <div class="component-tile__info"><div><p>09 / CONTENU</p><h3>Card</h3><span>Rassembler les idées</span></div><span class="component-tile__arrow" aria-hidden="true">↗</span></div>
+                            </a>
+                            <a class="component-tile" href="#accordion">
+                                <div class="component-tile__preview component-tile__preview--sand" aria-hidden="true"><span class="component-tile__accordion"><span>En savoir plus <b>−</b></span><small>Les réponses, au bon endroit.</small></span></div>
+                                <div class="component-tile__info"><div><p>10 / CONTENU</p><h3>Accordion</h3><span>Déplier l’essentiel</span></div><span class="component-tile__arrow" aria-hidden="true">↗</span></div>
+                            </a>
+                            <a class="component-tile" href="#tooltip">
+                                <div class="component-tile__preview component-tile__preview--violet" aria-hidden="true"><span class="component-tile__tooltip"><span>Un petit coup de pouce</span><b>i</b></span></div>
+                                <div class="component-tile__info"><div><p>11 / CONTEXTE</p><h3>Tooltip</h3><span>Guider sans interrompre</span></div><span class="component-tile__arrow" aria-hidden="true">↗</span></div>
+                            </a>
+                            <a class="component-tile" href="#modal">
+                                <div class="component-tile__preview component-tile__preview--peach" aria-hidden="true"><span class="component-tile__dialog"><b>Tout est prêt ?</b><small>Il ne reste qu’à confirmer.</small><span class="component-tile__dialog-actions"><span>Annuler</span><span>Confirmer</span></span></span></div>
+                                <div class="component-tile__info"><div><p>12 / DIALOGUE</p><h3>Modal</h3><span>Garder l’attention</span></div><span class="component-tile__arrow" aria-hidden="true">↗</span></div>
+                            </a>
+                        </div>
+
+                        <details class="component-index">
+                            <summary><span><strong>Et ce n’est que le début.</strong><small>Explorer les 24 composants et les fondations</small></span><span class="component-index__toggle" aria-hidden="true">+</span></summary>
+                            <div class="component-index__body">
+                                <div><h3>Actions & navigation</h3><div class="component-index__links"><a href="#accordion">Accordion</a><a href="#breadcrumb">Breadcrumb</a><a href="#button">Button</a><a href="#drawer">Drawer</a><a href="#dropdown">Dropdown</a><a href="#modal">Modal</a><a href="#pagination">Pagination</a><a href="#tabs">Tabs</a><a href="#tooltip">Tooltip</a></div></div>
+                                <div><h3>Contenu & données</h3><div class="component-index__links"><a href="#avatar">Avatar</a><a href="#badge">Badge</a><a href="#card">Card</a><a href="#dot">Dot</a><a href="#icon">Icon</a><a href="#image">Image</a><a href="#list">List</a><a href="#separator">Separator</a><a href="#square">Square</a><a href="#table">Table</a></div></div>
+                                <div><h3>États & retours</h3><div class="component-index__links"><a href="#alert">Alert</a><a href="#loader">Loader</a><a href="#notification">Notification</a><a href="#progress">Progress</a><a href="#toast">Toast</a></div></div>
+                                <div><h3>Pour aller plus loin</h3><div class="component-index__links"><a href="#forms">Form controls</a><a href="#colors">Couleurs & thèmes</a><a href="#utilities">Utilitaires</a><a href="#variants">Toutes les variantes</a></div></div>
+                            </div>
+                        </details>
+                    </section>
+
+                    <section class="playground" id="playground" aria-labelledby="playground-title">
+                        <div class="playground__intro"><div><p class="playground__eyebrow">02 / LE PLAYGROUND</p><h2 id="playground-title">Une base. Vos règles.</h2></div><p class="playground__intro-copy">Ajustez une variante, observez le résultat et récupérez les classes prêtes à intégrer dans votre interface.</p></div>
+                        <div class="playground__workspace">
+                            <form class="playground__controls" id="playground-controls" aria-label="Configuration de l’aperçu">
+                                <div class="playground__control-heading"><h2 id="playground-component-name">Button</h2><span>Composant <span id="playground-component-index">01</span></span></div>
+                                <div class="playground__field"><label for="playground-component">Composant</label><select id="playground-component"><option value="button">Button</option><option value="badge">Badge</option><option value="alert">Alert</option></select></div>
+                                <div class="playground__field"><label for="playground-variant">Variante</label><select id="playground-variant"><option value="primary">Primary</option><option value="secondary">Secondary</option><option value="success">Success</option><option value="warning">Warning</option><option value="danger">Danger</option><option value="info">Info</option><option value="primary-outline">Primary outline</option><option value="soft-blue">Soft blue</option></select></div>
+                                <div class="playground__field"><label for="playground-size">Taille</label><select id="playground-size"><option>xs</option><option>sm</option><option selected>md</option><option>lg</option><option>xl</option><option>xxl</option></select></div>
+                                <div class="playground__field" id="playground-state-field"><label for="playground-state">État</label><select id="playground-state"><option value="normal">Normal</option><option value="hover">Survol</option><option value="active">Actif</option><option value="disabled">Désactivé</option><option value="loading">Chargement</option></select></div>
+                                <p class="playground__hint">Les contrôles mettent à jour l’aperçu et le code en direct.</p>
+                            </form>
+                            <div class="playground__demo">
+                                <div class="playground__preview-heading"><h2>Aperçu</h2><span>État interactif</span></div>
+                                <div class="playground__live"><div class="playground__sample" id="playground-sample"><button class="btn btn--primary btn--md" id="playground-button" type="button">Enregistrer</button></div><p class="playground__sample-label" id="playground-state-label">Primary · MD</p></div>
+                                <div class="playground__code"><div class="playground__code-tabs"><div class="playground__code-switches" role="tablist" aria-label="Extrait de code"><button id="playground-tab-html" class="playground__code-tab" type="button" role="tab" aria-controls="playground-code" aria-selected="true" data-code-tab="html">HTML</button><button id="playground-tab-sass" class="playground__code-tab" type="button" role="tab" aria-controls="playground-code" aria-selected="false" data-code-tab="sass">Sass</button></div><button class="playground__copy" id="playground-copy" type="button">Copier</button></div><pre><code id="playground-code" role="tabpanel" aria-labelledby="playground-tab-html" tabindex="0"></code></pre><span class="playground__code-message" id="playground-copy-status" aria-live="polite"></span></div>
+                            </div>
                         </div>
                     </section>
 
                     <div class="showcase__sections" id="components">
+                        <div class="catalog-intro">
+                            <div><p class="landing-section-label"><span>03</span> / DANS LE DÉTAIL</p><h2>À chaque besoin, son composant.</h2></div>
+                            <p>Explorez les exemples, comparez les tailles et trouvez la variante qui correspond à votre projet.</p>
+                        </div>
                         <section class="card showcase__section" id="colors" aria-labelledby="colors-title">
                             <header class="card__title showcase__section-header">
                                 <div>
@@ -968,7 +1290,7 @@
                                             <div class="showcase__preview">
                                                 <button class="btn btn--primary btn--fluid btn--sm" type="button">Largeur fluide</button>
                                                 <button class="btn btn--primary btn--center btn--sm" type="button">Centré</button>
-                                                <button class="btn btn--primary btn--loading btn--sm" type="button" aria-label="Chargement">
+                                                <button class="btn btn--primary btn--loading btn--sm" type="button" aria-busy="true" aria-label="Chargement">
                                                     <span class="btn__label">Enregistrement</span>
                                                     <span class="btn__spinner" aria-hidden="true"></span>
                                                 </button>
@@ -1619,40 +1941,40 @@
                             </header>
                             <div class="card__body showcase__stack">
                                 <label for="progress-primary">Téléversement du fichier <strong>72&nbsp;%</strong></label>
-                                <progress id="progress-primary" class="progress--primary" value="72" max="100">72%</progress>
+                                <progress id="progress-primary" class="progress progress--primary" value="72" max="100">72%</progress>
                                 <label for="progress-secondary">Synchronisation <strong>36&nbsp;%</strong></label>
-                                <progress id="progress-secondary" class="progress--secondary" value="36" max="100">36%</progress>
+                                <progress id="progress-secondary" class="progress progress--secondary" value="36" max="100">36%</progress>
                                 <label for="progress-success">Tâches terminées <strong>48&nbsp;%</strong></label>
-                                <progress id="progress-success" class="progress--success" value="48" max="100">48%</progress>
+                                <progress id="progress-success" class="progress progress--success" value="48" max="100">48%</progress>
                                 <label for="progress-warning">Capacité utilisée <strong>86&nbsp;%</strong></label>
-                                <progress id="progress-warning" class="progress--warning" value="86" max="100">86%</progress>
+                                <progress id="progress-warning" class="progress progress--warning" value="86" max="100">86%</progress>
                                 <label for="progress-danger">Limite atteinte <strong>96&nbsp;%</strong></label>
-                                <progress id="progress-danger" class="progress--danger" value="96" max="100">96%</progress>
+                                <progress id="progress-danger" class="progress progress--danger" value="96" max="100">96%</progress>
                                 <label for="progress-info">Traitement <strong>24&nbsp;%</strong></label>
-                                <progress id="progress-info" class="progress--info" value="24" max="100">24%</progress>
+                                <progress id="progress-info" class="progress progress--info" value="24" max="100">24%</progress>
                             </div>
                             <div class="card__body">
                                 <details class="showcase__variant-details">
                                     <summary>Exemples d’accents et de tailles</summary>
                                     <div class="showcase__variant-body">
                                         <div class="showcase__variant-grid">
-                                            <progress class="progress--xs progress--primary" value="64" max="100" aria-label="Progression xs"></progress>
-                                            <progress class="progress--sm progress--primary" value="64" max="100" aria-label="Progression sm"></progress>
-                                            <progress class="progress--md progress--primary" value="64" max="100" aria-label="Progression md"></progress>
-                                            <progress class="progress--lg progress--primary" value="64" max="100" aria-label="Progression lg"></progress>
-                                            <progress class="progress--xl progress--primary" value="64" max="100" aria-label="Progression xl"></progress>
-                                            <progress class="progress--xxl progress--primary" value="64" max="100" aria-label="Progression xxl"></progress>
+                                            <progress class="progress progress--xs progress--primary" value="64" max="100" aria-label="Progression xs"></progress>
+                                            <progress class="progress progress--sm progress--primary" value="64" max="100" aria-label="Progression sm"></progress>
+                                            <progress class="progress progress--md progress--primary" value="64" max="100" aria-label="Progression md"></progress>
+                                            <progress class="progress progress--lg progress--primary" value="64" max="100" aria-label="Progression lg"></progress>
+                                            <progress class="progress progress--xl progress--primary" value="64" max="100" aria-label="Progression xl"></progress>
+                                            <progress class="progress progress--xxl progress--primary" value="64" max="100" aria-label="Progression xxl"></progress>
                                         </div>
                                         <div class="showcase__variant-grid">
-                                            <progress class="progress--red" value="64" max="100" aria-label="Accent rouge"></progress>
-                                            <progress class="progress--orange" value="64" max="100" aria-label="Accent orange"></progress>
-                                            <progress class="progress--blue" value="64" max="100" aria-label="Accent bleu"></progress>
-                                            <progress class="progress--green" value="64" max="100" aria-label="Accent vert"></progress>
-                                            <progress class="progress--purple" value="64" max="100" aria-label="Accent violet"></progress>
-                                            <progress class="progress--grey" value="64" max="100" aria-label="Accent gris"></progress>
-                                            <progress class="progress--brown" value="64" max="100" aria-label="Accent marron"></progress>
-                                            <progress class="progress--cyan" value="64" max="100" aria-label="Accent cyan"></progress>
-                                            <progress class="progress--black" value="64" max="100" aria-label="Accent noir"></progress>
+                                            <progress class="progress progress--red" value="64" max="100" aria-label="Accent rouge"></progress>
+                                            <progress class="progress progress--orange" value="64" max="100" aria-label="Accent orange"></progress>
+                                            <progress class="progress progress--blue" value="64" max="100" aria-label="Accent bleu"></progress>
+                                            <progress class="progress progress--green" value="64" max="100" aria-label="Accent vert"></progress>
+                                            <progress class="progress progress--purple" value="64" max="100" aria-label="Accent violet"></progress>
+                                            <progress class="progress progress--grey" value="64" max="100" aria-label="Accent gris"></progress>
+                                            <progress class="progress progress--brown" value="64" max="100" aria-label="Accent marron"></progress>
+                                            <progress class="progress progress--cyan" value="64" max="100" aria-label="Accent cyan"></progress>
+                                            <progress class="progress progress--black" value="64" max="100" aria-label="Accent noir"></progress>
                                         </div>
                                     </div>
                                 </details>
@@ -1713,17 +2035,16 @@
                                 </div>
                                 <div class="showcase__variant-group">
                                     <h3>Accents forts</h3>
-                                        <div class="showcase__variant-grid">
-                                            <div class="showcase__variant-sample"><span class="square square--high-red"></span><code>high-red</code></div>
-                                            <div class="showcase__variant-sample"><span class="square square--high-orange"></span><code>high-orange</code></div>
-                                            <div class="showcase__variant-sample"><span class="square square--high-blue"></span><code>high-blue</code></div>
-                                            <div class="showcase__variant-sample"><span class="square square--high-green"></span><code>high-green</code></div>
-                                            <div class="showcase__variant-sample"><span class="square square--high-purple"></span><code>high-purple</code></div>
-                                            <div class="showcase__variant-sample"><span class="square square--high-grey"></span><code>high-grey</code></div>
-                                            <div class="showcase__variant-sample"><span class="square square--high-brown"></span><code>high-brown</code></div>
-                                            <div class="showcase__variant-sample"><span class="square square--high-cyan"></span><code>high-cyan</code></div>
-                                            <div class="showcase__variant-sample"><span class="square square--high-black"></span><code>high-black</code></div>
-                                        </div>
+                                    <div class="showcase__variant-grid">
+                                        <div class="showcase__variant-sample"><span class="square square--high-red"></span><code>high-red</code></div>
+                                        <div class="showcase__variant-sample"><span class="square square--high-orange"></span><code>high-orange</code></div>
+                                        <div class="showcase__variant-sample"><span class="square square--high-blue"></span><code>high-blue</code></div>
+                                        <div class="showcase__variant-sample"><span class="square square--high-green"></span><code>high-green</code></div>
+                                        <div class="showcase__variant-sample"><span class="square square--high-purple"></span><code>high-purple</code></div>
+                                        <div class="showcase__variant-sample"><span class="square square--high-grey"></span><code>high-grey</code></div>
+                                        <div class="showcase__variant-sample"><span class="square square--high-brown"></span><code>high-brown</code></div>
+                                        <div class="showcase__variant-sample"><span class="square square--high-cyan"></span><code>high-cyan</code></div>
+                                        <div class="showcase__variant-sample"><span class="square square--high-black"></span><code>high-black</code></div>
                                     </div>
                                 </div>
                             </div>
@@ -2504,12 +2825,14 @@
                     </div>
 
                     <footer class="showcase__footer">
-                        My UI · bibliothèque de composants SCSS · BEM · thèmes white et dark
+                        <div><strong>My UI<span>✳</span></strong><p>Une bibliothèque de composants SCSS, pensée pour vos idées.</p></div>
+                        <a href="#top">Retour en haut <span aria-hidden="true">↑</span></a>
                     </footer>
                 </main>
             </div>
         </div>
 
         <script type="module" src="src/js/auto.js"></script>
+        <script type="module" src="src/js/showcase-playground.js"></script>
     </body>
 </html>
