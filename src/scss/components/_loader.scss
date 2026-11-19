@@ -40,14 +40,15 @@ $loader: (
 ) !default;
 
 @mixin loader-variant($color) {
-	border-color: $color;
+	--loader-color: #{$color};
 }
 
 @layer myui.components {
 	.loader {
+		--loader-color: var(--color-primary);
 		width: map.get($loader, size);
 		height: map.get($loader, size);
-		border: map.get($loader, border-size) solid var(--color-primary);
+		border: map.get($loader, border-size) solid var(--loader-color);
 		border-bottom-color: transparent;
 		border-radius: 100%;
 		display: block;
@@ -60,7 +61,7 @@ $loader: (
 			}
 		}
 
-		@include api.make-accent-prop-variants(border-color);
+		@include api.make-accent-prop-variants("--loader-color");
 		@include api.make-size-variants(map.get($loader, sizes));
 	}
 
