@@ -1,6 +1,6 @@
 # My UI
 
-My UI is a modular SCSS library built around BEM component classes, configurable design tokens, and light/dark themes. The full stylesheet entry point is `src/scss/index.scss`.
+My UI is a modular SCSS library built around BEM component classes, configurable design tokens, and light/dark themes. `src/scss/index.scss` is the standard entry point; `src/scss/full.scss` also includes the advanced utilities and third-party integrations.
 
 ## Project layout
 
@@ -13,7 +13,7 @@ src/scss/
 ├── layouts/     # Form and page-layout patterns
 ├── themes/      # White/light and dark theme overrides
 ├── utilities/   # Optional utility classes
-├── vendor/      # Optional third-party integrations, excluded from npm until dependencies are declared
+├── vendor/      # Packages integrations
 └── index.scss   # Public full-library entry point
 ```
 
@@ -44,6 +44,8 @@ Create a Sass entry point at the project root and configure the package before u
 );
 ```
 
+To include the entire library, use `@use 'myui/scss/full' with (...)` instead. It includes the standard bundle, advanced utilities and the Dropzone and Select2  styles. The package installs their dependencies. Vite resolves them automatically; with the Sass CLI, add `--load-path=node_modules`.
+
 Compile that entry point with Sass and include the resulting CSS in the application. Every setting is optional: omitted values keep the defaults. The Sass module can only be configured once per compilation, so configure it in the application's single root stylesheet.
 
 The generated CSS exposes semantic custom properties such as `--color-primary`, `--color-secondary`, `--color-success`, and `--color-danger`. Set `data-theme="white"` (or the compatible alias `data-theme="light"`) or `data-theme="dark"` on the root element to select a theme. The dark theme can be disabled with `$enable-dark-mode: false`.
@@ -54,7 +56,7 @@ Wrap native controls in an element with the `form` class to opt into My UI form 
 
 The default bundle includes a compact set of spacing, flexbox, grid, sizing, typography, border, color, and aspect-ratio utilities. Set `$enable-utilities: false` in the root Sass configuration to omit them.
 
-The advanced `row`, `position`, `opacity`, and `prose` partials are not loaded by default. Import one directly only when a project needs it.
+The advanced `row`, `position`, `opacity`, and `prose` partials are included by the full entry and can also be imported individually as `myui/scss/utilities/row`, `myui/scss/utilities/position`, `myui/scss/utilities/opacity`, and `myui/scss/utilities/prose`. The row grid's `gap-0` to `gap-5` modifiers apply whole-rem gaps only when combined with `.row`; other elements keep the standard spacing scale. Other standard gaps also update the row's column calculations.
 
 ## Components
 
@@ -87,6 +89,8 @@ ThemeToggle.destroy(); // removes listeners installed by initMyUI
 ```
 
 `initMyUI({ root, theme, components })` initializes matching components under `root` (default: `document`), including `root` itself when it matches. `theme` defaults to `true`. The `components` object accepts per-component options under `accordion`, `drawer`, `dropdown`, `modal`, `pagination`, `tabs`, `toast`, and `tooltip`. Initialization reuses existing instances. Direct construction with `new Dropdown(element)` throws if an instance already exists; use `Dropdown.getOrCreate(element, options)` to reuse it. Call `destroy()` before removing an initialized element. For script-tag or side-effect usage, import `myui/auto`, which also initializes the bundled icons. Components can also be imported individually from `myui/components/dropdown`, and the Sass entry point is `myui/scss`.
+
+The full stylesheet includes the third-party styles, but does not initialize those libraries automatically: Dropzone needs an upload URL and Select2 needs a target element. Their JavaScript is available through `myui/vendor/dropzone`, `myui/vendor/jquery`, and `myui/vendor/select2`. Import and configure them explicitly where needed.
 
 Interactive controls keep their ARIA state in sync. Dropdowns open with Enter, Space, or Arrow Down; Arrow keys/Home/End navigate menu items and Escape closes and restores focus. Tabs use the standard tablist/tab/tabpanel relationships; with `autoActivate: false`, Enter or Space activates the focused tab. Modal and drawer instances remove registered listeners when destroyed. Toast messages are inserted as text; pass plain text rather than HTML.
 
@@ -137,6 +141,6 @@ npm run lint
 npm pack --dry-run
 ```
 
-The package metadata points Sass consumers to `src/scss/index.scss` and ships the compiled default stylesheet as `dist/myui.css`. `prepack` builds that stylesheet before `npm pack` or `npm publish`. The repository is prepared for packaging but is not published automatically; choose the package license and verify the npm name before publishing.
+The package exposes both Sass entries and the compiled `myui/css` and `myui/css/full` stylesheets. `prepare` builds them before Git installs, `npm pack`, or `npm publish`. The repository is prepared for packaging but is not published automatically; choose the package license and verify the npm name before publishing.
 
 Unit tests run with Vitest and jsdom, so interactive component tests exercise a DOM implementation without launching a browser. Use Playwright separately for end-to-end checks in supported browsers.
