@@ -1,2 +1,6 @@
-@import "dropzone/src/basic";
-@import "dropzone/src/dropzone";
+@use "sass:meta";
+
+@layer myui.components {
+	@include meta.load-css("dropzone/dist/basic.css");
+	@include meta.load-css("dropzone/dist/dropzone.css");
+}

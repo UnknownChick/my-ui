@@ -1,0 +1,8 @@
+// Full bundle: keep the configurable public entry point and add opt-in modules.
+@forward "index";
+@use "index";
+@use "utilities/row";
+@use "utilities/position";
+@use "utilities/opacity";
+@use "utilities/prose";
+@use "vendor";

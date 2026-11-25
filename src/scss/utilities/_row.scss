@@ -1,4 +1,5 @@
 @use "sass:math";
+@use "sass:list";
 @use "../config/config-default" as cfg;
 @use "../abstracts/mixins" as m;
 
@@ -40,11 +41,22 @@ $_wrapper-width: 90%;
 		}
 	}
 
-	// Gap variations
+	// Legacy row gaps use whole rems; keep them scoped to rows so they do not
+	// override the standard spacing utilities on unrelated elements.
 	@for $i from 0 through 5 {
-		.gap-#{$i} {
+		.row.gap-#{$i} {
 			gap: #{$i}rem;
 			--gap-size: #{$i}rem;
+		}
+	}
+
+	// The remaining standard gaps also need a matching value for column widths.
+	@each $key, $_ in cfg.$spacing-scale {
+		@if list.index(("0", "1", "2", "3", "4", "5"), $key) == null {
+			.row.gap-#{$key} {
+				gap: var(--spacing-#{$key});
+				--gap-size: var(--spacing-#{$key});
+			}
 		}
 	}
 

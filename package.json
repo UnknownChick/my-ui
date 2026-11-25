@@ -13,11 +13,24 @@
 		},
 		"./auto": "./src/js/auto.js",
 		"./scss": "./src/scss/index.scss",
+		"./scss/full": "./src/scss/full.scss",
+		"./scss/abstracts": "./src/scss/abstracts/_index.scss",
+		"./scss/utilities/row": "./src/scss/utilities/_row.scss",
+		"./scss/utilities/position": "./src/scss/utilities/_position.scss",
+		"./scss/utilities/opacity": "./src/scss/utilities/_opacity.scss",
+		"./scss/utilities/prose": "./src/scss/utilities/_prose.scss",
+		"./scss/vendor": "./src/scss/vendor/_index.scss",
+		"./css": "./dist/myui.css",
+		"./css/full": "./dist/myui-full.css",
 		"./components/*": "./src/js/components/*.js",
-		"./features/theme-toggle": "./src/js/features/theme-toggle.js"
+		"./features/theme-toggle": "./src/js/features/theme-toggle.js",
+		"./vendor/dropzone": "./src/js/vendor/dropzone.js",
+		"./vendor/jquery": "./src/js/vendor/jquery.js",
+		"./vendor/select2": "./src/js/vendor/select2.js"
 	},
 	"files": [
 		"dist/myui.css",
+		"dist/myui-full.css",
 		"src/js/",
 		"src/scss/abstracts/",
 		"src/scss/base/",
@@ -26,7 +39,9 @@
 		"src/scss/layouts/",
 		"src/scss/themes/",
 		"src/scss/utilities/",
+		"src/scss/vendor/",
 		"src/scss/_layers.scss",
+		"src/scss/full.scss",
 		"src/scss/index.scss",
 		"readme.md"
 	],
@@ -36,10 +51,10 @@
 	],
 	"scripts": {
 		"dev": "vite",
-		"build": "vite build && sass --no-source-map src/scss/index.scss dist/myui.css",
+		"build": "vite build && npm run build:scss",
 		"build:demo": "vite build",
-		"build:scss": "sass --no-source-map src/scss/index.scss dist/myui.css",
-		"prepack": "sass --no-source-map src/scss/index.scss dist/myui.css",
+		"build:scss": "sass --no-source-map src/scss/index.scss dist/myui.css && sass --no-source-map --load-path=node_modules src/scss/full.scss dist/myui-full.css",
+		"prepare": "npm run build:scss",
 		"test": "vitest run",
 		"test:watch": "vitest",
 		"preview": "vite preview",
@@ -48,18 +63,21 @@
 		"format": "biome format --write"
 	},
 	"dependencies": {
-		"lucide": "^1.61.0"
+		"dropzone": "^6.3.5",
+		"jquery": "^4.1.0",
+		"lucide": "^1.78.0",
+		"select2": "^4.2.0"
 	},
 	"devDependencies": {
-		"@biomejs/biome": "2.6.2",
-		"@fullhuman/postcss-purgecss": "^8.0.0",
-		"autoprefixer": "^10.6.1",
-		"browserslist": "^4.29.4",
-		"jsdom": "^31.0.0",
+		"@biomejs/biome": "2.6.8",
+		"@fullhuman/postcss-purgecss": "^9.1.0",
+		"autoprefixer": "^10.7.0",
+		"browserslist": "^4.29.6",
+		"jsdom": "^31.0.1",
 		"lightningcss": "^1.33.0",
-		"postcss": "^8.5.31",
-		"sass": "^1.106.1",
-		"vite": "^8.3.5",
-		"vitest": "^5.1.0"
+		"postcss": "^8.5.33",
+		"sass": "^1.108.2",
+		"vite": "^8.3.8",
+		"vitest": "^5.1.1"
 	}
 }
