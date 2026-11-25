@@ -10,7 +10,10 @@ const projectRoot = path.resolve(
 );
 
 function compile(source) {
-	return sass.compileString(source, { loadPaths: [projectRoot] }).css;
+	return sass.compileString(source, {
+		loadPaths: [projectRoot, path.join(projectRoot, "node_modules")],
+		quietDeps: true,
+	}).css;
 }
 
 test("custom brand colors generate theme tokens and readable foregrounds", () => {
@@ -98,6 +101,38 @@ test("the default bundle keeps core utilities and omits advanced families", () =
 	assert.doesNotMatch(css, /\.opacity-10\s*\{/);
 	assert.doesNotMatch(css, /\.row\s*\{/);
 	assert.doesNotMatch(css, /\.prose\s*\{/);
+});
+
+test("the full bundle includes advanced utilities and vendor integrations", () => {
+	const css = compile('@use "src/scss/full" with ($color-primary: #5b4ce2);');
+
+	for (const selector of [
+		/\.row\s*\{/,
+		/\.col-md-6\s*\{/,
+		/\.relative\s*\{/,
+		/\.opacity-50\s*\{/,
+		/\.prose\s*\{/,
+		/\.dropzone\s*\{/,
+		/\.select2-container\s*\{/,
+		/\.toast\s*\{/,
+	]) {
+		assert.match(css, selector);
+	}
+	assert.match(css, /--color-primary:\s*#5b4ce2;/);
+});
+
+test("row gaps do not override the standard gap utilities", () => {
+	const css = compile('@use "src/scss/full";');
+
+	assert.match(css, /\.gap-4\s*\{[^}]*gap:\s*var\(--spacing-4\)/);
+	assert.match(
+		css,
+		/\.row\.gap-4\s*\{[^}]*gap:\s*4rem;[^}]*--gap-size:\s*4rem/,
+	);
+	assert.match(
+		css,
+		/\.row\.gap-8\s*\{[^}]*gap:\s*var\(--spacing-8\);[^}]*--gap-size:\s*var\(--spacing-8\)/,
+	);
 });
 
 test("dropdown size variants set the content width", () => {

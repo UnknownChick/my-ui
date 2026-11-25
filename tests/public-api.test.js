@@ -79,6 +79,11 @@ test("published JavaScript API and Sass package import resolve for consumers", a
 	);
 	assert.equal(metadata.exports["."].import, "./src/js/index.js");
 	assert.equal(metadata.exports["."].sass, "./src/scss/index.scss");
+	assert.equal(metadata.exports["./scss/full"], "./src/scss/full.scss");
+	assert.equal(
+		metadata.exports["./scss/vendor"],
+		"./src/scss/vendor/_index.scss",
+	);
 	const consumer = await mkdtemp(path.join(os.tmpdir(), "myui-consumer-"));
 	try {
 		const modules = path.join(consumer, "node_modules");
@@ -109,6 +114,27 @@ test("published JavaScript API and Sass package import resolve for consumers", a
 			importers: [new sass.NodePackageImporter(consumer)],
 		}).css;
 		assert.match(css, /--color-primary:/);
+		const fullCss = sass.compileString(
+			'@use "pkg:myui/scss/full" with ($color-primary: #5b4ce2);',
+			{
+				url: pathToFileURL(path.join(consumer, "full.scss")),
+				importers: [new sass.NodePackageImporter(consumer)],
+				loadPaths: [path.join(process.cwd(), "node_modules")],
+				quietDeps: true,
+			},
+		).css;
+		assert.match(fullCss, /\.row\s*\{/);
+		assert.match(fullCss, /\.select2-container\s*\{/);
+		assert.match(fullCss, /--color-primary:\s*#5b4ce2;/);
+		const advancedCss = sass.compileString(
+			'@use "pkg:myui/scss/utilities/position"; @use "pkg:myui/scss/utilities/opacity";',
+			{
+				url: pathToFileURL(path.join(consumer, "advanced.scss")),
+				importers: [new sass.NodePackageImporter(consumer)],
+			},
+		).css;
+		assert.match(advancedCss, /\.relative\s*\{/);
+		assert.match(advancedCss, /\.opacity-50\s*\{/);
 	} finally {
 		await rm(consumer, { recursive: true, force: true });
 	}
