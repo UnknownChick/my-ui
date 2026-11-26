@@ -68,6 +68,8 @@ Component blocks use BEM modifiers, for example:
 </button>
 ```
 
+Sidebars are collapsible menu blocks: `.sidebar__toggle` switches the icon rail, and each `.sidebar__link--toggle` controls its sibling `.sidebar__submenu`. Add `data-sidebar-storage-key` to persist the collapsed state, or `data-sidebar-accordion="true"` to allow only one open branch at a time.
+
 The shared component API provides size and semantic-color variant generators. Component size modifiers follow `--xs`, `--sm`, `--md`, `--lg`, `--xl`, and `--xxl`; component-specific Sass maps define the dimensions and spacing for each size. Accent modifiers such as `btn--soft-blue` are driven by the configurable `$accents` map.
 
 To add a component, create a partial in `src/scss/components/`, define its block styles, local variant mixins and size map, then forward the partial from `components/_index.scss`. Keep shared helpers in `abstracts/` and project-specific token choices in the root configuration entry point.
@@ -88,7 +90,7 @@ dropdown?.destroy();
 ThemeToggle.destroy(); // removes listeners installed by initMyUI
 ```
 
-`initMyUI({ root, theme, components })` initializes matching components under `root` (default: `document`), including `root` itself when it matches. `theme` defaults to `true`. The `components` object accepts per-component options under `accordion`, `drawer`, `dropdown`, `modal`, `pagination`, `tabs`, `toast`, and `tooltip`. Initialization reuses existing instances. Direct construction with `new Dropdown(element)` throws if an instance already exists; use `Dropdown.getOrCreate(element, options)` to reuse it. Call `destroy()` before removing an initialized element. For script-tag or side-effect usage, import `myui/auto`, which also initializes the bundled icons. Components can also be imported individually from `myui/components/dropdown`, and the Sass entry point is `myui/scss`.
+`initMyUI({ root, theme, components })` initializes matching components under `root` (default: `document`), including `root` itself when it matches. `theme` defaults to `true`. The `components` object accepts per-component options under `accordion`, `drawer`, `dropdown`, `modal`, `pagination`, `sidebar`, `tabs`, `toast`, and `tooltip`. Initialization reuses existing instances. Direct construction with `new Dropdown(element)` throws if an instance already exists; use `Dropdown.getOrCreate(element, options)` to reuse it. Call `destroy()` before removing an initialized element. For script-tag or side-effect usage, import `myui/auto`, which also initializes the bundled icons. Components can also be imported individually from `myui/components/dropdown`, and the Sass entry point is `myui/scss`.
 
 The full stylesheet includes the third-party styles, but does not initialize those libraries automatically: Dropzone needs an upload URL and Select2 needs a target element. Their JavaScript is available through `myui/vendor/dropzone`, `myui/vendor/jquery`, and `myui/vendor/select2`. Import and configure them explicitly where needed.
 
@@ -103,6 +105,7 @@ Interactive controls keep their ARIA state in sync. Dropdowns open with Enter, S
 | Dropdown | `.dropdown__toggle` and `.dropdown__content` | Click/outside close and keyboard menu navigation | Syncs `aria-controls` and `aria-expanded` |
 | Modal | Native `dialog.modal`; `data-modal-target` trigger | Native modal, Escape/backdrop options, focus and scroll-lock handling | Destroy cancels animation and listeners; respects reduced motion |
 | Pagination | `.pagination`, `.pagination__list`, `.pagination__link` | Active page and previous/next states | `onChange` callback and `pagination:change` event |
+| Sidebar | `.sidebar`, `.sidebar__toggle`, `.sidebar__link--toggle` + `.sidebar__submenu` | Icon rail collapse, submenu disclosure, optional persistence | Closed submenus become inert; destroy removes listeners and generated titles |
 | Tabs | `.tabs__nav`, `.tabs__button`, `.tabs__panel`; `aria-controls` maps button to panel | Arrow/Home/End navigation; optional hash persistence | `onChange` callback |
 | Toast | Trigger, usually `[data-toast-trigger]` | Timed live-region notification | Title and message are plain text |
 | Tooltip | `[data-tooltip]` trigger | Shows on hover/focus and uses `aria-describedby` | Removes generated node and ARIA reference |

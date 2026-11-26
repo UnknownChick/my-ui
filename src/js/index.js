@@ -3,6 +3,7 @@ import Drawer from "./components/drawer.js";
 import Dropdown from "./components/dropdown.js";
 import Modal from "./components/modal.js";
 import Pagination from "./components/pagination.js";
+import Sidebar from "./components/sidebar.js";
 import Tabs from "./components/tabs.js";
 import Toast from "./components/toast.js";
 import Tooltip from "./components/tooltip.js";
@@ -18,6 +19,7 @@ export {
 	initIcons,
 	Modal,
 	Pagination,
+	Sidebar,
 	Tabs,
 	ThemeToggle,
 	Toast,
@@ -35,6 +37,7 @@ export function initMyUI({
 	Dropdown.autoInit(".dropdown", components.dropdown, root);
 	Modal.autoInit("dialog.modal", components.modal, root);
 	Pagination.autoInit(".pagination", components.pagination, root);
+	Sidebar.autoInit(".sidebar", components.sidebar, root);
 	Tabs.autoInit(".tabs", components.tabs, root);
 	Toast.autoInit("[data-toast-trigger]", components.toast, root);
 	Tooltip.autoInit("[data-tooltip]", components.tooltip, root);

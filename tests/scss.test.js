@@ -147,6 +147,29 @@ test("dropdown size variants set the content width", () => {
 	);
 });
 
+test("sidebar supports an icon rail, animated submenus, and semantic accents", () => {
+	const css = compile('@use "src/scss";');
+
+	assert.match(css, /\.sidebar\s*\{[^}]*--sidebar-width:\s*16rem/);
+	assert.match(
+		css,
+		/\.sidebar--collapsed\s*\{[^}]*width:\s*var\(--sidebar-collapsed-width\)/,
+	);
+	assert.match(css, /\.sidebar__submenu\s*\{[^}]*grid-template-rows:\s*0fr/);
+	assert.match(
+		css,
+		/\.sidebar__item--open > \.sidebar__submenu\s*\{[^}]*grid-template-rows:\s*1fr/,
+	);
+	assert.match(
+		css,
+		/\.sidebar--primary\s*\{[^}]*--sidebar-accent:\s*var\(--color-primary\)/,
+	);
+	assert.match(
+		css,
+		/\.sidebar--xs\s*\{[^}]*--sidebar-width:\s*10rem;[^}]*--sidebar-collapsed-width:\s*3rem/,
+	);
+});
+
 test("utilities can be disabled from the consuming Sass entry point", () => {
 	const css = compile('@use "src/scss" with ($enable-utilities: false);');
 

@@ -1087,6 +1087,21 @@ html {
 	color: var(--showcase-muted);
 }
 
+.showcase__sidebar-demo {
+	display: flex;
+	justify-content: center;
+	padding: 1rem;
+	border: 1px solid var(--showcase-line);
+	border-radius: 0.75rem;
+	background: var(--showcase-bg);
+}
+
+.showcase__sidebar-demo .sidebar {
+	height: 34rem;
+	border: 1px solid var(--showcase-line);
+	border-radius: 0.75rem;
+}
+
 .showcase__footer {
 	display: flex;
 	flex-wrap: wrap;

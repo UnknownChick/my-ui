@@ -731,6 +731,7 @@
                             <li><a class="showcase__nav-link" href="#card">Card</a></li>
                             <li><a class="showcase__nav-link" href="#dot">Dot</a></li>
                             <li><a class="showcase__nav-link" href="#drawer">Drawer</a></li>
+                            <li><a class="showcase__nav-link" href="#sidebar">Sidebar</a></li>
                             <li><a class="showcase__nav-link" href="#dropdown">Dropdown</a></li>
                             <li><a class="showcase__nav-link" href="#icon">Icon</a></li>
                             <li><a class="showcase__nav-link" href="#image">Image</a></li>
@@ -764,7 +765,7 @@
                                 <a class="landing-hero__text-link" href="#playground">Tester le playground <span aria-hidden="true">→</span></a>
                             </div>
                             <div class="landing-hero__facts" aria-label="Les chiffres de My UI">
-                                <div><strong>24</strong><span>composants</span></div>
+                                <div><strong>25</strong><span>composants</span></div>
                                 <div><strong>6</strong><span>tailles</span></div>
                                 <div><strong>2</strong><span>thèmes</span></div>
                             </div>
@@ -793,7 +794,7 @@
                                 </div>
                                 <div class="hero-art__floating hero-art__floating--colors"><span class="hero-art__color-dots"><i></i><i></i><i></i></span><span><strong>À votre image</strong><small>Couleurs personnalisables</small></span></div>
                                 <div class="hero-art__floating hero-art__floating--ready"><span class="hero-art__check">✓</span><span><strong>Prêt à créer</strong><small>Modulaire & réutilisable</small></span></div>
-                                <span class="hero-art__canvas-bottom">DESIGNED TO BUILD / 01—24</span>
+                                <span class="hero-art__canvas-bottom">DESIGNED TO BUILD / 01—25</span>
                             </div>
                         </div>
                     </section>
@@ -862,9 +863,9 @@
                         </div>
 
                         <details class="component-index">
-                            <summary><span><strong>Et ce n’est que le début.</strong><small>Explorer les 24 composants et les fondations</small></span><span class="component-index__toggle" aria-hidden="true">+</span></summary>
+                            <summary><span><strong>Et ce n’est que le début.</strong><small>Explorer les 25 composants et les fondations</small></span><span class="component-index__toggle" aria-hidden="true">+</span></summary>
                             <div class="component-index__body">
-                                <div><h3>Actions & navigation</h3><div class="component-index__links"><a href="#accordion">Accordion</a><a href="#breadcrumb">Breadcrumb</a><a href="#button">Button</a><a href="#drawer">Drawer</a><a href="#dropdown">Dropdown</a><a href="#modal">Modal</a><a href="#pagination">Pagination</a><a href="#tabs">Tabs</a><a href="#tooltip">Tooltip</a></div></div>
+                                <div><h3>Actions & navigation</h3><div class="component-index__links"><a href="#accordion">Accordion</a><a href="#breadcrumb">Breadcrumb</a><a href="#button">Button</a><a href="#drawer">Drawer</a><a href="#sidebar">Sidebar</a><a href="#dropdown">Dropdown</a><a href="#modal">Modal</a><a href="#pagination">Pagination</a><a href="#tabs">Tabs</a><a href="#tooltip">Tooltip</a></div></div>
                                 <div><h3>Contenu & données</h3><div class="component-index__links"><a href="#avatar">Avatar</a><a href="#badge">Badge</a><a href="#card">Card</a><a href="#dot">Dot</a><a href="#icon">Icon</a><a href="#image">Image</a><a href="#list">List</a><a href="#separator">Separator</a><a href="#square">Square</a><a href="#table">Table</a></div></div>
                                 <div><h3>États & retours</h3><div class="component-index__links"><a href="#alert">Alert</a><a href="#loader">Loader</a><a href="#notification">Notification</a><a href="#progress">Progress</a><a href="#toast">Toast</a></div></div>
                                 <div><h3>Pour aller plus loin</h3><div class="component-index__links"><a href="#forms">Form controls</a><a href="#colors">Couleurs & thèmes</a><a href="#utilities">Utilitaires</a><a href="#variants">Toutes les variantes</a></div></div>
@@ -1537,6 +1538,96 @@
                                         <div class="drawer__body"><p>Largeur xxl</p></div>
                                     </aside>
                                 </details>
+                            </div>
+                        </section>
+
+                        <section class="card showcase__section" id="sidebar" aria-labelledby="sidebar-title">
+                            <header class="card__title showcase__section-header">
+                                <div>
+                                    <p class="showcase__section-index">Navigation d’application</p>
+                                    <h2 class="showcase__section-title" id="sidebar-title">Sidebar</h2>
+                                    <p class="showcase__section-description">Menu latéral repliable avec icônes, liens, badges et sous-menus animés.</p>
+                                </div>
+                                <code>.sidebar__submenu</code>
+                            </header>
+                            <div class="card__body showcase__stack">
+                                <div class="showcase__sidebar-demo">
+                                    <aside class="sidebar sidebar--md sidebar--static" id="showcase-sidebar" data-sidebar-storage-key="showcase-sidebar-collapsed" aria-label="Navigation de démonstration">
+                                        <div class="sidebar__header">
+                                            <a class="sidebar__brand" href="#sidebar">
+                                                <span class="sidebar__logo" aria-hidden="true">M</span>
+                                                <span class="sidebar__brand-text">My UI</span>
+                                            </a>
+                                            <button class="sidebar__toggle" type="button" aria-label="Replier ou déplier la navigation" aria-controls="showcase-sidebar-nav">
+                                                <span class="sidebar__toggle-icon" aria-hidden="true"><i data-lucide="chevrons-left"></i></span>
+                                            </button>
+                                        </div>
+                                        <nav class="sidebar__nav" id="showcase-sidebar-nav" aria-label="Navigation de démonstration">
+                                            <div class="sidebar__group">
+                                                <p class="sidebar__group-label">Général</p>
+                                                <ul class="sidebar__list">
+                                                    <li class="sidebar__item">
+                                                        <a class="sidebar__link sidebar__link--active" href="#sidebar" aria-current="page">
+                                                            <span class="sidebar__icon" aria-hidden="true"><i data-lucide="house"></i></span>
+                                                            <span class="sidebar__label">Tableau de bord</span>
+                                                        </a>
+                                                    </li>
+                                                    <li class="sidebar__item">
+                                                        <a class="sidebar__link" href="#sidebar">
+                                                            <span class="sidebar__icon" aria-hidden="true"><i data-lucide="chart-bar"></i></span>
+                                                            <span class="sidebar__label">Statistiques</span>
+                                                            <span class="sidebar__badge">12</span>
+                                                        </a>
+                                                    </li>
+                                                    <li class="sidebar__item sidebar__item--open">
+                                                        <button class="sidebar__link sidebar__link--toggle" type="button" aria-expanded="true">
+                                                            <span class="sidebar__icon" aria-hidden="true"><i data-lucide="folder"></i></span>
+                                                            <span class="sidebar__label">Projets</span>
+                                                            <span class="sidebar__arrow" aria-hidden="true"><i data-lucide="chevron-down"></i></span>
+                                                        </button>
+                                                        <div class="sidebar__submenu">
+                                                            <ul class="sidebar__submenu-list">
+                                                                <li class="sidebar__submenu-item"><a class="sidebar__submenu-link" href="#sidebar">Projet Alpha</a></li>
+                                                                <li class="sidebar__submenu-item"><a class="sidebar__submenu-link" href="#sidebar">Projet Beta</a></li>
+                                                                <li class="sidebar__submenu-item"><a class="sidebar__submenu-link" href="#sidebar">Archives</a></li>
+                                                            </ul>
+                                                        </div>
+                                                    </li>
+                                                    <li class="sidebar__item">
+                                                        <a class="sidebar__link" href="#sidebar">
+                                                            <span class="sidebar__icon" aria-hidden="true"><i data-lucide="users"></i></span>
+                                                            <span class="sidebar__label">Équipe</span>
+                                                        </a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                            <div class="sidebar__group">
+                                                <p class="sidebar__group-label">Système</p>
+                                                <ul class="sidebar__list">
+                                                    <li class="sidebar__item">
+                                                        <a class="sidebar__link" href="#sidebar">
+                                                            <span class="sidebar__icon" aria-hidden="true"><i data-lucide="settings"></i></span>
+                                                            <span class="sidebar__label">Réglages</span>
+                                                        </a>
+                                                    </li>
+                                                    <li class="sidebar__item">
+                                                        <a class="sidebar__link" href="#sidebar">
+                                                            <span class="sidebar__icon" aria-hidden="true"><i data-lucide="circle-help"></i></span>
+                                                            <span class="sidebar__label">Aide</span>
+                                                        </a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </nav>
+                                        <div class="sidebar__footer">
+                                            <a class="sidebar__link" href="#sidebar">
+                                                <span class="sidebar__icon" aria-hidden="true"><i data-lucide="log-out"></i></span>
+                                                <span class="sidebar__label">Déconnexion</span>
+                                            </a>
+                                        </div>
+                                    </aside>
+                                </div>
+                                <p class="showcase__muted">Cliquez sur l’icône de repli pour passer en mode icônes. Les sous-menus se ferment automatiquement et les libellés restent accessibles.</p>
                             </div>
                         </section>
 
@@ -2548,6 +2639,33 @@
                                                     <code>drawer--left</code><code>drawer--right</code><code>drawer--open</code>
                                                     <code>drawer--primary</code><code>drawer--secondary</code><code>drawer--success</code><code>drawer--warning</code><code>drawer--danger</code><code>drawer--info</code>
                                                     <code>data-drawer-position="left"</code><code>data-drawer-position="right"</code><code>drawer__backdrop--visible</code><code>drawer__close</code>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </details>
+
+                                    <details class="showcase__variant-details">
+                                        <summary><span>Sidebar</span><span class="showcase__variant-meta">6 tailles · 6 couleurs · repliable</span></summary>
+                                        <div class="showcase__variant-body">
+                                            <div class="showcase__variant-group">
+                                                <h3>Tailles</h3>
+                                                <div class="showcase__modifier-list"><code>sidebar--xs</code><code>sidebar--sm</code><code>sidebar--md</code><code>sidebar--lg</code><code>sidebar--xl</code><code>sidebar--xxl</code></div>
+                                            </div>
+                                            <div class="showcase__variant-group">
+                                                <h3>Couleurs sémantiques</h3>
+                                                <div class="showcase__modifier-list">
+                                                    <code>sidebar--primary</code><code>sidebar--secondary</code><code>sidebar--success</code><code>sidebar--warning</code><code>sidebar--danger</code><code>sidebar--info</code>
+                                                </div>
+                                            </div>
+                                            <div class="showcase__variant-group">
+                                                <h3>Structure, états et options</h3>
+                                                <div class="showcase__modifier-list">
+                                                    <code>sidebar--collapsed</code><code>sidebar--right</code><code>sidebar--static</code><code>sidebar--sticky</code><code>sidebar--surface</code><code>sidebar--borderless</code>
+                                                    <code>sidebar__header</code><code>sidebar__brand</code><code>sidebar__logo</code><code>sidebar__brand-text</code><code>sidebar__toggle</code><code>sidebar__toggle-icon</code>
+                                                    <code>sidebar__nav</code><code>sidebar__group</code><code>sidebar__group-label</code><code>sidebar__list</code><code>sidebar__item</code><code>sidebar__item--open</code>
+                                                    <code>sidebar__link</code><code>sidebar__link--active</code><code>sidebar__link--toggle</code><code>sidebar__link--disabled</code><code>sidebar__icon</code><code>sidebar__label</code><code>sidebar__badge</code><code>sidebar__arrow</code>
+                                                    <code>sidebar__submenu</code><code>sidebar__submenu-list</code><code>sidebar__submenu-item</code><code>sidebar__submenu-link</code><code>sidebar__divider</code><code>sidebar__footer</code>
+                                                    <code>data-sidebar-collapsed="true"</code><code>data-sidebar-accordion="true"</code><code>data-sidebar-storage-key="app-sidebar"</code>
                                                 </div>
                                             </div>
                                         </div>

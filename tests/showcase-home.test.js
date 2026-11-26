@@ -38,7 +38,7 @@ test("the homepage introduces components and links every preview and index entry
 	assert.equal(collection.querySelectorAll(".component-tile").length, 12);
 	assert.equal(
 		collection.querySelectorAll(".component-index__links a").length,
-		28,
+		29,
 	);
 	assert.equal(
 		page.querySelector(".showcase__skip").getAttribute("href"),
