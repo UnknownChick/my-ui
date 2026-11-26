@@ -1199,7 +1199,7 @@
                                 <div>
                                     <p class="showcase__section-index">Actions</p>
                                     <h2 class="showcase__section-title" id="button-title">Button</h2>
-                                    <p class="showcase__section-description">Couleurs sémantiques, variantes outline et tailles normalisées.</p>
+                                    <p class="showcase__section-description">Couleurs sémantiques, variantes outline, tailles normalisées et icônes à gauche ou à droite.</p>
                                 </div>
                                 <code>.btn--primary .btn--md</code>
                             </header>
@@ -1254,7 +1254,7 @@
                                     <button class="btn btn--soft-blue btn--sm" type="button">Accent doux</button>
                                     <button class="btn btn--high-purple btn--sm" type="button">Accent fort</button>
                                     <button class="btn btn--primary btn--icon btn--sm" type="button" aria-label="Rechercher">
-                                        <i data-lucide="search" class="icon icon--xs" aria-hidden="true"></i>
+                                        <i data-lucide="search" class="btn__icon" aria-hidden="true"></i>
                                     </button>
                                     <span class="btn-group" role="group" aria-label="Exemple de groupe de boutons">
                                         <button class="btn btn--secondary btn--sm" type="button">Précédent</button>
@@ -1303,11 +1303,25 @@
                                                 <div class="showcase__row">
                                                     <button class="btn btn--primary btn--sm" type="button">
                                                         <i data-lucide="search" class="btn__icon btn__icon--left" aria-hidden="true"></i>
-                                                        Rechercher
+                                                        <span class="btn__label">Rechercher</span>
                                                     </button>
                                                     <button class="btn btn--secondary btn--sm" type="button">
-                                                        Suivant
+                                                        <span class="btn__label">Suivant</span>
                                                         <i data-lucide="chevron-right" class="btn__icon btn__icon--right" aria-hidden="true"></i>
+                                                    </button>
+                                                </div>
+                                                <div class="showcase__row">
+                                                    <button class="btn btn--primary btn--icon btn--xs" type="button" aria-label="Rechercher en XS">
+                                                        <i data-lucide="search" class="btn__icon" aria-hidden="true"></i>
+                                                    </button>
+                                                    <button class="btn btn--primary btn--icon btn--sm" type="button" aria-label="Rechercher en SM">
+                                                        <i data-lucide="search" class="btn__icon" aria-hidden="true"></i>
+                                                    </button>
+                                                    <button class="btn btn--primary btn--icon btn--md" type="button" aria-label="Rechercher en MD">
+                                                        <i data-lucide="search" class="btn__icon" aria-hidden="true"></i>
+                                                    </button>
+                                                    <button class="btn btn--primary btn--icon btn--lg" type="button" aria-label="Rechercher en LG">
+                                                        <i data-lucide="search" class="btn__icon" aria-hidden="true"></i>
                                                     </button>
                                                 </div>
                                                 <div class="btn-group btn-group--vertical" role="group" aria-label="Groupe vertical">
@@ -2574,7 +2588,7 @@
                                             <div class="showcase__variant-group">
                                                 <h3>États et composition</h3>
                                                 <div class="showcase__modifier-list">
-                                                    <code>btn--fluid</code><code>btn--center</code><code>btn--icon</code><code>btn--loading</code><code>btn--link</code><code>btn__icon--left</code><code>btn__icon--right</code><code>btn-group--vertical</code>
+                                                    <code>btn--fluid</code><code>btn--center</code><code>btn--icon</code><code>btn--loading</code><code>btn--link</code><code>btn__label</code><code>btn__icon--left</code><code>btn__icon--right</code><code>btn-group--vertical</code>
                                                 </div>
                                             </div>
                                         </div>

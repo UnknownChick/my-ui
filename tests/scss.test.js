@@ -39,6 +39,12 @@ test("semantic and accent custom properties drive component styles at runtime", 
 	assert.match(css, /background-color:\s*var\(--color-primary\)/);
 	assert.match(css, /--font-size-md:\s*1rem/);
 	assert.match(css, /.btn--md\s*\{[^}]*font-size:\s*var\(--font-size-md\)/);
+	assert.match(css, /.btn--sm\s*\{[^}]*--btn-icon-size:\s*calc\(/);
+	assert.match(css, /.btn\s*\{[^}]*display:\s*inline-flex/);
+	assert.match(css, /.btn\s*\{[^}]*gap:\s*0\.5em/);
+	assert.match(css, /.btn__icon--left\s*\{[^}]*order:\s*-1/);
+	assert.match(css, /.btn__icon--right\s*\{[^}]*order:\s*1/);
+	assert.match(css, /.btn--icon\s*\{[^}]*width:\s*var\(--btn-icon-size\)/);
 	assert.match(css, /.p-4\s*\{[^}]*padding:\s*var\(--spacing-4\)/);
 	assert.match(css, /.fs-md\s*\{[^}]*font-size:\s*var\(--fs-fluid-md\)/);
 	assert.match(css, /--color-primary-hover:/);

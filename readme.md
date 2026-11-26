@@ -64,9 +64,12 @@ Component blocks use BEM modifiers, for example:
 
 ```html
 <button class="btn btn--primary btn--md">
+  <span class="btn__icon btn__icon--left" aria-hidden="true">…</span>
   <span class="btn__label">Save</span>
 </button>
 ```
+
+Buttons are inline flex containers with a `0.5em` gap. Place `.btn__icon` before or after `.btn__label`; the `--left` and `--right` modifiers order the icon on either side. `.btn--icon` renders a square icon-only button sized to the current button size; give it an `aria-label` or include a visually hidden `.btn__label`.
 
 Sidebars are collapsible menu blocks: `.sidebar__toggle` switches the icon rail, and each `.sidebar__link--toggle` controls its sibling `.sidebar__submenu`. Add `data-sidebar-storage-key` to persist the collapsed state, or `data-sidebar-accordion="true"` to allow only one open branch at a time.
 
